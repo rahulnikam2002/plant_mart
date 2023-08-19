@@ -1,6 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url(https://fonts.googleapis.com/css2?family=Lato:wght@100;200;300;400;500;600;800;900&display=swap);
+
+@layer base {
+  html {
+    font-family: 'Lato', system-ui, sans-serif;
+  }
+}
 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -17,11 +24,7 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  color: #333;
+  background: white;
+  font-family: "Lato", sans-serif;
 }
