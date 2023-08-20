@@ -25,10 +25,10 @@ export const PasswordInput = ({ placeholder, label, setText, name }) => {
                 <span>
                     {!isPassword ? <i
                         onClick={() => setIsPassword(true)}
-                        class="fi fi-rr-eye
+                        className="fi fi-rr-eye
                     "></i> : <i
                         onClick={() => setIsPassword(false)}
-                        class="fi fi-rs-crossed-eye"
+                        className="fi fi-rs-crossed-eye"
                     ></i>}
                 </span>
             </div>
