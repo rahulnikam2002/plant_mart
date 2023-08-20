@@ -10,7 +10,7 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Routes guidlines
+## Routes guidelines
 
 | Page                 | Route                   | Assigned to     |
 | -------------------- | ----------------------- | --------------- |
