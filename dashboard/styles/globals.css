@@ -1,30 +1,55 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url(https://fonts.googleapis.com/css2?family=Lato:wght@100;200;300;400;500;600;800;900&display=swap);
+@import url(https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;800;900&display=swap);
+@import "~@flaticon/flaticon-uicons/css/all/all";
+
 
 @layer base {
   html {
-    font-family: 'Lato', system-ui, sans-serif;
+    font-family: "Poppins", system-ui, sans-serif;
   }
 }
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
+  --primary: #005fff;
+  --white: #ffffff;
+  --textLight: #6d717c;
+  --lightGrey: #9ca3af;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+  --font13: 13px
+  --font16: 16px;
+  --font18: 18px;
+  --font20: 20px;
+  --font25: 25px;
+  --font30: 30px;
+  --font40: 40px;
+
+  /* Font Weight */
+  --w100: 100;
+  --w200: 200;
+  --w300: 300;
+  --w400: 400;
+  --w500: 500;
+  --w600: 600;
+  --w700: 700;
+
+  /* border radius */
+  --circle: 50px;
+  --largeCurve: 10px;
+  --mediumCurve: 7px;
+  --smallCurve: 5px;
+
+  --font: "poppins", sans-serif;
 }
 
 body {
   color: #333;
   background: white;
-  font-family: "Lato", sans-serif;
+  font-family: "Poppins", sans-serif;
+}
+
+
+i{
+  color: var(--lightGrey);
 }

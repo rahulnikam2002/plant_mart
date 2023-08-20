@@ -1,0 +1,37 @@
+.inputText {
+  border-radius: 8px;
+  border: 2px solid rgb(209 213 219);
+  outline: none;
+  width: 100%;
+  padding: 8px 10px;
+  margin: 6px 0;
+  cursor: pointer;
+  font-family: var(--font);
+  font-size: var(--font16);
+  transition: all ease 0.5s;
+}
+
+.inputPass {
+  border-radius: 8px;
+  border: 2px solid rgb(209 213 219);
+  outline: none;
+  width: 100%;
+  padding: 8px 10px;
+  margin: 6px 0;
+  cursor: pointer;
+  font-family: var(--font);
+  font-size: var(--font16);
+  transition: all ease 0.5s;
+}
+
+.innerInputClass{
+    position: relative;
+}
+
+.PasswordInput span {
+  cursor: pointer;
+  position: absolute;
+  top: 53%;
+  right: 2%;
+  transform: translate(-50%, -50%);
+}

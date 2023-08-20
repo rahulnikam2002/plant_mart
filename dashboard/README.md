@@ -37,6 +37,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 | Styling        | Tailwind CSS and CSS |
 | Toast messages | React Toastify       |
 | Image Upload   | Cloudinary           |
+| Input validation   | Validator           |
 
 ## cloudinary credentials
 

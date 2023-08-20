@@ -1,0 +1,23 @@
+.linkButton{
+    background-color: var(--primary);
+}
+
+.button{
+    background-color: var(--primary);
+    width: 100%;
+    transition: all ease 0.2s;
+    padding: 8px 0;
+    font-family: var(--font);
+    color: var(--white);
+    border-radius: 6px;
+    /* border: 2px solid var(--primary); */
+}
+
+.active{
+    background-color: #e8edeb;
+    /* border: 2px solid rgb(193, 199, 198); */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* padding: 9px; */
+}

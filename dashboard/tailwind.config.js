@@ -16,7 +16,7 @@ module.exports = {
       },
     },
     fontFamily: {
-      lato: ['Lato', 'sans'],
+      Poppins: ['Poppins', 'sans'],
     },
   },
   plugins: [],
