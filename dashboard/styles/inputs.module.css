@@ -11,6 +11,10 @@
   transition: all ease 0.5s;
 }
 
+.inputText:focus{
+  border: 2px solid var(--primary);
+}
+
 .inputPass {
   border-radius: 8px;
   border: 2px solid rgb(209 213 219);
@@ -23,6 +27,11 @@
   font-size: var(--font16);
   transition: all ease 0.5s;
 }
+
+.inputPass:focus{
+  border: 2px solid var(--primary);
+}
+
 
 .innerInputClass{
     position: relative;

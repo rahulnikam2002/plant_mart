@@ -25,19 +25,19 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 | Customers            | /customers              | Nisha Patil     |
 | Single customers     | /customers/:customer_id | Nisha Patil     |
 | Coupons              | /coupons                | Fouzan Sahibole |
-| Add Coupons          | /coupons/new            | /               |
+| Add Coupons          | /coupons/new            | Rahul Nikam     |
 | Settings             | /settings               | Fouzan Sahibole |
 | Change settings      | /settings/edit          | Fouzan Sahibole |
 | Analysis             | /analysis               | Siddhi Mahadik  |
 
 ## Libraries used
 
-| Functionality  | Library              |
-| -------------- | -------------------- |
-| Styling        | Tailwind CSS and CSS |
-| Toast messages | React Toastify       |
-| Image Upload   | Cloudinary           |
-| Input validation   | Validator           |
+| Functionality    | Library              |
+| ---------------- | -------------------- |
+| Styling          | Tailwind CSS and CSS |
+| Toast messages   | React Toastify       |
+| Image Upload     | Cloudinary           |
+| Input validation | Validator            |
 
 ## cloudinary credentials
 

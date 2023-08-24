@@ -14,7 +14,6 @@ export default async function handler(req, res) {
       getAdminDetails = await adminModel.findOne({ emailId: userName });
       if (getAdminDetails) {
         if (userName === getAdminDetails.emailId && password === getAdminDetails.password) {
-          res.send(getAdminDetails)
           res.setHeader(
             "Set-Cookie",
             cookie.serialize("token", process.env.NEXT_PUBLIC_TOKEN, {
@@ -24,7 +23,8 @@ export default async function handler(req, res) {
             })
           );
           res.status(200).json({
-            valid: true,
+            code: 1,
+            msg: "Success"
           });
         } else {
           res.status(401).json({
@@ -34,7 +34,7 @@ export default async function handler(req, res) {
         }
       }
       else {
-        res.send({
+        res.status(400).send({
           valid: false,
           msg: "Something went wrong",
         })

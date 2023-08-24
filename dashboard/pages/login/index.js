@@ -79,7 +79,6 @@ const LoginPage = () => {
             <main>
                 <ToastContainer />
                 <div className={styles.main}>
-                    {/* <div className={[styles.innerMain, styles.banner].join(" ")}></div> */}
                     <div className={[styles.innerMain, styles.contactForm].join(" ")}>
                         <p className={styles.pageHeading}>Sign in to <span className={styles.primaryColor}> Plant Mart</span></p>
                         <p className={styles.subHeading}>Manage your products, orders and get their analysis</p>
@@ -97,13 +96,22 @@ const LoginPage = () => {
                                 <Button title={"Sign in"} clickFunction={handleSignIn} isLoading={loading} />
                             </div>
                         </div>
-
                     </div>
+                    <div className={[styles.innerMain, styles.banner].join(" ")}></div>
+
                 </div>
             </main>
         </>
     )
 }
+
+
+/**
+ .pr-3{
+    padding-right: 18px;
+ }
+ * 
+ */
 
 export default LoginPage;
 

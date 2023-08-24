@@ -1,11 +1,11 @@
-import styles from '@/styles/inputs.module.css'
 import { useState } from 'react'
+import styles from '../../styles/inputs.module.css'
 
 export const TextInput = ({ placeholder, setText, label, name }) => {
     return (
         <div>
             {label && <p>{label}</p>}
-            <input className={styles.textInput} name={name} onChange={(e) => setText(e)} placeholder={placeholder} />
+            <input data-cy="counter" className={styles.inputText} name={name} onChange={(e) => setText(e)} placeholder={placeholder} />
         </div>
     )
 }
