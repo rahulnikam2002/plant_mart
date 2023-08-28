@@ -1,0 +1,58 @@
+.main {
+  height: 100vh;
+  width: 100%;
+  background-color: #f5f7f9;
+  display: grid;
+  grid-template-columns: 18% 82%;
+  grid-template-rows: 100%;
+  transition: all ease 0.5s;
+}
+
+.sidebar {
+  height: 100vh;
+  overflow-y: auto;
+  background-color: var(--secondary);
+  border-right: 1px solid var(--borderColor);
+  /* box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px; */
+  position: relative;
+}
+
+.sidebar::-webkit-scrollbar {
+  display: none;
+}
+
+.pages {
+  height: 100%;
+}
+
+.fullPage {
+  height: 100vh;
+  width: 100%;
+  background-color: #f5f7f9;
+  display: grid;
+  grid-template-columns: 100% !important;
+}
+
+.sideBarToggle {
+  position: absolute;
+  height: 30px;
+  width: 30px;
+  top: 30px;
+  left: 17%;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--borderColor);
+  border-radius: 50%;
+  background-color: white;
+  cursor: pointer;
+  transition: all ease 0.5s;
+}
+
+.sideBarToggle i {
+  position: relative;
+  top: 3px;
+  left: -1px;
+  transition: all ease0.2s;
+}

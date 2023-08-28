@@ -7,5 +7,14 @@ export const LinkButton = ({ href, title }) => <Link className={styles.linkButto
 
 export const Button = ({ clickFunction, title, isLoading }) =>
     <button className={[styles.button, isLoading ? styles.active : null].join(" ")} onClick={() => clickFunction()}>
-        {isLoading ? <ClipLoader size={22} color='rgb(193, 199, 198)'/> : "Sign in"}
+        {isLoading ? <ClipLoader size={22} color='rgb(193, 199, 198)' /> : "Sign in"}
+    </button>
+
+export const IconButton = ({ title, leftIcon, rightIcon, onClick, isLoading, width }) =>
+    <button
+        style={{ width: width ? width : "100%" }}
+        className={[styles.button, styles.leftIconButton, isLoading ? styles.active : null].join(" ")}
+        onClick={onClick}>
+        {isLoading ? <ClipLoader size={22} color='rgb(193, 199, 198)' /> : <span>{leftIcon && <span>{leftIcon}</span>}
+            {title}{rightIcon && <span style={{marginLeft: "5px"}}>{rightIcon}</span>}</span>}
     </button>

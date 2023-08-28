@@ -1,0 +1,94 @@
+.main {
+  height: 100%;
+  width: 100%;
+  padding: 10px;
+}
+
+.header {
+  width: 100%;
+  text-align: left;
+  margin-top: 10px;
+}
+
+.header p {
+  color: var(--primary);
+  font-size: var(--font25);
+  font-weight: var(--w800);
+}
+
+.searchSection {
+  margin-top: 20px;
+}
+
+.menuItems {
+  margin-top: 20px;
+}
+
+.mainMenuItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 8px 10px;
+  border-radius: var(--smallCurve);
+  margin-top: 1px !important;
+  margin-bottom: 5px;
+}
+
+.activeMenu {
+  background: #1a1e3d !important;
+  border-radius: var(--smallCurve);
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+}
+
+.leftIcon i,
+.rightIcon i {
+  color: #69727b;
+  position: relative;
+  top: 2px;
+}
+
+.leftIcon {
+  margin-right: 10px;
+}
+
+.menu p {
+  color: var(--whiteGrey);
+  font-weight: var(--w500);
+}
+
+.dropDownMenuItem {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  transition: opacity ease 1s;
+}
+
+.subMenu {
+  background: #1a1e3d;
+  width: 90%;
+  padding: 10px;
+  margin: 0px 10px 0 0;
+  border-radius: var(--smallCurve);
+}
+
+.singleSubMenu:not(:first-child) {
+  margin-top: 8px;
+}
+
+.singleSubMenu a {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--whiteGrey);
+  font-weight: var(--w500);
+}
+
+.singleMenuItem {
+  transition: all ease 1s;
+}

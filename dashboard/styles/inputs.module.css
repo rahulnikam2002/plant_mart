@@ -11,7 +11,7 @@
   transition: all ease 0.5s;
 }
 
-.inputText:focus{
+.inputText:focus {
   border: 2px solid var(--primary);
 }
 
@@ -28,13 +28,12 @@
   transition: all ease 0.5s;
 }
 
-.inputPass:focus{
+.inputPass:focus {
   border: 2px solid var(--primary);
 }
 
-
-.innerInputClass{
-    position: relative;
+.innerInputClass {
+  position: relative;
 }
 
 .PasswordInput span {
@@ -43,4 +42,30 @@
   top: 53%;
   right: 2%;
   transform: translate(-50%, -50%);
+}
+
+.iconInput {
+  position: relative;
+  /* background: rgba(255, 255, 255, 0.186); */
+}
+
+.rightIconInput{
+  position: absolute;
+  top: 55%;
+  right: 2%;
+  transform: translate(-50%, -50%);
+
+}
+
+.leftIconInput{
+  position: absolute;
+  top: 30px;
+  left: 25px;
+  transform: translate(-50%, -50%);
+}
+
+.iconInputField{
+  padding-left: 40px;
+  padding-right: 35px;
+  background: #1a1e3d;
 }

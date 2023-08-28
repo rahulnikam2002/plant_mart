@@ -21,3 +21,17 @@
     justify-content: center;
     /* padding: 9px; */
 }
+
+.leftIconButton{
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.leftIconButton span span{
+    position: relative;
+    top: 3px;
+    margin-right: 5px;
+}

@@ -13,9 +13,13 @@
 
 :root {
   --primary: #005fff;
+  --secondary: #0b1032;
   --white: #ffffff;
+  --whiteGrey: #9ca3af;
   --textLight: #6d717c;
   --lightGrey: #9ca3af;
+  --borderColor:  rgb(209 213 219);
+  --black: #333333;
 
   --toastify-color-success: #005fff !important;
 
@@ -35,6 +39,8 @@
   --w500: 500;
   --w600: 600;
   --w700: 700;
+  --w800: 800;
+  --w900: 900;
 
   /* border radius */
   --circle: 50px;
