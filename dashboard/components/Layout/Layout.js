@@ -5,7 +5,11 @@ import { useState } from "react";
 
 const Layout = ({ children }) => {
   const [isSideBarOpen, setIsSideBarOpen] = useState(true);
-  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter(); 
+
+
+  console.log(isLoading);
   return (
     <div
       style={
