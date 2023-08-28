@@ -1,4 +1,4 @@
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 import { Sidebar } from "./Sidebar/Sidebar";
 import styles from "@/styles/layout.module.css";
 import { useState } from "react";
@@ -6,8 +6,17 @@ import { useState } from "react";
 const Layout = ({ children }) => {
   const [isSideBarOpen, setIsSideBarOpen] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter(); 
+  const router = useRouter();
 
+  Router.onRouteChangeStart = (url) => {
+    console.log("Page change started");
+    setIsLoading(true);
+  };
+
+  Router.onRouteChangeComplete = (url) => {
+    console.log("Page change compleeted");
+    setIsLoading(false);
+  };
 
   console.log(isLoading);
   return (
@@ -41,7 +50,12 @@ const Layout = ({ children }) => {
             )}
           </p>
         )}
-        <div style={{height: "100vh", overflow: "auto"}}>{children}</div>
+
+        {isLoading ? (
+          <div className={styles.loader}>loading</div>
+        ) : (
+          <div style={{ height: "100vh", overflow: "auto" }}>{children}</div>
+        )}
       </div>
     </div>
   );
