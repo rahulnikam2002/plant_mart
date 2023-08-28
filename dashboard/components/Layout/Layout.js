@@ -37,7 +37,7 @@ const Layout = ({ children }) => {
             )}
           </p>
         )}
-        {children}
+        <div style={{height: "100vh", overflow: "auto"}}>{children}</div>
       </div>
     </div>
   );
