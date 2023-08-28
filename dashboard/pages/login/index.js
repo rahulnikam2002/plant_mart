@@ -118,17 +118,18 @@ export default LoginPage;
 export const getServerSideProps = async (ctx) => {
     const myCookie = ctx.req?.cookies || "";
     if (myCookie.token === process.env.NEXT_PUBLIC_TOKEN) {
-      return {
-        redirect: {
-          destination: "/",
-          permanent: false,
-        },
-      };
+        console.log("login");
+        return {
+            redirect: {
+                destination: "/",
+                permanent: false,
+            },
+        };
     } else {
-      return {
-        props: {
-          isLogin: true,
-        },
-      };
+        return {
+            props: {
+                isLogin: true,
+            },
+        };
     }
-  };
+};

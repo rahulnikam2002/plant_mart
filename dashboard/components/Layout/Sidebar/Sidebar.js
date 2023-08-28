@@ -3,7 +3,8 @@ import styles from "@/styles/sidebar.module.css";
 import { IconInput } from "@/components/Inputs/Inputs";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-const { AnimatePresence, motion } = require("framer-motion");
+// const { AnimatePresence, motion } = require("framer-motion");
+import { AnimatePresence, motion } from 'framer-motion'
 
 export const Sidebar = () => {
   const router = useRouter();
