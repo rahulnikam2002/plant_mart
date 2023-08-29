@@ -144,7 +144,7 @@ const dashboardMenu = [
       },
       {
         menu: "Add new Products",
-        link: "/products",
+        link: "/products/new",
         rightIcon: <i className="fi fi-sr-arrow-circle-right"></i>
       }
     ]
