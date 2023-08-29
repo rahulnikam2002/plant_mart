@@ -10,7 +10,7 @@ export const Button = ({ clickFunction, title, isLoading }) =>
         {isLoading ? <ClipLoader size={22} color='rgb(193, 199, 198)' /> : "Sign in"}
     </button>
 
-export const IconButton = ({ title, leftIcon, rightIcon, onClick, isLoading, width }) =>
+export const IconButton = ({ title, leftIcon, rightIcon, onClick, isLoading, width, bgColor }) =>
     <button
         style={{ width: width ? width : "100%" }}
         className={[styles.button, styles.leftIconButton, isLoading ? styles.active : null].join(" ")}
