@@ -12,3 +12,22 @@
     width: fit-content;
    
 }
+.pageTitle{
+    margin: 15px 0px;
+}
+
+.headerGrp{
+    display: flex;
+}
+
+.topTxt{
+    font-size: 13px !important;
+    color: var(--textLight);
+}
+.textGrp{
+    margin:0px 15px;
+}
+
+.bottomTxt>p{
+    font-weight: var(--w700);
+}
