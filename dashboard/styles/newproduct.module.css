@@ -1,0 +1,14 @@
+.main{
+    margin: 30px 50px;
+}
+
+.header{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.headerbtn{
+    width: fit-content;
+   
+}
