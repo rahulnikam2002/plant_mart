@@ -18,19 +18,9 @@ const ProductsPage = () => {
         sparkline: {
           enabled: false
         },
-        toolbar: {
-          show: false
-        }
       },
-      theme: {
-        mode: "dark",
-        palette: "palette2",
-        monochrome: {
-          enabled: true,
-          color: "#255aee",
-          shadeTo: "dark",
-          shadeIntensity: 0.65
-        }
+      dataLabels: {
+        enabled: false
       },
       grid: {
         show: false, // you can either change hear to disable all grids
@@ -46,7 +36,7 @@ const ProductsPage = () => {
         }
       },
       xaxis: {
-        categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999],
+        categories: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
         axisBorder: {
           show: false
         },
@@ -60,20 +50,17 @@ const ProductsPage = () => {
       fill: {
         type: "gradient",
         gradient: {
-          shade: "dark",
-          gradientToColors: ["var(--primary)"],
           shadeIntensity: 1,
-          type: "horizontal",
-          opacityFrom: 1,
-          opacityTo: 1,
-          stops: [0, 100, 100, 100]
+          opacityFrom: 0.7,
+          opacityTo: 0.9,
+          stops: [0, 90, 100]
         }
       }
     });
     setSeries([
       {
-        name: "series-1",
-        data: [30, 40, 45, 50, 49, 60, 70, 91]
+        name: "Sales",
+        data: [30, 40, 45, 50, 49, 60, 70]
       }
     ]);
   }, []);
@@ -84,8 +71,8 @@ const ProductsPage = () => {
       <Chart
         options={options}
         series={series}
-        type="line"
-        width="500"
+        type="area"
+        width="90%"
       />
     </div>
   );

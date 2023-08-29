@@ -1,5 +1,11 @@
 .linkButton{
     background-color: var(--primary);
+    width: 100%;
+    transition: all ease 0.2s;
+    padding: 8px 0;
+    font-family: var(--font);
+    color: var(--white);
+    border-radius: 6px;
 }
 
 .button{
