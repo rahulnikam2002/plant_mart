@@ -8,6 +8,8 @@ const Layout = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
+  console.log("as path", router.pathname)
+
   Router.onRouteChangeStart = (url) => {
     console.log("Page change started");
     setIsLoading(true);
@@ -28,13 +30,13 @@ const Layout = ({ children }) => {
       }
       className={[
         styles.main,
-        router.asPath === "/login" && styles.fullPage
+        router.pathname === "/login" && styles.fullPage
       ].join(" ")}>
-      {router.asPath !== "/login" && (
+      {router.pathname !== "/login" && (
         <div className={styles.sidebar}>{isSideBarOpen && <Sidebar />}</div>
       )}
       <div className={[styles.pages].join(" ")}>
-        {router.asPath !== "/login" && (
+        {router.pathname !== "/login" && (
           <p
             onClick={() => setIsSideBarOpen(!isSideBarOpen)}
             style={

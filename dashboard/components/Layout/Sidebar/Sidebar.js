@@ -249,7 +249,7 @@ const dashboardMenu = [
       },
       {
         menu: "Logout",
-        link: "/categories",
+        link: "/api/authentication/logout",
         rightIcon: <i className="fi fi-sr-arrow-circle-right"></i>
       },
       {

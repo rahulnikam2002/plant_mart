@@ -14,11 +14,15 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
 
 const LoginPage = () => {
   const [loading, setLoading] = useState(false);
   const [inputs, setInputs] = useState({ userName: "", password: "" });
   const router = useRouter();
+  const navigation = useSearchParams();
+  const redirectTo =
+    navigation.get("redirectTo") !== null ? navigation.get("redirectTo") : "/";
   const handleChange = (e) =>
     setInputs((prevState) => ({
       ...prevState,
@@ -44,7 +48,7 @@ const LoginPage = () => {
         const status = await loginUser.status;
         if (status === 200) {
           successToast("Login success");
-          router.push("/");
+          router.push(redirectTo);
         }
         setLoading(false);
       } catch (err) {

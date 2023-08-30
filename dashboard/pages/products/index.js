@@ -88,7 +88,7 @@ export const getServerSideProps = async (ctx) => {
     if (res.code === 0) {
       return {
         redirect: {
-          destination: "/login",
+          destination: `/login?redirectTo=/products`,
           permanent: false
         }
       };
@@ -102,7 +102,7 @@ export const getServerSideProps = async (ctx) => {
     // console.log(err)
     return {
       redirect: {
-        destination: "/login",
+        destination: `/login?redirectTo=/products`,
         permanent: false
       }
     };
