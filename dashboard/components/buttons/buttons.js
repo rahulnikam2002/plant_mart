@@ -13,6 +13,7 @@ export const LinkButton = ({ href, title }) => (
 
 export const Button = ({ clickFunction, title, isLoading }) => (
   <button
+    style={{ border: "none", cursor: "pointer" }}
     className={[styles.button, isLoading ? styles.active : null].join(" ")}
     onClick={() => clickFunction()}>
     {isLoading ? (

@@ -1,6 +1,7 @@
 import styles from "../styles/home.module.css";
 import { useState } from "react";
 import Head from "next/head";
+import { AnalysisBox } from "@/components/Analytics/AnalysisBox/AnalysisBox";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
@@ -10,8 +11,36 @@ export default function Home() {
         <title>Dashboard | Plant Mart</title>
       </Head>
       <main className={styles.main}>
-        <div className={styles.header}>
-          <svg
+        <div className={styles.headerAnalysis}>
+          <div className={styles.box}><AnalysisBox title={"Total producs"} percentage={50}/></div>
+          <div className={styles.box}><AnalysisBox title={"Orders completed"} percentage={-0.5}/></div>
+          <div className={styles.box}><AnalysisBox title={"Earnings"} percentage={30}/></div>
+        </div>
+      </main>
+    </>
+  );
+}
+
+export const getServerSideProps = async (ctx) => {
+  const myCookie = ctx.req?.cookies || "";
+  if (myCookie.token !== process.env.NEXT_PUBLIC_TOKEN) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false
+      }
+    };
+  } else {
+    return {
+      props: {
+        isLogin: true
+      }
+    };
+  }
+};
+
+
+{/* <svg
             class="MuiBox-root css-uwwqev"
             viewBox="0 0 480 360"
             xmlns="http://www.w3.org/2000/svg">
@@ -225,27 +254,4 @@ export default function Home() {
               height="300"
               x="312"
               y="30"></image>
-          </svg>
-        </div>
-      </main>
-    </>
-  );
-}
-
-export const getServerSideProps = async (ctx) => {
-  const myCookie = ctx.req?.cookies || "";
-  if (myCookie.token !== process.env.NEXT_PUBLIC_TOKEN) {
-    return {
-      redirect: {
-        destination: "/login",
-        permanent: false
-      }
-    };
-  } else {
-    return {
-      props: {
-        isLogin: true
-      }
-    };
-  }
-};
+          </svg> */}
