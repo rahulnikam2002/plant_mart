@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
+import { adminVerification } from "@/utils/helper/authentication/admin/admin.verification";
 const Chart = dynamic(() => import("react-apexcharts"), {
   ssr: false
 });
@@ -79,3 +80,31 @@ const ProductsPage = () => {
 };
 
 export default ProductsPage;
+
+export const getServerSideProps = async (ctx) => {
+  try {
+    const myCookie = ctx.req?.cookies || "";
+    const res = await adminVerification(myCookie.token);
+    if (res.code === 0) {
+      return {
+        redirect: {
+          destination: "/login",
+          permanent: false
+        }
+      };
+    }
+    return{
+      props: {
+        isLogin: true
+      }
+    }
+  } catch (err) {
+    // console.log(err)
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false
+      }
+    };
+  }
+};

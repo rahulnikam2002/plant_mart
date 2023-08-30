@@ -11,6 +11,7 @@ import {
   productSeries
 } from "@/data";
 import axios from "axios";
+import { adminVerification } from "@/utils/helper/authentication/admin/admin.verification";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
@@ -78,6 +79,34 @@ export default function Home() {
     </>
   );
 }
+
+export const getServerSideProps = async (ctx) => {
+  try {
+    const myCookie = ctx.req?.cookies || "";
+    const res = await adminVerification(myCookie.token);
+    if (res.code === 0) {
+      return {
+        redirect: {
+          destination: "/login",
+          permanent: false
+        }
+      };
+    }
+    return{
+      props: {
+        isLogin: true
+      }
+    }
+  } catch (err) {
+    // console.log(err)
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false
+      }
+    };
+  }
+};
 
 {
   /* <svg
