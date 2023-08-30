@@ -60,8 +60,16 @@ body {
   "Plus Jakarta Sans", "Poppins", sans-serif;
  }
 
+*{
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
 
 i{
   color: var(--lightGrey);
 }
 
+a{
+  text-decoration: none;
+}
