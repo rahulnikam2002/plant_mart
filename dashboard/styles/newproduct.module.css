@@ -1,60 +1,85 @@
-.main{
-    margin: 30px 50px;
+.main {
+  margin: 30px 50px;
 }
 
-.header{
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
 }
 
-.headerbtn{
-    width: fit-content;
-   
+.headerbtn {
+  width: fit-content;
 }
-.pageTitle{
-    margin: 15px 0px;
-}
-
-.headerGrp{
-    display: flex;
+.pageTitle {
+  margin: 15px 0px;
 }
 
-.topTxt{
-    font-size: 13px !important;
-    color: var(--textLight);
-}
-.textGrp{
-    margin:0px 15px;
+.headerGrp {
+  display: flex;
 }
 
-.bottomTxt>p{
-    font-weight: var(--w700);
+.topTxt {
+  font-size: 13px !important;
+  color: var(--textLight);
 }
-.addProduct{
-    height:100%;
-    display: grid;
-    grid-template-columns: 50% 50%;
-  }
-  
-  .col1{
-/* background: yellow; */
-    height:100%;
-    width:100%;
-    padding-right: 20px;
-  }
-  .col2{
+.textGrp {
+  margin: 0px 15px;
+}
 
-    height: 100%;
-    width:100%;
-  }
-  .prodDes{
-    padding: 10px 15px;
-    border: 2px solid rgb(209 213 219);
-    border-radius: var(--mediumCurve);
-    margin-top: 10px;
-  }
+.bottomTxt > p {
+  font-weight: var(--w700);
+}
+.addProduct {
+  height: 100%;
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
 
-  .innerProdNameInput{ 
-    margin-bottom: 10px;
-  }
+.col1 {
+  /* background: yellow; */
+  height: 100%;
+  width: 100%;
+  padding-right: 20px;
+}
+.col2 {
+  height: 100%;
+  width: 100%;
+}
+.prodDes {
+  padding: 10px 15px;
+  border: 2px solid rgb(209 213 219);
+  border-radius: var(--mediumCurve);
+  margin-top: 10px;
+}
+
+.innerProdNameInput {
+  margin-bottom: 10px;
+}
+
+.prodCatArea {
+  margin-top: 20px;
+}
+.prodCat {
+  padding: 10px 15px;
+  border: 2px solid rgb(209 213 219);
+  border-radius: var(--mediumCurve);
+  margin-top: 10px;
+}
+.innerProdInput {
+  margin-bottom: 10px;
+}
+
+.inventory{
+  margin-top: 20px;
+}
+
+.inventoryinfo{
+  padding: 15px 15px;
+  border: 2px solid rgb(209 213 219);
+  border-radius: var(--mediumCurve);
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 30% 68%;
+  column-gap: 10px;
+}
