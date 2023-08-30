@@ -37,7 +37,7 @@ const NewProductPage = () => {
             <div className={styles.addProduct}>
                 <div className={styles.col1}>
                     <div>
-                        <p>Description</p>
+                        <p className={styles.title}>Description</p>
                         <div className={styles.prodDes}>
                             <div className={styles.innerProdNameInput}>
                                 <TextInput setText={(e)=>setProductName(e.target.value)} label={"Product name"} placeholder={"Product name"} />
@@ -48,7 +48,7 @@ const NewProductPage = () => {
                         </div>
                     </div>
                     <div className={styles.prodCatArea}>
-                        <p>Category</p>
+                        <p className={styles.title}>Category</p>
                         <div className={styles.prodCat}>
                             <div className={styles.innerProdInput}>
                                 <TextInput setText={(e)=>setProdCat(e.target.value)} label={"Product Category"} placeholder={"Health and Medicine"} />
@@ -60,7 +60,7 @@ const NewProductPage = () => {
                         </div>
                     </div>
                     <div className={styles.inventory}>
-                        <p>Inventory</p>
+                        <p className={styles.title}>Inventory</p>
                         <div className={styles.inventoryinfo}>
                             <div className={styles.quantity}>
                                 <TextInput label={"Quantity"} placeholder={1020}/>

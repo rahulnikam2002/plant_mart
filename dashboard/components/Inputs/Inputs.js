@@ -4,7 +4,7 @@ import styles from '../../styles/inputs.module.css'
 export const TextInput = ({ placeholder, setText, label, name }) => {
     return (
         <div>
-            {label && <p>{label}</p>}
+            {label && <p className={styles.label}>{label}</p>}
             <input className={styles.inputText} name={name} onChange={(e) => setText(e)} placeholder={placeholder} />
         </div>
     )
@@ -14,7 +14,7 @@ export const TextInput = ({ placeholder, setText, label, name }) => {
 export const TextArea = ({ placeholder, setText, label, name }) => {
     return (
         <div>
-            {label && <p>{label}</p>}
+            {label && <p className={styles.label}>{label}</p>}
             <textarea className={styles.inputText} name={name} onChange={(e) => setText(e)} placeholder={placeholder} />
         </div>
     )
@@ -24,7 +24,7 @@ export const PasswordInput = ({ placeholder, label, setText, name }) => {
     const [isPassword, setIsPassword] = useState(true)
     return (
         <div className={styles.PasswordInput}>
-            {label && <p>{label}</p>}
+            {label && <p className={styles.label}>{label}</p>}
             <div className={styles.innerInputClass}>
                 <input
                     onChange={(e) => setText(e)}
@@ -46,7 +46,7 @@ export const PasswordInput = ({ placeholder, label, setText, name }) => {
     )
 }
 export const IconInput = ({ placeholder, label, onChange, rightIcon, leftIcon, background, noBorder , color}) => <div className={styles.iconInput}>
-    {label && <p>{label}</p>}
+    {label && <p className={styles.label}>{label}</p>}
     <input
         style={{
             border: noBorder ? "none" : "2px solid rgb(209 213 219)",

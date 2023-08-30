@@ -1,10 +1,21 @@
 import styles from "../styles/home.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Head from "next/head";
 import { AnalysisBox } from "@/components/Analytics/AnalysisBox/AnalysisBox";
+import { earningSeries, earningsOption, ordersOption, ordersSeries, productOption, productSeries } from "@/data";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
+  const [productsData, setProductsData] = useState({options: productOption, series: productSeries});
+  const [ordersData, setOrdersData] = useState({options: ordersOption, series: ordersSeries});
+  const [earningsData, setEarningsData] = useState({options: earningsOption, series: earningSeries});
+
+  useEffect(() => {
+    setProductsData({options: productOption, series: productSeries})
+    setOrdersData({options: ordersOption, series: ordersSeries})
+    setEarningsData({options: earningsOption, series: earningSeries})
+  }, []);
+
   return (
     <>
       <Head>
@@ -12,9 +23,32 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <div className={styles.headerAnalysis}>
-          <div className={styles.box}><AnalysisBox title={"Total producs"} percentage={50}/></div>
-          <div className={styles.box}><AnalysisBox title={"Orders completed"} percentage={-0.5}/></div>
-          <div className={styles.box}><AnalysisBox title={"Earnings"} percentage={30}/></div>
+          <div className={styles.box}>
+            <AnalysisBox
+              title={"Total products"}
+              percentage={50}
+              number={850}
+              data={productsData}
+            />
+          </div>
+          <div className={styles.box}>
+            <AnalysisBox
+              title={"Orders completed"}
+              percentage={-0.5}
+              number={1500}
+              data={ordersData}
+            />
+          </div>
+          <div className={styles.box}>
+            <AnalysisBox
+              title={"Earnings"}
+              percentage={30}
+              number={1582000}
+              currency={"₹"}
+              data={earningsData}
+              chartType="area"
+            />
+          </div>
         </div>
       </main>
     </>
@@ -39,8 +73,8 @@ export const getServerSideProps = async (ctx) => {
   }
 };
 
-
-{/* <svg
+{
+  /* <svg
             class="MuiBox-root css-uwwqev"
             viewBox="0 0 480 360"
             xmlns="http://www.w3.org/2000/svg">
@@ -254,4 +288,5 @@ export const getServerSideProps = async (ctx) => {
               height="300"
               x="312"
               y="30"></image>
-          </svg> */}
+          </svg> */
+}

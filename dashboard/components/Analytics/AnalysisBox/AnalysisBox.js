@@ -1,22 +1,34 @@
 import styles from "@/styles/AnalyticsBox.module.css";
+import dynamic from "next/dynamic";
+const Chart = dynamic(() => import("react-apexcharts"), {
+  ssr: false
+});
 
-export const AnalysisBox = ({ title, percentage, number, data, color }) => {
+export const AnalysisBox = ({
+  title,
+  percentage,
+  number,
+  data,
+  currency,
+  chartType
+}) => {
   return (
     <div className={styles.box}>
       <div className={styles.left}>
-        <p >{title}</p>
+        <p>{title}</p>
         <div className={styles.percentage}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             // xmlns:xlink="http://www.w3.org/1999/xlink"
             // className={styles.}
             style={{
-              color: Number(percentage) > 0 ? `var(--green)` : "var(--red)"
+              color: percentage > 0 ? `var(--green)` : "var(--red)",
+              transform: percentage <= 0 && "rotate(180deg)"
             }}
             aria-hidden="true"
             role="img"
-            width="1em"
-            height="1em"
+            width="1.5em"
+            height="1.5em"
             viewBox="0 0 24 24">
             <g fill="currentColor">
               <path
@@ -30,8 +42,22 @@ export const AnalysisBox = ({ title, percentage, number, data, color }) => {
           </svg>
           <p>{percentage}%</p>
         </div>
+        <p className={styles.number}>
+          {currency}
+          {number}
+        </p>
       </div>
-      <div className={styles.right}></div>
+      <div className={styles.right}>
+        {data && (
+          <Chart
+            options={data.options}
+            series={data.series}
+            type={chartType ? chartType : "bar"}
+            width="100%"
+            height="150px"
+          />
+        )}
+      </div>
     </div>
   );
 };

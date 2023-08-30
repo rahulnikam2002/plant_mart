@@ -12,11 +12,44 @@
   display: flex;
   -webkit-box-align: center;
   align-items: center;
+  justify-content: space-between;
   padding: 24px;
 }
 
-.left > p{
-    font-weight: var(--w600);
-    line-height: 1.57143;
-    font-size: 0.975rem;
+.left
+{
+    width: 60%;
+}
+
+.left > p {
+  font-weight: var(--w600);
+  line-height: 1.57143;
+  font-size: 0.9rem;
+  font-family: var(--font);
+}
+
+.percentage {
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.percentage > svg {
+  margin-right: 10px;
+}
+
+.percentage p {
+  font-weight: var(--w600);
+}
+
+.number {
+    margin-top: 15px;
+    line-height: 48px;
+    font-size: var(--font30) !important;
+    font-weight: var(--w700);
+}
+
+
+.right{
+    height: 100px;
 }

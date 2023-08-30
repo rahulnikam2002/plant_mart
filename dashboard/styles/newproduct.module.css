@@ -83,3 +83,7 @@
   grid-template-columns: 30% 68%;
   column-gap: 10px;
 }
+
+.title{
+  font-weight: var(--w600);
+}
