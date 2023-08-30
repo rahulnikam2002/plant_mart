@@ -15,6 +15,7 @@
     "axios": "^1.4.0",
     "cookie": "^0.5.0",
     "framer-motion": "^10.16.1",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.4.3",
     "next": "13.4.16",
     "postcss": "8.4.27",

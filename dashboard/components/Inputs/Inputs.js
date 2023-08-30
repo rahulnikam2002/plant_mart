@@ -15,7 +15,7 @@ export const TextArea = ({ placeholder, setText, label, name }) => {
     return (
         <div>
             {label && <p className={styles.label}>{label}</p>}
-            <textarea className={styles.inputText} name={name} onChange={(e) => setText(e)} placeholder={placeholder} />
+            <textarea style={{resize: "vertical"}} className={styles.inputText} name={name} onChange={(e) => setText(e)} placeholder={placeholder} />
         </div>
     )
 }

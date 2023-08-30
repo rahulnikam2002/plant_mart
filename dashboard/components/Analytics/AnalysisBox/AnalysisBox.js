@@ -10,12 +10,16 @@ export const AnalysisBox = ({
   number,
   data,
   currency,
-  chartType
+  chartType,
+  reportTooltip,
+  toolTipColor
 }) => {
   return (
     <div className={styles.box}>
       <div className={styles.left}>
-        <p>{title}</p>
+        <p className={styles.title}>
+          {title} <span style={{color: toolTipColor, background: toolTipColor+"30"}} className={styles.tooltip}>{reportTooltip}</span>
+        </p>
         <div className={styles.percentage}>
           <svg
             xmlns="http://www.w3.org/2000/svg"

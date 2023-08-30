@@ -16,9 +16,8 @@
   padding: 24px;
 }
 
-.left
-{
-    width: 60%;
+.left {
+  width: 60%;
 }
 
 .left > p {
@@ -43,13 +42,27 @@
 }
 
 .number {
-    margin-top: 15px;
-    line-height: 48px;
-    font-size: var(--font30) !important;
-    font-weight: var(--w700);
+  margin-top: 15px;
+  line-height: 48px;
+  font-size: var(--font30) !important;
+  font-weight: var(--w700);
 }
 
+.right {
+  height: 100px;
+  width: 50%;
+}
 
-.right{
-    height: 100px;
+.title{
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.tooltip{
+  padding: 5px;
+  border-radius: var(--smallCurve);
+  font-size: var(--font10);
+  margin-left: 5px;
+  font-weight: var(--w600);
 }

@@ -45,7 +45,7 @@ export const Sidebar = () => {
         ? "dashboard"
         : router.asPath.split("/")[1].toLocaleLowerCase()
     );
-  }, []);
+  }, [router]);
 
   return (
     router.asPath !== "/login" && (

@@ -2,18 +2,35 @@ import styles from "../styles/home.module.css";
 import { useEffect, useState } from "react";
 import Head from "next/head";
 import { AnalysisBox } from "@/components/Analytics/AnalysisBox/AnalysisBox";
-import { earningSeries, earningsOption, ordersOption, ordersSeries, productOption, productSeries } from "@/data";
+import {
+  earningSeries,
+  earningsOption,
+  ordersOption,
+  ordersSeries,
+  productOption,
+  productSeries
+} from "@/data";
+import axios from "axios";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
-  const [productsData, setProductsData] = useState({options: productOption, series: productSeries});
-  const [ordersData, setOrdersData] = useState({options: ordersOption, series: ordersSeries});
-  const [earningsData, setEarningsData] = useState({options: earningsOption, series: earningSeries});
+  const [productsData, setProductsData] = useState({
+    options: productOption,
+    series: productSeries
+  });
+  const [ordersData, setOrdersData] = useState({
+    options: ordersOption,
+    series: ordersSeries
+  });
+  const [earningsData, setEarningsData] = useState({
+    options: earningsOption,
+    series: earningSeries
+  });
 
   useEffect(() => {
-    setProductsData({options: productOption, series: productSeries})
-    setOrdersData({options: ordersOption, series: ordersSeries})
-    setEarningsData({options: earningsOption, series: earningSeries})
+    setProductsData({ options: productOption, series: productSeries });
+    setOrdersData({ options: ordersOption, series: ordersSeries });
+    setEarningsData({ options: earningsOption, series: earningSeries });
   }, []);
 
   return (
@@ -29,16 +46,22 @@ export default function Home() {
               percentage={50}
               number={850}
               data={productsData}
+              reportTooltip="Weekly"
+              toolTipColor="#22c55e"
             />
           </div>
+
           <div className={styles.box}>
             <AnalysisBox
               title={"Orders completed"}
               percentage={-0.5}
               number={1500}
               data={ordersData}
+              reportTooltip="Weekly"
+              toolTipColor="#f6136e"
             />
           </div>
+
           <div className={styles.box}>
             <AnalysisBox
               title={"Earnings"}
@@ -46,7 +69,8 @@ export default function Home() {
               number={1582000}
               currency={"₹"}
               data={earningsData}
-              chartType="area"
+              reportTooltip="Weekly"
+              toolTipColor="#2069f6"
             />
           </div>
         </div>
@@ -54,24 +78,6 @@ export default function Home() {
     </>
   );
 }
-
-export const getServerSideProps = async (ctx) => {
-  const myCookie = ctx.req?.cookies || "";
-  if (myCookie.token !== process.env.NEXT_PUBLIC_TOKEN) {
-    return {
-      redirect: {
-        destination: "/login",
-        permanent: false
-      }
-    };
-  } else {
-    return {
-      props: {
-        isLogin: true
-      }
-    };
-  }
-};
 
 {
   /* <svg
