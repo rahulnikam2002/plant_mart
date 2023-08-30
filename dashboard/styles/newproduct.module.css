@@ -31,3 +31,30 @@
 .bottomTxt>p{
     font-weight: var(--w700);
 }
+.addProduct{
+    height:100%;
+    display: grid;
+    grid-template-columns: 50% 50%;
+  }
+  
+  .col1{
+/* background: yellow; */
+    height:100%;
+    width:100%;
+    padding-right: 20px;
+  }
+  .col2{
+
+    height: 100%;
+    width:100%;
+  }
+  .prodDes{
+    padding: 10px 15px;
+    border: 2px solid rgb(209 213 219);
+    border-radius: var(--mediumCurve);
+    margin-top: 10px;
+  }
+
+  .innerProdNameInput{ 
+    margin-bottom: 10px;
+  }

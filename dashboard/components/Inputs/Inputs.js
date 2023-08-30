@@ -10,6 +10,16 @@ export const TextInput = ({ placeholder, setText, label, name }) => {
     )
 }
 
+
+export const TextArea = ({ placeholder, setText, label, name }) => {
+    return (
+        <div>
+            {label && <p>{label}</p>}
+            <textarea className={styles.inputText} name={name} onChange={(e) => setText(e)} placeholder={placeholder} />
+        </div>
+    )
+}
+
 export const PasswordInput = ({ placeholder, label, setText, name }) => {
     const [isPassword, setIsPassword] = useState(true)
     return (
