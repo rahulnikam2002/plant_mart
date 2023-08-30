@@ -4,7 +4,8 @@ import { IconInput } from "@/components/Inputs/Inputs";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 // const { AnimatePresence, motion } = require("framer-motion");
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion } from "framer-motion";
+import axios from "axios";
 
 export const Sidebar = () => {
   const router = useRouter();
@@ -46,6 +47,11 @@ export const Sidebar = () => {
         : router.asPath.split("/")[1].toLocaleLowerCase()
     );
   }, [router]);
+
+  const redirect = async () => {
+    const logout = await axios.get(`${process.env.NEXT_PUBLIC_API_HOST}/authentication/logout`)
+    router.push("/login");
+  }
 
   return (
     router.asPath !== "/login" && (
@@ -100,7 +106,7 @@ export const Sidebar = () => {
                           {menu.subMenu &&
                             menu.subMenu.map((subMenu) => (
                               <div className={styles.singleSubMenu}>
-                                <Link href={subMenu.link}>
+                                <Link onClick={() => subMenu.link === "#" && redirect()} href={subMenu.link}>
                                   {subMenu.menu}
                                   <i className="fi fi-rr-angle-small-right"></i>
                                 </Link>
@@ -249,7 +255,7 @@ const dashboardMenu = [
       },
       {
         menu: "Logout",
-        link: "/api/authentication/logout",
+        link: "#",
         rightIcon: <i className="fi fi-sr-arrow-circle-right"></i>
       },
       {
