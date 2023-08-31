@@ -129,6 +129,8 @@ const LoginPage = () => {
                   title={"Sign in"}
                   clickFunction={handleSignIn}
                   isLoading={loading}
+                  bg="var(--primary)"
+                  color="var(--white)"
                 />
               </div>
             </div>

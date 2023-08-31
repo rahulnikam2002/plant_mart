@@ -3,17 +3,41 @@ import styles from "@/styles/buttons.module.css";
 import ClipLoader from "react-spinners/ClipLoader";
 import FadeLoader from "react-spinners/FadeLoader";
 
-export const LinkButton = ({ href, title }) => (
+export const LinkButton = ({ href, title, bg, color, padding, width, sx }) => (
   <Link
+    style={{
+      ...sx,
+      background: bg ? bg : "#f2f5fa",
+      color: color ? color : "var(--primary)",
+      padding: padding ? padding : "8px",
+      width: width ? width : "100%"
+    }}
     className={styles.linkButton}
     href={href}>
     {title}
   </Link>
 );
 
-export const Button = ({ clickFunction, title, isLoading }) => (
+export const Button = ({
+  clickFunction,
+  title,
+  isLoading,
+  bg,
+  color,
+  padding,
+  width,
+  sx
+}) => (
   <button
-    style={{ border: "none", cursor: "pointer" }}
+    style={{
+      ...sx,
+      border: "none",
+      cursor: "pointer",
+      background: bg ? bg : "#f2f5fa",
+      color: color ? color : "var(--primary)",
+      padding: padding ? padding : "8px",
+      width: width ? width : "100%"
+    }}
     className={[styles.button, isLoading ? styles.active : null].join(" ")}
     onClick={() => clickFunction()}>
     {isLoading ? (
@@ -22,7 +46,7 @@ export const Button = ({ clickFunction, title, isLoading }) => (
         color="rgb(193, 199, 198)"
       />
     ) : (
-      "Sign in"
+      title
     )}
   </button>
 );
@@ -37,10 +61,12 @@ export const IconButton = ({
   bgColor,
   padding,
   border,
-  shadow
+  shadow,
+  sx
 }) => (
   <button
     style={{
+      ...sx,
       width: width ? width : "100%",
       background: bgColor ? bgColor : "var(--primary)",
       padding: padding ? padding : "8px",

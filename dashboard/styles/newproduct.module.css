@@ -49,7 +49,7 @@
 }
 .prodDes {
   padding: 10px 15px;
-  border: 2px solid rgb(209 213 219);
+  border: 2px solid var(--borderGrey);
   border-radius: var(--mediumCurve);
   margin-top: 10px;
 }
@@ -63,7 +63,7 @@
 }
 .prodCat {
   padding: 10px 15px;
-  border: 2px solid rgb(209 213 219);
+  border: 2px solid var(--borderGrey);
   border-radius: var(--mediumCurve);
   margin-top: 10px;
 }
@@ -71,14 +71,14 @@
   margin-bottom: 10px;
 }
 
-.inventory{
+.inventory {
   margin-top: 20px;
   margin-bottom: 10px;
 }
 
-.inventoryinfo{
+.inventoryinfo {
   padding: 15px 15px;
-  border: 2px solid rgb(209 213 219);
+  border: 2px solid var(--borderGrey);
   border-radius: var(--mediumCurve);
   margin-top: 10px;
   display: grid;
@@ -86,42 +86,51 @@
   column-gap: 10px;
 }
 
-.title{
+.title {
   font-weight: var(--w600);
 }
 
-.plantSize{
+.plantSize {
   display: grid;
-   grid-template-columns: repeat(3,1fr);
-   column-gap: 10px;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 10px;
 }
-.shippingdelivery{
+.shippingdelivery {
   padding: 10px 15px;
-  border: 2px solid rgb(209 213 219);
+  border: 2px solid var(--borderGrey);
   border-radius: var(--mediumCurve);
   margin-top: 10px;
   margin-bottom: 20px;
 }
-.plantSize{
+.plantSize {
   margin-top: 20px;
 }
 
-.pricing{
+.pricing {
   padding: 10px 15px;
-  border: 2px solid rgb(209 213 219);
+  border: 2px solid var(--borderGrey);
   border-radius: var(--mediumCurve);
   margin-top: 10px;
   display: grid;
-   grid-template-columns: repeat(2,1fr);
-   column-gap: 10px;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 10px;
 }
 
-.callToactions{
+.callToactions {
   display: flex;
   justify-content: flex-end;
   margin-top: 20px;
 }
 
-.callToactions *:nth-child(1){
+.callToactions *:nth-child(1) {
   margin-right: 10px;
+}
+
+.pageTitle,
+.header {
+  background-color: white;
+  position: sticky;
+  top: 0px;
+  padding: 20px 0;
+  z-index: 1000;
 }

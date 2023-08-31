@@ -7,6 +7,8 @@ import {
   earningsOption,
   ordersOption,
   ordersSeries,
+  productAnalysisOption,
+  productAnalysisSeries,
   productOption,
   productSeries,
   yearlyAnalysisSeries
@@ -31,8 +33,16 @@ export default function Home() {
     series: earningSeries
   });
 
-  const [analysisOption, setYearlyAnalysisOption] = useState(yearlyAnalysisOption);
-  const [analysisSeries, setYearlyAnalysisSeries] = useState(yearlyAnalysisSeries);
+  const [analysisOption, setYearlyAnalysisOption] =
+    useState(yearlyAnalysisOption);
+  const [analysisSeries, setYearlyAnalysisSeries] =
+    useState(yearlyAnalysisSeries);
+  const [productAnalysisOpt, setProductAnalysisOpt] = useState(
+    productAnalysisOption
+  );
+  const [productAnalysiSer, setProductAnalysisSer] = useState(
+    productAnalysisSeries
+  );
 
   useEffect(() => {
     setProductsData({ options: productOption, series: productSeries });
@@ -83,14 +93,14 @@ export default function Home() {
         </div>
         <div className={styles.col2Analysis}>
           <div className={styles.innerCol1Analysis}>
-            <ColumnAnalysis data={{analysisOption, analysisSeries}} />
+            <ColumnAnalysis option={analysisOption} series={analysisSeries} />
           </div>
           <div className={styles.innerCol1Analysis}>
-            <ColumnAnalysis data={{analysisOption, analysisSeries}} />
+            <ColumnAnalysis type="polarArea" option={productAnalysisOpt} series={productAnalysiSer}  />
           </div>
-          <div className={styles.innerCol1Analysis}>
-            <ColumnAnalysis data={{analysisOption, analysisSeries}} />
-          </div>
+          {/* <div className={styles.innerCol1Analysis}>
+            <ColumnAnalysis data={{ analysisOption, analysisSeries }} />
+          </div> */}
         </div>
       </main>
     </>

@@ -256,3 +256,66 @@ export const yearlyAnalysisOption = {
     opacity: 1
   }
 };
+
+export const productAnalysisSeries = [14, 23, 21, 17, 15, 10, 12, 17, 21];
+export const productAnalysisOption = {
+  chart: {
+    type: "polarArea"
+  },
+  plotOptions: {
+    polarArea: {
+      rings: {
+        show: false
+      },
+      spokes: {
+        show: false
+      }
+    }
+  },
+  labels: [
+    "Apples plant",
+    "Oranges plant",
+    "Berries plant",
+    "Grapes plant",
+    "Mango plant",
+    "Tomato plant",
+    "Lily plant",
+    "Jasmine plant",
+    "Rose plant"
+  ],
+  stroke: {
+    colors: ["#fff"]
+  },
+  grid: {
+    show: false, // you can either change hear to disable all grids
+    xaxis: {
+      borderColor: "#000",
+
+      lines: {
+        show: false //or just here to disable only x axis grids
+      }
+    },
+    yaxis: {
+      borderColor: "#000",
+      lines: {
+        show: false //or just here to disable only y axis
+      }
+    }
+  },
+  fill: {
+    opacity: 1
+  },
+  responsive: [
+    {
+      breakpoint: 480,
+      options: {
+        chart: {
+          width: 200
+        },
+        legend: {
+          position: "bottom"
+        }
+      }
+    }
+  ]
+};

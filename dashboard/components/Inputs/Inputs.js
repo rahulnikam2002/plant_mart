@@ -67,22 +67,37 @@ export const IconInput = ({
   leftIcon,
   background,
   noBorder,
-  color
+  color,
+  rightIconCSS,
+  leftIconCSS
 }) => (
   <div className={styles.iconInput}>
     {label && <p className={styles.label}>{label}</p>}
     <input
       style={{
-        border: noBorder ? "none" : "2px solid rgb(209 213 219)",
+        border: noBorder ? "none" : "2px solid var(--borderGrey)",
         background: background ? background : "white",
-        color: color ? color : "#333333"
+        color: color ? color : "#333333",
+        paddingLeft: leftIcon ? "30px" : "10px"
       }}
       type="text"
       className={[styles.inputText, styles.iconInputField].join(" ")}
       placeholder={placeholder}
       onChange={(e) => onChange && onChange(e.target.value)}
     />
-    {rightIcon && <span className={styles.rightIconInput}>{rightIcon}</span>}
-    {leftIcon && <span className={styles.leftIconInput}>{leftIcon}</span>}
+    {rightIcon && (
+      <span
+        style={{ ...rightIconCSS }}
+        className={styles.rightIconInput}>
+        {rightIcon}
+      </span>
+    )}
+    {leftIcon && (
+      <span
+        style={{...leftIconCSS}}
+        className={styles.leftIconInput}>
+        {leftIcon}
+      </span>
+    )}
   </div>
 );

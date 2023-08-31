@@ -61,7 +61,7 @@ const Layout = ({ children }) => {
             <Image src={"/loading_animation.gif"} width={100} height={100} />
           </div>
         ) : (
-          <div style={{ height: "100vh", overflow: "auto" }}>{children}</div>
+          <div style={{ height: "100vh", overflow: "auto" }} className={styles.rightMain}>{children}</div>
         )}
       </div>
     </div>

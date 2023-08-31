@@ -63,3 +63,7 @@
   display: grid;
   place-items: center;
 }
+
+.rightMain::-webkit-scrollbar{
+  display: none;
+}

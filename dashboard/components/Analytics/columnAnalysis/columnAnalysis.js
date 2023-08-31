@@ -4,14 +4,14 @@ const Chart = dynamic(() => import("react-apexcharts"), {
   ssr: false
 });
 
-export const ColumnAnalysis = ({ data }) => {
+export const ColumnAnalysis = ({ option, series, type }) => {
   return (
     <div className={styles.main}>
-      {data && (
+      {option && series && (
         <Chart
-          options={data.analysisOption}
-          series={data.analysisSeries}
-          type={"bar"}
+          options={option}
+          series={series}
+          type={type ? type : "bar"}
           width="500px"
           height="300px"
         />

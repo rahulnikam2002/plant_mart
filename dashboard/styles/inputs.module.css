@@ -17,7 +17,7 @@
 
 .inputPass {
   border-radius: 8px;
-  border: 2px solid rgb(209 213 219);
+  border: 2px solid var(--borderGrey);
   outline: none;
   width: 100%;
   padding: 8px 10px;
@@ -26,6 +26,10 @@
   font-family: var(--font);
   font-size: var(--font16);
   transition: all ease 0.5s;
+}
+
+.iconInputField:focus {
+  border: 2px solid var(--primary) !important;
 }
 
 .inputPass:focus {
@@ -51,16 +55,17 @@
 
 .rightIconInput{
   position: absolute;
-  top: 55%;
+  top: 50%;
   right: 2%;
-  transform: translate(-50%, -50%);
+  color: #757575;
+  margin-left: 5px;
 
 }
 
 .leftIconInput{
   position: absolute;
   top: 25px;
-  left: 25px;
+  left:15px;
   transform: translate(-50%, -50%);
 }
 
