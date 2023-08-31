@@ -1,8 +1,9 @@
 import { IconInput, TextArea, TextInput } from "@/components/Inputs/Inputs";
-import { IconButton, LinkButton } from "@/components/buttons/buttons";
+import { Button, IconButton, LinkButton } from "@/components/buttons/buttons";
 import styles from "@/styles/newproduct.module.css";
 import { adminVerification } from "@/utils/helper/authentication/admin/admin.verification";
 import { useState } from "react";
+
 const NewProductPage = () => {
     const [productname, setProductName] = useState("");
     const [description, setDescription] = useState("");
@@ -100,7 +101,7 @@ const NewProductPage = () => {
                     </div>
                 </div>
                 <div className={styles.col2}>
-                    <p  className={styles.title}>Shipping and delivery</p>
+                    <p className={styles.title}>Shipping and delivery</p>
                     <div className={styles.shippingdelivery}>
                         <div className={styles.itemWeight}>
                             <TextInput label={"Plant weight"} placeholder={12.00} />
@@ -113,10 +114,15 @@ const NewProductPage = () => {
                     </div>
                     <p className={styles.title}>Pricing</p>
                     <div className={styles.pricing}>
-                        <TextInput label={"Pricing"} placeholder={345}/>
-                        <TextInput label={"Compare at price"} placeholder={555}/>
+                        <TextInput label={"Pricing"} placeholder={345} />
+                        <TextInput label={"Compare at price"} placeholder={555} />
+                    </div>
+                    <div className={styles.callToactions}>
+                        <IconButton padding={"12px"} width={"25%"} title="Discard" />
+                        <IconButton padding={"12px"} width={"25%"}  title="Add product" />
                     </div>
                 </div>
+
             </div>
         </div>
     );
