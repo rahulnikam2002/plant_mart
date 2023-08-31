@@ -34,6 +34,7 @@
   height: 100%;
   display: grid;
   grid-template-columns: 50% 50%;
+  margin-top: 30px;
 }
 
 .col1 {
@@ -72,6 +73,7 @@
 
 .inventory{
   margin-top: 20px;
+  margin-bottom: 10px;
 }
 
 .inventoryinfo{
@@ -86,4 +88,19 @@
 
 .title{
   font-weight: var(--w600);
+}
+
+.plantSize{
+  display: grid;
+   grid-template-columns: repeat(3,1fr);
+   column-gap: 10px;
+}
+.shippingdelivery{
+  padding: 10px 15px;
+  border: 2px solid rgb(209 213 219);
+  border-radius: var(--mediumCurve);
+  margin-top: 10px;
+}
+.plantSize{
+  margin-top: 20px;
 }
