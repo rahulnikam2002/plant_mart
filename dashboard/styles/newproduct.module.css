@@ -115,3 +115,13 @@
    grid-template-columns: repeat(2,1fr);
    column-gap: 10px;
 }
+
+.callToactions{
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.callToactions *:nth-child(1){
+  margin-right: 10px;
+}
