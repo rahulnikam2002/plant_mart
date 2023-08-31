@@ -111,6 +111,11 @@ const NewProductPage = () => {
                             <TextInput label={'Maximum Height'} placeholder={12} />
                         </div>
                     </div>
+                    <p className={styles.title}>Pricing</p>
+                    <div className={styles.pricing}>
+                        <TextInput label={"Pricing"} placeholder={345}/>
+                        <TextInput label={"Compare at price"} placeholder={555}/>
+                    </div>
                 </div>
             </div>
         </div>

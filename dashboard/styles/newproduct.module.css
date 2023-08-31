@@ -100,7 +100,18 @@
   border: 2px solid rgb(209 213 219);
   border-radius: var(--mediumCurve);
   margin-top: 10px;
+  margin-bottom: 20px;
 }
 .plantSize{
   margin-top: 20px;
+}
+
+.pricing{
+  padding: 10px 15px;
+  border: 2px solid rgb(209 213 219);
+  border-radius: var(--mediumCurve);
+  margin-top: 10px;
+  display: grid;
+   grid-template-columns: repeat(2,1fr);
+   column-gap: 10px;
 }
