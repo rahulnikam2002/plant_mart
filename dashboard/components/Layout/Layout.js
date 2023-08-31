@@ -2,13 +2,16 @@ import Router, { useRouter } from "next/router";
 import { Sidebar } from "./Sidebar/Sidebar";
 import styles from "@/styles/layout.module.css";
 import { useState } from "react";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import Image from "next/image";
 
 const Layout = ({ children }) => {
   const [isSideBarOpen, setIsSideBarOpen] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  console.log("as path", router.pathname)
+  console.log("as path", router.pathname);
 
   Router.onRouteChangeStart = (url) => {
     console.log("Page change started");
@@ -54,7 +57,9 @@ const Layout = ({ children }) => {
         )}
 
         {isLoading ? (
-          <div className={styles.loader}>loading</div>
+          <div className={styles.loader}>
+            <Image src={"/loading_animation.gif"} width={100} height={100} />
+          </div>
         ) : (
           <div style={{ height: "100vh", overflow: "auto" }}>{children}</div>
         )}

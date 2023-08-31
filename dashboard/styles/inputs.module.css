@@ -1,6 +1,6 @@
 .inputText {
   border-radius: 8px;
-  border: 2px solid rgb(209 213 219);
+  border: 2px solid var(--borderGrey);
   outline: none;
   width: 100%;
   padding: 8px 10px;

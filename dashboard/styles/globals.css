@@ -3,9 +3,8 @@
 @tailwind utilities;
 @import url(https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;800;900&display=swap);
 @import "~@flaticon/flaticon-uicons/css/all/all";
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,300;1,400&family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:wght@200;300;400;500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Great+Vibes&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,300;1,400&family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:wght@200;300;400;500&display=swap");
 @import url(https://fonts.googleapis.com/css2?family=Public+Sans:wght@100;200;300;400;500;600;800;900&display=swap);
-
 
 @layer base {
   html {
@@ -18,9 +17,10 @@
   --secondary: #0b1032;
   --white: #ffffff;
   --whiteGrey: #9ca3af;
+  --borderGrey: #d1d5db63;
   --textLight: #6d717c;
   --lightGrey: #9ca3af;
-  --borderColor:  rgb(209 213 219);
+  --borderColor: rgb(209 213 219);
   --black: #333333;
   --green: rgb(34, 197, 94);
   --red: rgb(255, 86, 48);
@@ -59,21 +59,41 @@
 body {
   color: #333;
   background: white;
-  font-family: 
-  "Public Sans", "Poppins", sans-serif;
- }
+  font-family: "Public Sans", "Poppins", sans-serif;
+}
 
-*{
+* {
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
 }
 
-i{
+i {
   color: var(--lightGrey);
 }
 
-a{
+a {
   text-decoration: none;
 }
 
+p,
+a,
+h1,
+h2,
+h3,
+li,
+ul,
+span,
+div {
+  -webkit-user-select: none;
+}
+
+
+.react-loading-skeleton {
+  height: 100%;
+  width: 100%;
+}
+
+.chart{
+  max-width: 100% !important;
+}

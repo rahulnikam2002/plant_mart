@@ -158,6 +158,7 @@ export const getServerSideProps = async (ctx) => {
         `${process.env.NEXT_PUBLIC_API_HOST}/authentication/verify`,
         { token: myCookie.token }
       );
+      console.log("verify admin", verifyAdmin.data);
       if (verifyAdmin.data.code === 1) {
         return {
           redirect: {

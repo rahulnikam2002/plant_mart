@@ -8,10 +8,13 @@ import {
   ordersOption,
   ordersSeries,
   productOption,
-  productSeries
+  productSeries,
+  yearlyAnalysisSeries
 } from "@/data";
 import axios from "axios";
 import { adminVerification } from "@/utils/helper/authentication/admin/admin.verification";
+import { yearlyAnalysisOption } from "@/data";
+import { ColumnAnalysis } from "@/components/Analytics/columnAnalysis/columnAnalysis";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
@@ -27,6 +30,9 @@ export default function Home() {
     options: earningsOption,
     series: earningSeries
   });
+
+  const [analysisOption, setYearlyAnalysisOption] = useState(yearlyAnalysisOption);
+  const [analysisSeries, setYearlyAnalysisSeries] = useState(yearlyAnalysisSeries);
 
   useEffect(() => {
     setProductsData({ options: productOption, series: productSeries });
@@ -75,6 +81,17 @@ export default function Home() {
             />
           </div>
         </div>
+        <div className={styles.col2Analysis}>
+          <div className={styles.innerCol1Analysis}>
+            <ColumnAnalysis data={{analysisOption, analysisSeries}} />
+          </div>
+          <div className={styles.innerCol1Analysis}>
+            <ColumnAnalysis data={{analysisOption, analysisSeries}} />
+          </div>
+          <div className={styles.innerCol1Analysis}>
+            <ColumnAnalysis data={{analysisOption, analysisSeries}} />
+          </div>
+        </div>
       </main>
     </>
   );
@@ -92,11 +109,11 @@ export const getServerSideProps = async (ctx) => {
         }
       };
     }
-    return{
+    return {
       props: {
         isLogin: true
       }
-    }
+    };
   } catch (err) {
     // console.log(err)
     return {

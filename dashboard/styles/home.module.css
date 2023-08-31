@@ -12,3 +12,16 @@
 .headerAnalysis > .box{
   width: 100%;
 }
+
+.col2Analysis{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 20px;
+  overflow-y: auto;
+  cursor: grab;
+}
+
+.col2Analysis::-webkit-scrollbar{
+  display: none;
+}
