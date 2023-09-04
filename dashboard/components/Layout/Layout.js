@@ -54,12 +54,20 @@ const Layout = ({ children }) => {
           </p>
         )}
 
-        {isLoading ? (
+        {isLoading === true ? (
           <div className={styles.loader}>
-            <Image src={"/loading_animation.gif"} width={100} height={100} />
+            <Image
+              src={"/loading_animation.gif"}
+              width={100}
+              height={100}
+            />
           </div>
         ) : (
-          <div style={{ height: "100vh", overflow: "auto" }} className={styles.rightMain}>{children}</div>
+          <div
+            style={{ height: "100vh", overflow: "auto" }}
+            className={styles.rightMain}>
+            {children}
+          </div>
         )}
       </div>
     </div>
