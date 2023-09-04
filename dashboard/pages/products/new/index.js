@@ -95,6 +95,7 @@ const NewProductPage = () => {
             <div className={styles.inventoryinfo}>
               <div className={styles.quantity}>
                 <TextInput
+                setText={(e)=> console.log(e)}
                   label={"Quantity"}
                   placeholder={1020}
                 />
