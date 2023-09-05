@@ -95,12 +95,14 @@ const NewProductPage = () => {
             <div className={styles.inventoryinfo}>
               <div className={styles.quantity}>
                 <TextInput
+                  setText={(e) => console.log(e.target.value)}
                   label={"Quantity"}
                   placeholder={1020}
                 />
               </div>
               <div className={styles.sku}>
                 <TextInput
+                  setText={(e) => console.log(e.target.value)}
                   label={"SKU"}
                   placeholder={"uu-br-br-05"}
                 />
@@ -115,26 +117,26 @@ const NewProductPage = () => {
               <IconInput
                 label={"Plant weight"}
                 placeholder={12.0}
-                rightIcon={<p>Kg</p>}
+                rightIcon={<p>k g</p>}
               />
             </div>
             <div className={styles.plantSize}>
               <IconInput
                 label={"Height"}
                 placeholder={12}
-                rightIcon={<p>Ft</p>}
+                rightIcon={<p>ft</p>}
                 rightIconCSS={{ paddingRight: "5px" }}
               />
               <IconInput
                 label={"Plant Spread"}
                 placeholder={12}
-                rightIcon={<p>Cm</p>}
+                rightIcon={<p>cm</p>}
                 rightIconCSS={{ paddingRight: "5px" }}
               />
               <IconInput
                 label={"Maximum Height"}
                 placeholder={12}
-                rightIcon={<p>Ft</p>}
+                rightIcon={<p>ft</p>}
                 rightIconCSS={{ paddingRight: "5px" }}
               />
             </div>
@@ -148,7 +150,7 @@ const NewProductPage = () => {
               leftIconCSS={{
                 position: "absolute",
                 top: "62%",
-                left: "7%",
+                left: "7%"
               }}
             />
             <IconInput
@@ -158,7 +160,7 @@ const NewProductPage = () => {
               leftIconCSS={{
                 position: "absolute",
                 top: "62%",
-                left: "7%",
+                left: "7%"
               }}
             />
           </div>

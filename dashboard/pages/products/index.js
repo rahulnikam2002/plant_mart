@@ -69,12 +69,12 @@ const ProductsPage = () => {
   return (
     <div>
       <p>Hello products!</p>
-      <Chart
+      {/* <Chart
         options={options}
         series={series}
         type="area"
         width="90%"
-      />
+      /> */}
     </div>
   );
 };
