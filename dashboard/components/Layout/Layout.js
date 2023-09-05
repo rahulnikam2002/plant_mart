@@ -2,8 +2,6 @@ import Router, { useRouter } from "next/router";
 import { Sidebar } from "./Sidebar/Sidebar";
 import styles from "@/styles/layout.module.css";
 import { useState } from "react";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
 import Image from "next/image";
 
 const Layout = ({ children }) => {
