@@ -111,6 +111,33 @@ const NewProductPage = () => {
           </div>
         </div>
         <div className={styles.col2}>
+         <p className={styles.title}>Product Images</p>
+         <div className={styles.productimg}>
+          <div className={styles.grid1}>
+            <div className={styles.innergrid}>
+            <i class="fi fi-rr-images"></i>
+            {/* <p>Click to upload</p> */}
+            </div>
+          </div>
+          <div className={styles.grid2}>
+          <div className={styles.innergrid}>
+            <i class="fi fi-rr-images"></i>
+            {/* <p>Click to upload</p> */}
+            </div>
+          </div>
+          <div className={styles.grid3}>
+          <div className={styles.innergrid}>
+            <i class="fi fi-rr-images"></i>
+            {/* <p>Click to upload</p> */}
+            </div>
+          </div>
+          <div className={styles.grid4}>
+          <div className={styles.innergrid}>
+            <i class="fi fi-rr-images"></i>
+            {/* <p>Click to upload</p> */}
+            </div>
+          </div>
+         </div>
           <p className={styles.title}>Shipping and delivery</p>
           <div className={styles.shippingdelivery}>
             <div className={styles.itemWeight}>
@@ -175,8 +202,7 @@ const NewProductPage = () => {
               bg="var(--primary)"
               color={"var(--white)"}
               padding={"10px"}
-              width={"25%"}
-              title="Add product"
+              width={"25%"} title="Add product"
             />
           </div>
         </div>
