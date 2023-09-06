@@ -1,0 +1,45 @@
+.main {
+  margin: 30px 50px;
+}
+
+.pageTitle,
+.header {
+  background-color: white;
+  position: sticky;
+  top: 0px;
+  padding: 20px 0;
+  z-index: 1000;
+}
+
+
+.pageTitle {
+    margin: 15px 0px;
+  }
+  
+  .headerGrp {
+    display: flex;
+  }
+  
+  .topTxt {
+    font-size: 13px !important;
+    color: var(--textLight);
+  }
+  .textGrp {
+    margin: 0px 15px;
+  }
+  
+  .bottomTxt > p {
+    font-weight: var(--w700);
+  }
+  
+  .productCta{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .filter{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+  }
