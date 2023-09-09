@@ -23,8 +23,9 @@
   --borderColor: rgb(209 213 219);
   --black: #333333;
   --green: rgb(34, 197, 94);
-  --red: rgb(255, 86, 48);
-
+  --lowLightGreen: rgba(34, 197, 94, 0.162);
+  --red: #ff0066;
+  --lowLightRed: #ff006620;
   --toastify-color-success: #005fff !important;
 
   --font10: 10px;
