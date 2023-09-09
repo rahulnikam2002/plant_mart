@@ -11,16 +11,13 @@ const ProductsPage = () => {
   return (
     <div>
       <p>Hello products!</p>
-<<<<<<< HEAD
       {/* <Chart
         options={options}
         series={series}
         type="area"
         width="90%"
       /> */}
-=======
       
->>>>>>> a82c114b311899439b38b13d9df4980c99881c43
     </div>
   );
 };

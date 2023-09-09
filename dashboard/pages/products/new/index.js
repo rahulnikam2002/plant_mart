@@ -11,7 +11,7 @@ const NewProductPage = () => {
   const [prodCat, setProdCat] = useState("");
 
   const router = useRouter();
-
+ 
   return (
     <div className={styles.main}>
       {/* <div className={styles.header}>
