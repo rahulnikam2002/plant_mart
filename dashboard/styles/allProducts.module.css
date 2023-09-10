@@ -11,39 +11,37 @@
   z-index: 1000;
 }
 
-
 .pageTitle {
-    margin: 15px 0px;
-  }
-  
-  .headerGrp {
-    display: flex;
-  }
-  
-  .topTxt {
-    font-size: 13px !important;
-    color: var(--textLight);
-  }
-  .textGrp {
-    margin: 0px 15px;
-  }
-  
-  .bottomTxt > p {
-    font-weight: var(--w700);
-  }
-  
-  .productCta{
-    display:flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .filter{
-    display:flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-  }
-  .allProductList{
-    margin-top:30px;
-  }
-  
+  margin: 15px 0px;
+}
+
+.headerGrp {
+  display: flex;
+}
+
+.topTxt {
+  font-size: 13px !important;
+  color: var(--textLight);
+}
+.textGrp {
+  margin: 0px 15px;
+}
+
+.bottomTxt > p {
+  font-weight: var(--w700);
+}
+
+.productCta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.filter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+.allProductList {
+  margin-top: 30px;
+}

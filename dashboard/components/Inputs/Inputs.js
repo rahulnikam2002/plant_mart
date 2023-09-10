@@ -15,11 +15,12 @@ export const TextInput = ({ placeholder, setText, label, name }) => {
   );
 };
 
-export const TextArea = ({ placeholder, setText, label, name }) => {
+export const TextArea = ({ placeholder, setText, label, name, value }) => {
   return (
     <div>
       {label && <p className={styles.label}>{label}</p>}
       <textarea
+        value={value}
         style={{ resize: "vertical" }}
         className={styles.inputText}
         name={name}
@@ -94,7 +95,7 @@ export const IconInput = ({
     )}
     {leftIcon && (
       <span
-        style={{...leftIconCSS}}
+        style={{ ...leftIconCSS }}
         className={styles.leftIconInput}>
         {leftIcon}
       </span>

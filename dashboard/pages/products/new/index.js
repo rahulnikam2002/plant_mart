@@ -1,17 +1,59 @@
 import { IconInput, TextArea, TextInput } from "@/components/Inputs/Inputs";
 import { Button, IconButton, LinkButton } from "@/components/buttons/buttons";
 import styles from "@/styles/newproduct.module.css";
+import { generateImageUsingAI } from "@/utils/ai/generate/image";
+import { generateProductDescriptionUsingAI } from "@/utils/ai/generate/productDescription";
 import { adminVerification } from "@/utils/helper/authentication/admin/admin.verification";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { ClipLoader } from "react-spinners";
+
+const CustomCircularLoading = () => (
+  <ClipLoader
+    size={15}
+    cssOverride={{
+      position: "relative",
+      top: "1px",
+      marginLeft: "10px"
+    }}
+    color="var(--primary)"
+  />
+);
 
 const NewProductPage = () => {
   const [productname, setProductName] = useState("");
   const [description, setDescription] = useState("");
   const [prodCat, setProdCat] = useState("");
+  const [aiGeneratedImgs, setAiGeneratedImgs] = useState();
+  const [loading, setLoading] = useState({
+    aiImages: false,
+    aiDescription: false
+  });
 
   const router = useRouter();
- 
+
+  const handleAddProduct = async () => {
+    console.log(true);
+  };
+
+  const generateImages = async () => {
+    setLoading((prev) => ({ ...prev, aiImages: true }));
+    const data = await generateImageUsingAI(productname);
+    const response = data.data;
+    setLoading((prev) => ({ ...prev, aiImages: false }));
+    setAiGeneratedImgs(response);
+  };
+
+  const generateDescription = async () => {
+    setLoading((prev) => ({ ...prev, aiDescription: true }));
+    const data = await generateProductDescriptionUsingAI(productname);
+    setDescription(data.response.choices[0].message.content);
+    setLoading((prev) => ({ ...prev, aiDescription: false }));
+    console.log(data.response.choices[0].message.content);
+  };
+
+  console.log(loading);
+
   return (
     <div className={styles.main}>
       {/* <div className={styles.header}>
@@ -30,6 +72,7 @@ const NewProductPage = () => {
       <div className={styles.pageTitle}>
         <div className={styles.headerGrp}>
           <IconButton
+            onClick={generateImages}
             bgColor={"#f5f7f9"}
             padding={"0px 10px"}
             leftIcon={
@@ -62,12 +105,35 @@ const NewProductPage = () => {
                   placeholder={"Product name"}
                 />
               </div>
-              <div className={styles.innerProdDescInput}>
+              <div
+                style={{ position: "relative" }}
+                className={styles.innerProdDescInput}>
                 <TextArea
                   setText={(e) => setDescription(e.target.value)}
                   label={"Description"}
                   placeholder={"Description"}
+                  value={description}
                 />
+                <span
+                  style={{
+                    color: "var(--primary)",
+                    cursor: "pointer",
+                    fontWeight: "600",
+                    marginLeft: "5px",
+                    position: "absolute",
+                    top: 0,
+                    right: 0
+                  }}>
+                  {!loading.aiDescription ? (
+                    <p onClick={() => generateDescription()}>
+                      Generate using AI
+                    </p>
+                  ) : (
+                    <p>
+                      Generating, Hold on! <CustomCircularLoading />
+                    </p>
+                  )}
+                </span>
               </div>
             </div>
           </div>
@@ -111,33 +177,71 @@ const NewProductPage = () => {
           </div>
         </div>
         <div className={styles.col2}>
-         <p className={styles.title}>Product Images</p>
-         <div className={styles.productimg}>
-          <div className={styles.grid1}>
-            <div className={styles.innergrid}>
-            <i class="fi fi-rr-images"></i>
-            {/* <p>Click to upload</p> */}
+          <div
+            style={{ display: "flex", justifyContent: "space-between" }}
+            className={styles.title}>
+            <span>Product Images</span>{" "}
+            <span
+              style={{
+                color: "var(--primary)",
+                cursor: "pointer",
+                marginLeft: "5px"
+              }}>
+              {!loading.aiImages ? (
+                <span onClick={() => generateImages()}>Generate using AI</span>
+              ) : (
+                <span>
+                  Generating, Hold on
+                  <CustomCircularLoading />
+                </span>
+              )}
+            </span>
+          </div>
+          <div
+            className={[
+              styles.productimg,
+              !aiGeneratedImgs && styles.height166
+            ].join(" ")}>
+            <div className={styles.grid1}>
+              <div className={styles.innergrid}>
+                {aiGeneratedImgs ? (
+                  <img
+                    style={{ width: "100%", objectFit: "cover" }}
+                    src={aiGeneratedImgs[0].url}
+                    alt=""
+                  />
+                ) : (
+                  <i class="fi fi-rr-images"></i>
+                )}
+              </div>
+            </div>
+            <div className={styles.grid2}>
+              <div className={styles.innergrid}>
+                {aiGeneratedImgs ? (
+                  <img
+                    style={{ width: "100%", objectFit: "cover" }}
+                    src={aiGeneratedImgs[1].url}
+                    alt=""
+                  />
+                ) : (
+                  <i class="fi fi-rr-images"></i>
+                )}
+              </div>
+            </div>
+            <div className={styles.grid3}>
+              <div className={styles.innergrid}>
+                {aiGeneratedImgs ? (
+                  <img
+                    style={{ width: "100%", objectFit: "cover" }}
+                    src={aiGeneratedImgs[2].url}
+                    alt=""
+                  />
+                ) : (
+                  <i class="fi fi-rr-images"></i>
+                )}
+              </div>
             </div>
           </div>
-          <div className={styles.grid2}>
-          <div className={styles.innergrid}>
-            <i class="fi fi-rr-images"></i>
-            {/* <p>Click to upload</p> */}
-            </div>
-          </div>
-          <div className={styles.grid3}>
-          <div className={styles.innergrid}>
-            <i class="fi fi-rr-images"></i>
-            {/* <p>Click to upload</p> */}
-            </div>
-          </div>
-          <div className={styles.grid4}>
-          <div className={styles.innergrid}>
-            <i class="fi fi-rr-images"></i>
-            {/* <p>Click to upload</p> */}
-            </div>
-          </div>
-         </div>
           <p className={styles.title}>Shipping and delivery</p>
           <div className={styles.shippingdelivery}>
             <div className={styles.itemWeight}>
@@ -199,10 +303,12 @@ const NewProductPage = () => {
               clickFunction={() => router.push("/products")}
             />
             <Button
+              clickFunction={() => handleAddProduct()}
               bg="var(--primary)"
               color={"var(--white)"}
               padding={"10px"}
-              width={"25%"} title="Add product"
+              width={"25%"}
+              title="Add product"
             />
           </div>
         </div>

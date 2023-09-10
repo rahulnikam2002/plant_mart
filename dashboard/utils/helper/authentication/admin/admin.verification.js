@@ -11,11 +11,11 @@ export const adminVerification = async (cookie) => {
         if (verifyAdmin.data.code !== 1) {
           reject({ code: 0 });
         }
-        resolve({ code: 1 });
+        resolve({ code: 1, data: verifyAdmin.data });
       }
-      reject({ code: 0 });
+      reject({ code: 0, message: "No cookie" });
     } catch (err) {
-      reject({ code: 0 });
+      reject({ code: 0, message: "Something went wrong", error: err });
     }
   });
 };
