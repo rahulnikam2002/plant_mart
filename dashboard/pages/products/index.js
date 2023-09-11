@@ -1,18 +1,14 @@
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import styles from '@/styles/allProducts.module.css'
+import styles from "@/styles/allProducts.module.css";
 import { adminVerification } from "@/utils/helper/authentication/admin/admin.verification";
 import { Button, IconButton } from "@/components/buttons/buttons";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import ProductVerticalListing from "@/components/Listing/Product/vertical";
 
-
-
-
 const ProductsPage = () => {
-
-  const router = useRouter()
+  const router = useRouter();
   return (
     <div className={styles.main}>
       <div className={styles.pageTitle}>
@@ -44,31 +40,64 @@ const ProductsPage = () => {
             <p>Filter By</p>
           </div>
           <div className={styles.prodFilter}>
-            <IconButton width={"fit-content"} rightIcon={<i style={{ color: "var(--primary)" }} class="fi fi-ss-angle-small-down"></i>} sx={{ color: "var(--primary)" }} bgColor={"#f5f7f9"} title={"All products"} />
+            <IconButton
+              width={"fit-content"}
+              rightIcon={
+                <i
+                  style={{ color: "var(--primary)" }}
+                  class="fi fi-ss-angle-small-down"></i>
+              }
+              sx={{ color: "var(--primary)" }}
+              bgColor={"#f5f7f9"}
+              title={"All products"}
+            />
           </div>
           <div className={styles.prodType}>
-            <IconButton width={"fit-content"} rightIcon={<i style={{ color: "var(--primary)" }} class="fi fi-ss-angle-small-down"></i>} sx={{ color: "var(--primary)" }} bgColor={"#f5f7f9"} title={"All type"} />
-
+            <IconButton
+              width={"fit-content"}
+              rightIcon={
+                <i
+                  style={{ color: "var(--primary)" }}
+                  class="fi fi-ss-angle-small-down"></i>
+              }
+              sx={{ color: "var(--primary)" }}
+              bgColor={"#f5f7f9"}
+              title={"All type"}
+            />
           </div>
         </div>
         <div className={styles.addProduct}>
-          <IconButton onClick={() => { router.push("/products/new") }} leftIcon={<i style={{ color: "var(--white)" }} class="fi fi-rr-add"></i>} title={"Add Product"} width={"fit-content"} padding={"10px"} />
+          <IconButton
+            onClick={() => {
+              router.push("/products/new");
+            }}
+            leftIcon={
+              <i
+                style={{ color: "var(--white)" }}
+                class="fi fi-rr-add"></i>
+            }
+            title={"Add Product"}
+            width={"fit-content"}
+            padding={"10px"}
+          />
         </div>
       </div>
 
       <div className={styles.allProductList}>
-
-
-        {
-          dummyProducts.map((value)=>{
-             return (
-              <ProductVerticalListing productName={value.name} price={value.price}  weight={value.weight} stock={value.stock} img={value.img}  status={value.status} sku={value.sku} date={value.date}/>
-             )
-          })
-        }
-        
-
-
+        {dummyProducts.map((value) => {
+          return (
+            <ProductVerticalListing
+              productName={value.name}
+              price={value.price}
+              weight={value.weight}
+              stock={value.stock}
+              img={value.img}
+              status={value.status}
+              sku={value.sku}
+              date={value.date}
+            />
+          );
+        })}
       </div>
     </div>
   );
@@ -92,7 +121,7 @@ export const getServerSideProps = async (ctx) => {
       props: {
         isLogin: true
       }
-    }
+    };
   } catch (err) {
     // console.log(err)
     return {
@@ -103,7 +132,6 @@ export const getServerSideProps = async (ctx) => {
     };
   }
 };
-
 
 const dummyProducts = [{
   name: "Alphonso Mango Plant",
@@ -128,7 +156,7 @@ const dummyProducts = [{
 },
 
 {
-  name:'Apple Tree Grafted-plant',
+  name: 'Apple Tree Grafted-plant',
   price: 600,
   stock: 269,
   img: 'https://images.unsplash.com/photo-1576179635662-9d1983e97e1e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXBwbGUlMjB0cmVlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60',
@@ -137,4 +165,4 @@ const dummyProducts = [{
   date: '1/10/23',
   status: 'Low stock'
 }
-]  
+] 

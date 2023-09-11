@@ -17,7 +17,6 @@
     color: var(--white);
     border-radius: 6px;
     font-size: 16px;
-    font-weight: 600;
     cursor: pointer;
     /* border: 2px solid var(--primary); */
 }
@@ -41,6 +40,14 @@
 
 .leftIconButton span span{
     position: relative;
-    top: 3px;
+    top: 2px;
     margin-right: 5px;
+}
+
+.leftIconButton:active{
+    scale: 0.95;
+}
+
+.button:active{
+    scale: 0.95;
 }
