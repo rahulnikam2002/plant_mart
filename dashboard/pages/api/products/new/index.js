@@ -1,24 +1,24 @@
 import { adminVerification } from "@/utils/helper/authentication/admin/admin.verification";
 import Joi from "joi";
+import productModel from "@/models/product/product.model";
 
-const productSchema = Joi.object({
+const productDataSchema = Joi.object({
   productName: Joi.string().required(),
   productDescription: Joi.string().required(),
   featuredImages: Joi.array().items(Joi.string()).min(3).max(3).required(),
   categories: Joi.array().items(Joi.string()).required(),
   productQuantity: Joi.number().strict().integer().min(0).required(),
   productSKU: Joi.string().required(),
-  productWeight: Joi.number().strict().min(0).required(),
-  productHeight: Joi.number().strict().min(0).required(),
-  productSpread: Joi.number().strict().min(0).required(),
-  productMaxHeight: Joi.number().strict().min(0).required(),
+  productWeight: Joi.number().strict().min(1).required(),
+  productHeight: Joi.number().strict().min(1).required(),
+  productSpread: Joi.number().strict().min(1).required(),
+  productMaxHeight: Joi.number().strict().min(1).required(),
   salePrice: Joi.number().strict().min(0).required(),
   originPrice: Joi.number().strict().min(0).required()
 });
 
 const validator = (data) => {
-  const { error } = productSchema.validate(data, { abortEarly: false });
-
+  const { error } = productDataSchema.validate(data, { abortEarly: false });
   if (error) {
     return {
       isValid: false,
@@ -77,7 +77,8 @@ export default async function handler(req, res) {
       if (!isDataValid.isValid) {
         return res.send(isDataValid.errors);
       } else {
-        res.send(isDataValid.data)
+        const addProduct = await productModel.create(isDataValid.data);
+        res.send(addProduct);
       }
     }
   } catch (err) {
