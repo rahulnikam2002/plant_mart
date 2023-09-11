@@ -137,4 +137,4 @@ const dummyProducts = [{
   date: '1/10/23',
   status: 'Low stock'
 }
-]
+]  
