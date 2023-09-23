@@ -89,7 +89,6 @@ const ProductsPage = () => {
         <p>Weight</p>
         <p>Date</p>
         <p>Status</p>
-       
       </div>
       <div className={styles.allProductList}>
         {dummyProducts.map((value) => {
