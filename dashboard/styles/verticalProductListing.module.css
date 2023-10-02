@@ -36,7 +36,7 @@
 .productInventory > p,
 .productDate > p,
 .productWeight > p {
-  font-weight: 600;
+  font-weight: var(--w600);
 }
 
 .productStatus {

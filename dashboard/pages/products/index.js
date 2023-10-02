@@ -82,7 +82,14 @@ const ProductsPage = () => {
           />
         </div>
       </div>
-
+      <div className={styles.productHeader}>
+        <p>Product details</p>
+        <p>Price</p>
+        <p>Inventory</p>
+        <p>Weight</p>
+        <p>Date</p>
+        <p>Status</p>
+      </div>
       <div className={styles.allProductList}>
         {dummyProducts.map((value) => {
           return (
@@ -133,36 +140,36 @@ export const getServerSideProps = async (ctx) => {
   }
 };
 
-const dummyProducts = [
-  {
-    name: "Alphonso Mango Plant",
-    price: 500,
-    stock: 677,
-    img: "https://images.unsplash.com/photo-1621872507418-e158640eee49?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-    weight: 3,
-    sku: "12-67-87",
-    date: "12/9/23",
-    status: "Published"
-  },
-  {
-    name: "Knockout Rose Plant",
-    price: 200,
-    stock: 899,
-    img: "https://images.unsplash.com/photo-1528402288002-20c468eb8bcc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cm9zZSUyMGJ1c2h8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60",
-    weight: 4,
-    sku: "14-y7-87",
-    date: "1/1/23",
-    status: "Low stock"
-  },
+const dummyProducts = [{
+  name: "Alphonso Mango Plant",
+  price: 500,
+  stock: 677,
+  img: 'https://images.unsplash.com/photo-1621872507418-e158640eee49?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+  weight: 3,
+  sku: '12-67-87',
+  date: '12/9/23',
+  status: 'Published'
 
-  {
-    name: "Apple Tree Grafted-plant",
-    price: 600,
-    stock: 269,
-    img: "https://images.unsplash.com/photo-1576179635662-9d1983e97e1e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXBwbGUlMjB0cmVlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60",
-    weight: 4,
-    sku: "14-55-87",
-    date: "1/10/23",
-    status: "Low stock"
-  }
-];
+},
+{
+  name: "Knockout Rose Plant",
+  price: 200,
+  stock: 899,
+  img: 'https://images.unsplash.com/photo-1528402288002-20c468eb8bcc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cm9zZSUyMGJ1c2h8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60',
+  weight: 4,
+  sku: '14-y7-87',
+  date: '1/1/23',
+  status: 'Low stock'
+},
+
+{
+  name: 'Apple Tree Grafted-plant',
+  price: 600,
+  stock: 269,
+  img: 'https://images.unsplash.com/photo-1576179635662-9d1983e97e1e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXBwbGUlMjB0cmVlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60',
+  weight: 4,
+  sku: '14-55-87',
+  date: '1/10/23',
+  status: 'Low stock'
+}
+] 
