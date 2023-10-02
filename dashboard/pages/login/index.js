@@ -53,7 +53,7 @@ const LoginPage = () => {
         setLoading(false);
       } catch (err) {
         setLoading(false);
-        const { status } = err.response;
+        const status = err.response.status;
         if (status === 401) {
           errorToast("Credentials incorrect");
         } else if (status === 404) {
