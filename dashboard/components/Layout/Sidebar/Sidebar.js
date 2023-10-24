@@ -215,7 +215,7 @@ const dashboardMenu = [
     subMenu: [
       {
         menu: "All customers",
-        link: "/categories",
+        link: "/customers",
         rightIcon: <i className="fi fi-sr-arrow-circle-right"></i>
       }
     ]
