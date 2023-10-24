@@ -49,9 +49,11 @@ export const Sidebar = () => {
   }, [router]);
 
   const redirect = async () => {
-    const logout = await axios.get(`${process.env.NEXT_PUBLIC_API_HOST}/authentication/logout`)
+    const logout = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_HOST}/authentication/logout`
+    );
     router.push("/login");
-  }
+  };
 
   return (
     router.asPath !== "/login" && (
@@ -106,7 +108,11 @@ export const Sidebar = () => {
                           {menu.subMenu &&
                             menu.subMenu.map((subMenu) => (
                               <div className={styles.singleSubMenu}>
-                                <Link onClick={() => subMenu.link === "#" && redirect()} href={subMenu.link}>
+                                <Link
+                                  onClick={() =>
+                                    subMenu.link === "#" && redirect()
+                                  }
+                                  href={subMenu.link}>
                                   {subMenu.menu}
                                   <i className="fi fi-rr-angle-small-right"></i>
                                 </Link>
@@ -215,87 +221,100 @@ const dashboardMenu = [
     ]
   },
   {
-    menu: "Coupons",
+    menu: "Logout",
     link: "#",
     rightIcon: <i className="fi fi-rr-angle-small-right"></i>,
-    leftIcon: <i className="fi fi-rs-ticket"></i>,
+    leftIcon: <i className="fi fi-br-basket-shopping-simple"></i>,
     subMenu: [
-      {
-        menu: "All Coupons",
-        link: "/categories",
-        rightIcon: <i className="fi fi-sr-arrow-circle-right"></i>
-      },
-      {
-        menu: "Add new Coupon",
-        link: "/categories",
-        rightIcon: <i className="fi fi-sr-arrow-circle-right"></i>
-      }
-    ]
-  },
-  {
-    menu: "Settings",
-    link: "#",
-    rightIcon: <i className="fi fi-rr-angle-small-right"></i>,
-    leftIcon: <i className="fi fi-rr-settings"></i>,
-    subMenu: [
-      {
-        menu: "View settings",
-        link: "/categories",
-        rightIcon: <i className="fi fi-sr-arrow-circle-right"></i>
-      },
-      {
-        menu: "Edit settings",
-        link: "/categories",
-        rightIcon: <i className="fi fi-sr-arrow-circle-right"></i>
-      },
-      {
-        menu: "Manage roles",
-        link: "/categories",
-        rightIcon: <i className="fi fi-sr-arrow-circle-right"></i>
-      },
       {
         menu: "Logout",
         link: "#",
         rightIcon: <i className="fi fi-sr-arrow-circle-right"></i>
-      },
-      {
-        menu: "Add admin",
-        link: "/categories",
-        rightIcon: <i className="fi fi-sr-arrow-circle-right"></i>
-      },
-      {
-        menu: "Manage admin",
-        link: "/categories",
-        rightIcon: <i className="fi fi-sr-arrow-circle-right"></i>
-      }
-    ]
-  },
-  {
-    menu: "Analysis",
-    link: "#",
-    rightIcon: <i className="fi fi-rr-angle-small-right"></i>,
-    leftIcon: <i className="fi fi-br-arrow-trend-up"></i>,
-    subMenu: [
-      {
-        menu: "Analysis",
-        link: "/categories",
-        rightIcon: <i className="fi fi-sr-arrow-circle-right"></i>
-      },
-      {
-        menu: "Customer analysis",
-        link: "/categories",
-        rightIcon: <i className="fi fi-sr-arrow-circle-right"></i>
-      },
-      {
-        menu: "Product analysis",
-        link: "/categories",
-        rightIcon: <i className="fi fi-sr-arrow-circle-right"></i>
-      },
-      {
-        menu: "Coupons analysis",
-        link: "/categories",
-        rightIcon: <i className="fi fi-sr-arrow-circle-right"></i>
       }
     ]
   }
+  // {
+  //   menu: "Coupons",
+  //   link: "#",
+  //   rightIcon: <i className="fi fi-rr-angle-small-right"></i>,
+  //   leftIcon: <i className="fi fi-rs-ticket"></i>,
+  //   subMenu: [
+  //     {
+  //       menu: "All Coupons",
+  //       link: "/categories",
+  //       rightIcon: <i className="fi fi-sr-arrow-circle-right"></i>
+  //     },
+  //     {
+  //       menu: "Add new Coupon",
+  //       link: "/categories",
+  //       rightIcon: <i className="fi fi-sr-arrow-circle-right"></i>
+  //     }
+  //   ]
+  // },
+  // {
+  //   menu: "Settings",
+  //   link: "#",
+  //   rightIcon: <i className="fi fi-rr-angle-small-right"></i>,
+  //   leftIcon: <i className="fi fi-rr-settings"></i>,
+  //   subMenu: [
+  //     {
+  //       menu: "View settings",
+  //       link: "/categories",
+  //       rightIcon: <i className="fi fi-sr-arrow-circle-right"></i>
+  //     },
+  //     // {
+  //     //   menu: "Edit settings",
+  //     //   link: "/categories",
+  //     //   rightIcon: <i className="fi fi-sr-arrow-circle-right"></i>
+  //     // },
+  //     // {
+  //     //   menu: "Manage roles",
+  //     //   link: "/categories",
+  //     //   rightIcon: <i className="fi fi-sr-arrow-circle-right"></i>
+  //     // },
+  //     {
+  //       menu: "Logout",
+  //       link: "#",
+  //       rightIcon: <i className="fi fi-sr-arrow-circle-right"></i>
+  //     },
+  //     // {
+  //     //   menu: "Add admin",
+  //     //   link: "/categories",
+  //     //   rightIcon: <i className="fi fi-sr-arrow-circle-right"></i>
+  //     // },
+  //     // {
+  //     //   menu: "Manage admin",
+  //     //   link: "/categories",
+  //     //   rightIcon: <i className="fi fi-sr-arrow-circle-right"></i>
+  //     // }
+  //   ]
+  // },
+  // {
+  //   menu: "Analysis",
+  //   link: "#",
+  //   rightIcon: <i className="fi fi-rr-angle-small-right"></i>,
+  //   leftIcon: <i className="fi fi-br-arrow-trend-up"></i>,
+  //   subMenu: [
+  //     {
+  //       menu: "Analysis",
+  //       link: "/categories",
+  //       rightIcon: <i className="fi fi-sr-arrow-circle-right"></i>
+  //     },
+  //     {
+  //       menu: "Customer analysis",
+  //       link: "/categories",
+  //       rightIcon: <i className="fi fi-sr-arrow-circle-right"></i>
+  //     },
+  //     {
+  //       menu: "Product analysis",
+  //       link: "/categories",
+  //       rightIcon: <i className="fi fi-sr-arrow-circle-right"></i>
+  //     },
+  //     {
+  //       menu: "Coupons analysis",
+  //       link: "/categories",
+  //       rightIcon: <i className="fi fi-sr-arrow-circle-right"></i>
+  //     }
+  //   ]
+  // }
 ];

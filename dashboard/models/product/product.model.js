@@ -19,22 +19,22 @@ const productSchema = new mongoose.Schema(
       }
     ],
     productQuantity: {
-      type: Number,
+      type: String,
       default: 0
     },
     productSKU: {
       type: String,
       unique: true // Ensure SKU is unique
     },
-    productWeight: Number,
-    productHeight: Number,
-    productSpread: Number,
-    productMaxHeight: Number,
+    productWeight: String,
+    productHeight: String,
+    productSpread: String,
+    productMaxHeight: String,
     salePrice: {
-      type: Number
+      type: String
     },
     originPrice: {
-      type: Number,
+      type: String,
       required: true
     }
   },

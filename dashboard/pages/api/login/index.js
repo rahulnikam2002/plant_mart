@@ -24,7 +24,7 @@ export default async function handler(req, res) {
   } else {
     return res.status(400).send({
       code: 0,
-      msg: "Something went wrong"
+      msg: "Something went wrong, make sure you enter correct credentials"
     });
   }
 

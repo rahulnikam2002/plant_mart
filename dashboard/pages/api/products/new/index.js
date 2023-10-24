@@ -7,14 +7,14 @@ const productDataSchema = Joi.object({
   productDescription: Joi.string().required(),
   featuredImages: Joi.array().items(Joi.string()).min(3).max(3).required(),
   categories: Joi.array().items(Joi.string()).required(),
-  productQuantity: Joi.number().strict().integer().min(0).required(),
+  productQuantity: Joi.string().required(),
   productSKU: Joi.string().required(),
-  productWeight: Joi.number().strict().min(1).required(),
-  productHeight: Joi.number().strict().min(1).required(),
-  productSpread: Joi.number().strict().min(1).required(),
-  productMaxHeight: Joi.number().strict().min(1).required(),
-  salePrice: Joi.number().strict().min(0).required(),
-  originPrice: Joi.number().strict().min(0).required()
+  productWeight: Joi.string().required(),
+  productHeight: Joi.string().required(),
+  productSpread: Joi.string().required(),
+  productMaxHeight: Joi.string().required(),
+  salePrice: Joi.string().required(),
+  originPrice: Joi.string().required()
 });
 
 const validator = (data) => {
