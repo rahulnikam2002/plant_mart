@@ -31,6 +31,7 @@
   --black: #333333;
   --green: rgb(34, 197, 94);
   --lowLightGreen: rgba(34, 197, 94, 0.162);
+  --lowLightBlue: #005eff21;
   --red: #ff0066;
   --lowLightRed: #ff006620;
   --toastify-color-success: #005fff !important;
