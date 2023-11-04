@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@flaticon/flaticon-uicons": "^2.4.0",
+    "@upstash/redis": "^1.24.3",
     "apexcharts": "^3.42.0",
     "autoprefixer": "10.4.15",
     "axios": "^1.4.0",

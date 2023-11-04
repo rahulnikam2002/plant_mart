@@ -38,7 +38,9 @@ export default async function handler(req, res) {
       });
     }
 
-    const deleteProductWithIDs = await productModel.deleteMany({_id: {$in: ids}});
+    const deleteProductWithIDs = await productModel.deleteMany({
+      _id: { $in: ids }
+    });
     if (!deleteProductWithIDs) {
       return res.send({
         msg: "Something went wrong while performing this operation"

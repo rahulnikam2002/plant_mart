@@ -27,7 +27,7 @@ export default async function (req, res) {
     const parseCSV = await csvToObjectParser(csvLink);
     const finalData = mergeData(parseCSV);
     const dataBulkProductsToDatabase = await productModel.insertMany(finalData);
-    res.send(dataBulkProductsToDatabase)
+    res.send(dataBulkProductsToDatabase);
   }
 }
 
@@ -44,17 +44,17 @@ const mergeImages = (data) => {
     const finalObject = { ...rest, featuredImages };
     return finalObject;
   });
-
+  console.log(mergeData);
   return mergeData;
 };
 
 const mergeCategories = (data) => {
-    const mergeData = data.map((item) => {
-        const { categorie1, categorie2, categorie3, ...rest } = item;
-        const categories = [categorie1, categorie2, categorie3];
-        const finalObject = { ...rest, categories };
-        return finalObject;
-      });
-    
-      return mergeData;
+  const mergeData = data.map((item) => {
+    const { categorie1, categorie2, categorie3, ...rest } = item;
+    const categories = [categorie1, categorie2, categorie3];
+    const finalObject = { ...rest, categories };
+    return finalObject;
+  });
+
+  return mergeData;
 };

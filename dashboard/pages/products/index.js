@@ -6,8 +6,24 @@ import { Button, IconButton } from "@/components/buttons/buttons";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import ProductVerticalListing from "@/components/Listing/Product/vertical";
+import axios from "axios";
 
-const ProductsPage = () => {
+const ProductsPage = ({ data }) => {
+  const [loading, setLoading] = useState(true);
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = async () => {
+    setLoading(true);
+    const res = await axios.get("/api/products/get");
+    const data = res.data;
+    console.log(data);
+    setProducts(data);
+    setLoading(false);
+  };
+
   const router = useRouter();
   return (
     <div className={styles.main}>
@@ -91,17 +107,17 @@ const ProductsPage = () => {
         <p>Status</p>
       </div>
       <div className={styles.allProductList}>
-        {dummyProducts.map((value) => {
+        {products.map((value) => {
           return (
             <ProductVerticalListing
-              productName={value.name}
-              price={value.price}
-              weight={value.weight}
-              stock={value.stock}
-              img={value.img}
-              status={value.status}
-              sku={value.sku}
-              date={value.date}
+              productName={value.productName}
+              price={value.salePrice}
+              weight={value.productWeight}
+              stock={value.productQuantity}
+              img={value.featuredImages[0]}
+              status={"Published"}
+              sku={value.productSKU}
+              date={value.createdAt}
             />
           );
         })}
@@ -116,6 +132,7 @@ export const getServerSideProps = async (ctx) => {
   try {
     const myCookie = ctx.req?.cookies || "";
     const res = await adminVerification(myCookie.token);
+
     if (res.code === 0) {
       return {
         redirect: {
@@ -124,6 +141,7 @@ export const getServerSideProps = async (ctx) => {
         }
       };
     }
+
     return {
       props: {
         isLogin: true
@@ -140,36 +158,36 @@ export const getServerSideProps = async (ctx) => {
   }
 };
 
-const dummyProducts = [{
-  name: "Alphonso Mango Plant",
-  price: 500,
-  stock: 677,
-  img: 'https://images.unsplash.com/photo-1621872507418-e158640eee49?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-  weight: 3,
-  sku: '12-67-87',
-  date: '12/9/23',
-  status: 'Published'
+const dummyProducts = [
+  {
+    name: "Alphonso Mango Plant",
+    price: 500,
+    stock: 677,
+    img: "https://images.unsplash.com/photo-1621872507418-e158640eee49?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    weight: 3,
+    sku: "12-67-87",
+    date: "12/9/23",
+    status: "Published"
+  },
+  {
+    name: "Knockout Rose Plant",
+    price: 200,
+    stock: 899,
+    img: "https://images.unsplash.com/photo-1528402288002-20c468eb8bcc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cm9zZSUyMGJ1c2h8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60",
+    weight: 4,
+    sku: "14-y7-87",
+    date: "1/1/23",
+    status: "Low stock"
+  },
 
-},
-{
-  name: "Knockout Rose Plant",
-  price: 200,
-  stock: 899,
-  img: 'https://images.unsplash.com/photo-1528402288002-20c468eb8bcc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cm9zZSUyMGJ1c2h8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60',
-  weight: 4,
-  sku: '14-y7-87',
-  date: '1/1/23',
-  status: 'Low stock'
-},
-
-{
-  name: 'Apple Tree Grafted-plant',
-  price: 600,
-  stock: 269,
-  img: 'https://images.unsplash.com/photo-1576179635662-9d1983e97e1e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXBwbGUlMjB0cmVlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60',
-  weight: 4,
-  sku: '14-55-87',
-  date: '1/10/23',
-  status: 'Low stock'
-}
-] 
+  {
+    name: "Apple Tree Grafted-plant",
+    price: 600,
+    stock: 269,
+    img: "https://images.unsplash.com/photo-1576179635662-9d1983e97e1e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXBwbGUlMjB0cmVlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60",
+    weight: 4,
+    sku: "14-55-87",
+    date: "1/10/23",
+    status: "Low stock"
+  }
+];

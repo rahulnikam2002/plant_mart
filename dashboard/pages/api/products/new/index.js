@@ -86,7 +86,7 @@ export default async function handler(req, res) {
     res.status(500).send({
       code: 0,
       message: "Something went wrong!",
-      error: err.message
+      error: err
     });
   }
 }

@@ -1,0 +1,1 @@
+export const networkIP = "http://192.168.199.96:3000";

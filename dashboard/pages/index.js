@@ -60,8 +60,8 @@ export default function Home() {
           <div className={styles.box}>
             <AnalysisBox
               title={"Total products"}
-              percentage={50}
-              number={850}
+              percentage={0}
+              number={0}
               data={productsData}
               reportTooltip="Weekly"
               toolTipColor="#22c55e"
@@ -71,8 +71,8 @@ export default function Home() {
           <div className={styles.box}>
             <AnalysisBox
               title={"Orders completed"}
-              percentage={-0.5}
-              number={1500}
+              percentage={0}
+              number={0}
               data={ordersData}
               reportTooltip="Weekly"
               toolTipColor="#f6136e"
@@ -82,8 +82,8 @@ export default function Home() {
           <div className={styles.box}>
             <AnalysisBox
               title={"Earnings"}
-              percentage={30}
-              number={1582000}
+              percentage={0}
+              number={0}
               currency={"₹"}
               data={earningsData}
               reportTooltip="Weekly"
