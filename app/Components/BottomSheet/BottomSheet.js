@@ -6,7 +6,7 @@ import { ScrollView } from "react-native";
 const height = Dimensions.get("screen").height;
 
 export const CustomBottomSheet = ({
-  ref,
+  sheetRef,
   snapPoints,
   index,
   handleSheetChanges,
@@ -26,7 +26,7 @@ export const CustomBottomSheet = ({
             width: "100%"
           }}>
           <BottomSheet
-            ref={ref}
+            ref={sheetRef}
             index={index}
             snapPoints={snapPoints}
             onChange={handleSheetChanges}>

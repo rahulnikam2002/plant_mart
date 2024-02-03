@@ -52,3 +52,13 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 | Name                      | Password                          |
 | ------------------------- | --------------------------------- |
 | plant.mart.2023@gmail.com | rahulsiddhinishafouzanplantmart@@ |
+
+
+1. Incorrect key
+2. already present
+6. not present
+3. Something went wrong
+4. Invalid request,
+5. Incorrect details
+7. payment failed
+200. Success 

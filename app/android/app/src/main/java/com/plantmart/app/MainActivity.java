@@ -1,4 +1,4 @@
-package com.app;
+package com.plantmart.app;
 
 import android.os.Build;
 import android.os.Bundle;

@@ -10,6 +10,7 @@ export const IconButton = ({
   onPress,
   size,
   bg,
+  addBackground = true,
   bgSize = "large"
 }) => {
   return (
@@ -17,7 +18,7 @@ export const IconButton = ({
       <View
         style={[
           styles.iconContainer,
-          bg && { backgroundColor: bg },
+          addBackground && bg && { backgroundColor: bg },
           bgSize === "small" && { paddingHorizontal: 4, paddingVertical: 3 },
           bgSize === "medium" && { paddingHorizontal: 7, paddingVertical: 6 },
           bgSize === "large" && { paddingHorizontal: 10, paddingVertical: 9 }

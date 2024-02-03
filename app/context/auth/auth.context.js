@@ -4,42 +4,35 @@ import * as SecureStore from "expo-secure-store";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isLogin, setIsLogin] = useState(false);
 
-  const loginUser = ({ userName, userPassword }) => {
+  const loginUser = (token) => {
     setIsLoading(true);
-    setTimeout(() => {
-      SecureStore.setItemAsync("token", "mytoken").then((res) => {
-        setIsLoading(false);
-        setIsLogin(true);
-      });
-    }, 3000);
+    SecureStore.setItemAsync("userAuthToken", token).then((res) => {
+      setIsLoading(false);
+      setIsLogin(true);
+    });
   };
 
-  const registerUser = ({ userName, userPassword }) => {
+  const registerUser = (token) => {
     setIsLoading(true);
-    setTimeout(() => {
+    SecureStore.setItemAsync("userAuthToken", token).then((res) => {
       setIsLoading(false);
-      SecureStore.setItemAsync("token", "mytoken").then((res) => {
-        setIsLogin(true);
-      });
-    }, 3000);
+      setIsLogin(true);
+    });
   };
 
   const logoutUser = () => {
     setIsLoading(true);
-    setTimeout(() => {
+    SecureStore.deleteItemAsync("userAuthToken").then((res) => {
       setIsLoading(false);
-      SecureStore.deleteItemAsync("token").then((res) => {
-        setIsLogin(false);
-      });
-    }, 3000);
+      setIsLogin(false);
+    });
   };
 
   useEffect(() => {
-    SecureStore.getItemAsync("token").then((res) => {
-      console.log(res);
+    SecureStore.getItemAsync("userAuthToken").then((res) => {
       if (res) {
         setIsLogin(true);
       }

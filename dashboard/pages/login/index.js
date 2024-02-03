@@ -75,17 +75,14 @@ const LoginPage = () => {
       }
     };
 
-    // Add the event listener when the component mounts
+    //* Add the event listener when the component mounts
     document.addEventListener("keydown", handleKeyPress);
 
-    // Remove the event listener when the component unmounts
+    //* Remove the event listener when the component unmounts
     return () => {
       document.removeEventListener("keydown", handleKeyPress);
     };
   }, []);
-
-  // Created fouzan branch!
-  // Task comp!
 
   return (
     <>
@@ -130,7 +127,7 @@ const LoginPage = () => {
               <div className={styles.buttonPlace}>
                 <Button
                   title={"Sign in"}
-                  clickFunction={handleSignIn}
+                onClick={handleSignIn}
                   isLoading={loading}
                   bg="var(--primary)"
                   color="var(--white)"

@@ -15,9 +15,10 @@ export default async function handler(req, res) {
     const { email } = req.body;
     console.log(email);
     const isInCache = await checkInRedisCache(email);
+    let isUserRegistered;
     if (!isInCache) {
       console.log(1);
-      const isUserRegistered = await doUserExist(email);
+      isUserRegistered = await doUserExist(email);
       console.log(isUserRegistered);
       return res.send({
         type: "SUCCESS",
@@ -27,6 +28,7 @@ export default async function handler(req, res) {
     }
     return res.send({
       type: "SUCCESS",
+      isUserRegistered: true,
       isInCache,
       source: "Cache"
     });

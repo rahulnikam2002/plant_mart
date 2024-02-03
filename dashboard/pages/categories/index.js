@@ -1,13 +1,16 @@
 import CategoryVerticalListing from "@/components/Listing/Product/Category/vertical";
 import { IconButton } from "@/components/buttons/buttons";
 import styles from "@/styles/allCategories.module.css";
+import { useRouter } from "next/router";
 
 const CategoryListingPage = () => {
+  const router = useRouter();
   return (
     <div className={styles.main}>
       <div className={styles.pageTitle}>
         <div className={styles.headerGrp}>
           <IconButton
+            clickFunction={() => router.back()}
             bgColor={"#f5f7f9"}
             padding={"0px 10px"}
             leftIcon={

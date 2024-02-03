@@ -43,7 +43,7 @@ export const BottomSheet = ({
           }
         }>
         <CustomBottomSheet
-          ref={sheetRef}
+          sheetRef={sheetRef}
           snapPoints={snapPoints}
           handleSheetChanges={handleSheetChanges}
           index={snapToIndex}>

@@ -9,7 +9,8 @@ const nextConfig = {
       "res.cloudinary.com",
       "oaidalleapiprodscus.blob.core.windows.net",
       "cdn.shopify.com",
-      "www.google.com"
+      "www.google.com",
+      "cdn.britannica.com"
     ]
   }
 };

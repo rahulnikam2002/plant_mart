@@ -10,8 +10,9 @@ import { OnBoarding } from "../../screens/auth/onboarding/app";
 import { SignInScreen } from "../../screens/auth/signin/app";
 import { SafeAreaView } from "react-native";
 import { SignUpScreen } from "../../screens/auth/signup/app";
-import { PasswordScreen } from "../../screens/auth/password/app";
+import { PasswordScreen } from "../../screens/auth/password/new/app";
 import { OTPScreen } from "../../screens/auth/otp/app";
+import Toast from "react-native-toast-message";
 
 const Stack = createStackNavigator();
 

@@ -49,7 +49,8 @@ export default async function handler(req, res) {
     });
   } catch (requestError) {
     return res.send({
-      error: requestError.message
+      error: requestError.message,
+      requestError
     });
   }
 }

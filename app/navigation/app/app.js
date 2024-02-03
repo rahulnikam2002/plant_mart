@@ -1,53 +1,102 @@
-import { Text } from "react-native";
-import { View, Button } from "react-native";
-// Context
-import { AuthContext } from "../../context/auth/auth.context";
-import { useCallback, useContext, useMemo, useRef, useState } from "react";
-import { CustomBottomSheet } from "../../Components/BottomSheet/BottomSheet";
-import { SCREEN_HEIGHT } from "@gorhom/bottom-sheet";
-import { TextInput } from "react-native-gesture-handler";
-import { BottomSheet } from "../../Components/BottomSheet/BottomSheetWrapper";
+import { CardStyleInterpolators, createStackNavigator } from "@react-navigation/stack";
+import { DrawerNavigation } from "../../Components/NavigationComponents/Drawer/Drawer";
+import { CartPage } from "../../screens/app/Cart/app";
+import { SearchScreen } from "../../screens/app/Search/app";
+import { useGoogleFonts } from "../../Hooks/Fonts/useFonts";
+import { useState } from "react";
+import { View } from "react-native";
+import { ActivityIndicator } from "react-native";
+import { useEffect } from "react";
+import { ProductsScreen } from "../../screens/app/Products/app";
+import { OrderConfirmScreen, orderConfirmScreen } from "../../screens/app/Order/Confirm/app";
+import { IconButton } from "../../Components/Icons/Icon";
+import { MediumText } from "../../Components/Text/Headings/Headings";
+import { fonts } from "../../utils/constants/fonts/fonts";
+import { SingleProductScreen } from "../../screens/app/Products/SingleProductScreen/app";
+
+const Stack = createStackNavigator();
 
 export const App = () => {
-  const { logoutUser } = useContext(AuthContext);
-  const [snapToIndex, setSnapToIndex] = useState(-1);
+    const { fontError, fontsLoaded } = useGoogleFonts();
+    const [fontLoading, setFontLoading] = useState(fontsLoaded);
 
-  const sheetRef = useRef(null);
-  const snapPoints = useMemo(() => ["2%","15%", "50%", "80%", "90%"], []);
+    console.log({ fontsLoaded });
 
-  const handleSnapPress = useCallback((index) => {
-    sheetRef.current?.snapToIndex(index);
-  }, []);
+    useEffect(() => {
+        if (fontsLoaded) {
+            setFontLoading(true);
+        }
+    }, [fontsLoaded]);
 
-  // callbacks
-  const handleSheetChanges = useCallback((index) => {
-    console.log(index);
-    if (index == 0) {
-      setSnapToIndex(-1);
-      sheetRef.current?.close();
-    }
-  }, []);
-  
-  return (
-    <View style={{ height: SCREEN_HEIGHT, paddingTop: 50 }}>
-      <Text>App</Text>
-      <Button
-        onPress={() => logoutUser()}
-        title="Logout"
-      />
-      <View
-        style={
-          snapToIndex && {
-            position: "absolute",
-            top: 0,
-            right: 0,
-            width: "100%",
-          }
-        }>
-        <BottomSheet snapToIndex={snapToIndex} setSnapToIndex={setSnapToIndex}>
-          <Text>Hello</Text>
-        </BottomSheet>
-      </View>
-    </View>
-  );
+    return fontLoading ? (
+        <Stack.Navigator
+            screenOptions={{
+                headerShown: false,
+                gestureEnabled: true,
+                cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS
+            }}>
+            <Stack.Screen
+                name="customDrawer"
+                component={DrawerNavigation}
+            />
+            <Stack.Screen
+                name="cartScreen"
+                component={CartPage}
+            />
+            <Stack.Screen
+                name="searchScreen"
+                component={SearchScreen}
+            />
+            <Stack.Screen
+                name="productsScreen"
+                component={ProductsScreen}
+            />
+            <Stack.Screen
+                name="singleProductsScreen"
+                options={({ navigation }) => ({
+                    // gestureDirection: "vertical",
+                    // gestureResponseDistance: 250,
+                    gestureEnabled: false,
+                    headerShown: false
+                })}
+                component={SingleProductScreen}
+            />
+            <Stack.Screen
+                name="orderConfirmScreen"
+                component={OrderConfirmScreen}
+                options={({ navigation }) => ({
+                    // gestureDirection: "vertical",
+                    // gestureResponseDistance: 250,
+                    gestureEnabled: false,
+                    cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
+                    headerShown: true,
+                    headerLeft: () => (
+                        <View style={{ position: "relative", top: -5 }}>
+                            <IconButton
+                                type="ionicon"
+                                name="arrow-back-outline"
+                                onPress={() => navigation.navigate("homeScreen")}
+                            />
+                        </View>
+                    ),
+                    headerTitleAlign: "center",
+                    title: "Order overview",
+                    headerTitleStyle: { fontFamily: fonts.Montserrat[600], fontSize: 16 }
+                })}
+            />
+        </Stack.Navigator>
+    ) : (
+        <View
+            style={{
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center",
+                height: "100%"
+            }}>
+            <ActivityIndicator
+                size={50}
+                color={"#000"}
+            />
+        </View>
+    );
 };

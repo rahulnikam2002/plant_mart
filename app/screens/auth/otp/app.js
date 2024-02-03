@@ -9,14 +9,45 @@ import { View } from "react-native";
 import { useGoogleFonts } from "../../../Hooks/Fonts/useFonts";
 import { SmallText } from "../../../Components/Text/Headings/Headings";
 import { Text } from "react-native";
+import axios from "axios";
+import { networkIP } from "../../../utils/constants/ip";
+import { resolveObjectURL } from "buffer";
+import { successToast } from "../../../utils/toasts/toasts";
+import { toastConfig } from "../../../utils/toasts/config";
+import Toast from "react-native-toast-message";
 
-export const OTPScreen = ({ navigation }) => {
+export const OTPScreen = ({ route, navigation }) => {
+  const { email, key } = route.params;
+  // console.log("the data we got is ==> ",{email, key})
   const [validOTP, setValidOTP] = useState(false);
   const [loading, setLoading] = useState(false);
   let { fontError, fontsLoaded } = useGoogleFonts();
-  //   if (!fontsLoaded && !fontError) {
-  //     return null;
-  //   }
+  const [time, setTime] = useState(120);
+  const [isRunning, setIsRunning] = useState(false);
+
+  useEffect(() => {
+    let timer;
+
+    if (isRunning) {
+      timer = setInterval(() => {
+        if (time > 0) {
+          setTime((prevTime) => prevTime - 1);
+        } else {
+          clearInterval(timer);
+        }
+      }, 1000);
+    } else {
+      clearInterval(timer);
+    }
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, [isRunning, time]);
+
+  const minutes = String(Math.floor(time / 60)).padStart(2, "0");
+  const seconds = String(time % 60).padStart(2, "0");
+  const formattedTime = `${minutes}:${seconds}`;
 
   const [otp, setOTP] = useState(["", "", "", ""]);
   const inputRefs = [
@@ -61,12 +92,25 @@ export const OTPScreen = ({ navigation }) => {
     }
   }, [otp]);
 
-  const handleCheckPassword = () => {
-    setLoading(true);
-    setTimeout(() => {
+  useEffect(() => {
+    successToast("OTP sent ❤️", "We have successfully sent you OTP");
+  }, []);
+
+  const handleCheckPassword = async () => {
+    if (validOTP) {
+      setLoading(true);
+      const OTP = otp.join("");
+      const response = await axios.post(
+        `${networkIP}/api/user/authentication/verify/otp`,
+        { email, otp: OTP, key }
+      );
+      const responseObject = response.data;
+      console.log(responseObject);
       setLoading(false);
-      navigation.navigate("password");
-    }, 2000);
+      if (responseObject.type === "SUCCESS") {
+        navigation.navigate("password", { email, key });
+      }
+    }
   };
 
   return (
@@ -102,9 +146,13 @@ export const OTPScreen = ({ navigation }) => {
             sx={{ fontFamily: "Montserrat_400Regular", marginTop: 10 }}>
             We have sent you a 4 digit OTP on your email{" "}
             <Text style={{ fontFamily: "Montserrat_600SemiBold" }}>
-              codewithrahulnikam@gmail.com,
+              {email},
             </Text>
             If you didn't received it, please do check youe spam folder too!
+            This OTP will get expired in{" "}
+            <Text style={{ fontFamily: "Montserrat_600SemiBold" }}>
+              {formattedTime}
+            </Text>
           </SmallText>
         </View>
         <View style={styles.button}>
@@ -116,6 +164,12 @@ export const OTPScreen = ({ navigation }) => {
           />
         </View>
       </View>
+      <Toast
+        config={toastConfig}
+        autoHide={true}
+        // visibilityTime={5000}
+        topOffset={70}
+      />
     </CustomSafeAreaView>
   );
 };
