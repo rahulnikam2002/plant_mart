@@ -16,6 +16,7 @@ import { ScrollView, TextInput } from "react-native-gesture-handler";
 import { TouchableOpacity } from "react-native";
 import { pinCodes } from "../../../../Static/data/pincodes/pincodes";
 import { infoToast, successToast } from "../../../../utils/toasts/toasts";
+import Markdown from "react-native-markdown-display";
 
 const IMGHEIGHT = 350;
 
@@ -51,7 +52,7 @@ export const SingleProductScreen = ({ routes, navigation }) => {
                     <QuantitySelection />
 
                     <ProductDescription />
-                    <View style={{ marginVertical: 40 }}></View>
+                    {/* <View style={{ marginVertical: 40 }}></View> */}
                 </View>
             </ScrollView>
         </View>
@@ -299,6 +300,8 @@ const CheckDelivery = ({ scrollViewRef }) => {
 };
 
 const ProductDescription = () => {
+    const description = `This is product information`;
+
     return (
         <View style={styles.productInfo}>
             <View style={styles.sectionHeader}>
@@ -307,6 +310,10 @@ const ProductDescription = () => {
                     type="ionicon"
                     name="chevron-forward-outline"
                 />
+            </View>
+
+            <View>
+                <SmallText mergeStyle={true}>{description}</SmallText>
             </View>
         </View>
     );
