@@ -4,9 +4,14 @@ import styles from "@/styles/newproduct.module.css";
 import { generateImageUsingAI } from "@/utils/ai/generate/image";
 import { generateProductDescriptionUsingAI } from "@/utils/ai/generate/productDescription";
 import { adminVerification } from "@/utils/helper/authentication/admin/admin.verification";
+import { errorToast, successToast, warningToast } from "@/utils/helper/toasts/toasts.messages";
+import { uploadImage } from "@/utils/helper/upload/images/uploadImages";
+import axios from "axios";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { ClipLoader } from "react-spinners";
+import { ToastContainer } from "react-toastify";
 
 const CustomCircularLoading = () => (
     <ClipLoader
@@ -21,59 +26,124 @@ const CustomCircularLoading = () => (
 );
 
 const NewProductPage = () => {
-    const [productname, setProductName] = useState("");
-    const [description, setDescription] = useState("");
-    const [prodCat, setProdCat] = useState("");
-    const [aiGeneratedImgs, setAiGeneratedImgs] = useState();
-    const [loading, setLoading] = useState({
-        aiImages: false,
-        aiDescription: false
-    });
-
     const router = useRouter();
 
+    const [prodCat, setProdCat] = useState("");
+    const [aiGeneratedImgs, setAiGeneratedImgs] = useState();
+    const [loading, setLoading] = useState(false);
+    const [createBtnText, setCreateBtnText] = useState("Add Product");
+
+    const [productImgs, setProductImgs] = useState({
+        1: {
+            img: null,
+            raw: null
+        },
+        2: {
+            img: null,
+            raw: null
+        },
+        3: {
+            img: null,
+            raw: null
+        }
+    });
+
+    const [productDetails, setProductDetails] = useState({
+        productName: null,
+        productDescription: null,
+        featuredImages: [],
+        categories: null,
+        productQuantity: null,
+        productSKU: null,
+        productWeight: null,
+        productHeight: null,
+        productSpread: null,
+        productMaxHeight: null,
+        salePrice: null,
+        originPrice: null
+    });
+
     const handleAddProduct = async () => {
-        console.log(true);
+        try {
+            // const validateData = validateAllInputs({ ...productDetails, ...productImgs });
+            const validateData = true;
+            if (validateData) {
+                const allSecureLinks = await uploadAllImages();
+                setCreateBtnText("Creating new product...");
+
+                productDetails.categories =
+                    typeof productDetails.categories === "object"
+                        ? productDetails.categories.join(",").replace(/\s/g, "").split(",")
+                        : productDetails.categories.replace(/\s/g, "").split(",");
+
+                productDetails.featuredImages = allSecureLinks;
+
+                const createNewProduct = await axios.post("http://localhost:3000/api/products/new", productDetails);
+                console.log({ res: createNewProduct.data });
+                setCreateBtnText("Add Product");
+                successToast("New product created");
+            }
+        } catch (error) {
+            console.log({ error });
+            errorToast("Product not added, try again");
+        }
     };
 
-    const generateImages = async () => {
-        setLoading((prev) => ({ ...prev, aiImages: true }));
-        const data = await generateImageUsingAI(productname);
-        const response = data.data;
-        setLoading((prev) => ({ ...prev, aiImages: false }));
-        setAiGeneratedImgs(response);
+    const uploadAllImages = async () => {
+        const images = [];
+        setCreateBtnText("Uploading images...");
+        for (const img in productImgs) {
+            const uploadImg = await uploadImage(productImgs[img].img);
+            images.push(uploadImg);
+        }
+        return images;
     };
 
-    const generateDescription = async () => {
-        setLoading((prev) => ({ ...prev, aiDescription: true }));
-        const data = await generateProductDescriptionUsingAI(productname);
-        console.log(data);
-        // setDescription(data.response.choices[0].message.content);
-        setLoading((prev) => ({ ...prev, aiDescription: false }));
-        // console.log(data.response.choices[0].message.content);
+    const handleImgState = (event, stateNo) => {
+        const reader = new FileReader();
+        const file = event.target.files[0];
+
+        if (file) {
+            if (isImageFile(file)) {
+                reader.onload = () => {
+                    if (reader.readyState === 2) {
+                        setProductImgs((prev) => ({
+                            ...prev,
+                            [stateNo]: {
+                                ...prev[stateNo],
+                                img: file,
+                                raw: reader.result
+                            }
+                        }));
+                    }
+                };
+                reader.readAsDataURL(file);
+            } else {
+                errorToast("Only img format is accepted!");
+            }
+        }
     };
 
-    console.log(loading);
+    const isImageFile = (file) => {
+        console.log("inside");
+        console.log(file.type.startsWith("image/"));
+        return file.type.startsWith("image/");
+    };
+
+    const handleInputSubmit = (e) => {
+        const value = e.target.value;
+        const name = e.target.name;
+        setProductDetails((prevDetails) => ({ ...prevDetails, [name]: value }));
+    };
+
+    console.log(productDetails);
 
     return (
         <div className={styles.main}>
-            {/* <div className={styles.header}>
-        <div className={styles.headerbtn}>
-          <LinkButton
-            padding="10px 15px"
-            bg={"transparent"}
-            color="var(--black)"
-            href="/"
-            title="Dashboard"
-            sx={{border: "2px solid var(--borderGrey)"}}
-          />
-        </div>
-      </div> */}
-
             <div className={styles.pageTitle}>
                 <div className={styles.headerGrp}>
                     <IconButton
-                        onClick={generateImages}
+                        onClick={() => router.push("/products")}
                         bgColor={"#f5f7f9"}
                         padding={"0px 10px"}
                         leftIcon={
@@ -101,19 +171,22 @@ const NewProductPage = () => {
                         <div className={styles.prodDes}>
                             <div className={styles.innerProdNameInput}>
                                 <TextInput
-                                    setText={(e) => setProductName(e.target.value)}
+                                    name="productName"
+                                    setText={(e) => handleInputSubmit(e)}
                                     label={"Product name"}
                                     placeholder={"Product name"}
+                                    value={productDetails.productName}
                                 />
                             </div>
                             <div
                                 style={{ position: "relative" }}
                                 className={styles.innerProdDescInput}>
                                 <TextArea
-                                    setText={(e) => setDescription(e.target.value)}
+                                    name="productDescription"
+                                    setText={(e) => handleInputSubmit(e)}
                                     label={"Description"}
                                     placeholder={"Description"}
-                                    value={description}
+                                    value={productDetails.productDescription}
                                 />
                                 {/* <span
                                     style={{
@@ -142,17 +215,19 @@ const NewProductPage = () => {
                         <div className={styles.prodCat}>
                             <div className={styles.innerProdInput}>
                                 <TextInput
-                                    setText={(e) => setProdCat(e.target.value)}
+                                    value={productDetails.categories}
+                                    name="categories"
+                                    setText={(e) => handleInputSubmit(e)}
                                     label={"Product Category"}
-                                    placeholder={"Health and Medicine"}
+                                    placeholder={"Separate using commas (,)"}
                                 />
                             </div>
-                            <div className={styles.innerProdInput}>
+                            {/* <div className={styles.innerProdInput}>
                                 <TextInput
                                     label={"Product Category"}
                                     placeholder={"Beauty"}
                                 />
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                     <div className={styles.inventory}>
@@ -160,14 +235,19 @@ const NewProductPage = () => {
                         <div className={styles.inventoryinfo}>
                             <div className={styles.quantity}>
                                 <TextInput
-                                    setText={(e) => console.log(e.target.value)}
+                                    type="number"
+                                    value={productDetails.productQuantity}
+                                    name="productQuantity"
+                                    setText={(e) => handleInputSubmit(e)}
                                     label={"Quantity"}
                                     placeholder={1020}
                                 />
                             </div>
                             <div className={styles.sku}>
                                 <TextInput
-                                    setText={(e) => console.log(e.target.value)}
+                                    value={productDetails.productSKU}
+                                    name="productSKU"
+                                    setText={(e) => handleInputSubmit(e)}
                                     label={"SKU"}
                                     placeholder={"uu-br-br-05"}
                                 />
@@ -198,49 +278,87 @@ const NewProductPage = () => {
                     </div>
                     <div className={[styles.productimg, !aiGeneratedImgs && styles.height166].join(" ")}>
                         <div className={styles.grid1}>
-                            <div className={styles.innergrid}>
-                                {aiGeneratedImgs ? (
-                                    <img
-                                        style={{ width: "100%", objectFit: "cover" }}
-                                        src={aiGeneratedImgs[0].url}
-                                        alt=""
-                                    />
-                                ) : (
-                                    <i class="fi fi-rr-images"></i>
-                                )}
-                            </div>
+                            <label htmlFor="productImg1">
+                                <div style={{ height: "100%" }}>
+                                    {productImgs[1].raw ? (
+                                        <div
+                                            style={{
+                                                height: "100%",
+                                                backgroundSize: "cover",
+                                                backgroundPosition: "center",
+                                                backgroundImage: `url(${productImgs[1].raw})`
+                                            }}></div>
+                                    ) : (
+                                        <div className={styles.selectImgIconContainer}>
+                                            <i class="fi fi-rr-images"></i>
+                                        </div>
+                                    )}
+                                </div>
+                                <input
+                                    type="file"
+                                    id="productImg1"
+                                    hidden
+                                    accept="image/*"
+                                    onChange={(e) => handleImgState(e, 1)}
+                                />
+                            </label>
                         </div>
                         <div className={styles.grid2}>
-                            <div className={styles.innergrid}>
-                                {aiGeneratedImgs ? (
-                                    <img
-                                        style={{ width: "100%", objectFit: "cover" }}
-                                        src={aiGeneratedImgs[1].url}
-                                        alt=""
-                                    />
+                            <label htmlFor="productImg2">
+                                {productImgs[2].raw ? (
+                                    <div
+                                        style={{
+                                            height: "100%",
+                                            backgroundSize: "cover",
+                                            backgroundPosition: "center",
+                                            backgroundImage: `url(${productImgs[2].raw})`
+                                        }}></div>
                                 ) : (
-                                    <i class="fi fi-rr-images"></i>
+                                    <div className={styles.selectImgIconContainer}>
+                                        <i class="fi fi-rr-images"></i>
+                                    </div>
                                 )}
-                            </div>
+                                <input
+                                    type="file"
+                                    id="productImg2"
+                                    hidden
+                                    accept="image/*"
+                                    onChange={(e) => handleImgState(e, 2)}
+                                />
+                            </label>
                         </div>
                         <div className={styles.grid3}>
-                            <div className={styles.innergrid}>
-                                {aiGeneratedImgs ? (
-                                    <img
-                                        style={{ width: "100%", objectFit: "cover" }}
-                                        src={aiGeneratedImgs[2].url}
-                                        alt=""
-                                    />
+                            <label htmlFor="productImg3">
+                                {productImgs[3].raw ? (
+                                    <div
+                                        style={{
+                                            height: "100%",
+                                            backgroundSize: "cover",
+                                            backgroundPosition: "center",
+                                            backgroundImage: `url(${productImgs[3].raw})`
+                                        }}></div>
                                 ) : (
-                                    <i class="fi fi-rr-images"></i>
+                                    <div className={styles.selectImgIconContainer}>
+                                        <i class="fi fi-rr-images"></i>
+                                    </div>
                                 )}
-                            </div>
+                                <input
+                                    type="file"
+                                    id="productImg3"
+                                    hidden
+                                    accept="image/*"
+                                    onChange={(e) => handleImgState(e, 3)}
+                                />
+                            </label>
                         </div>
                     </div>
                     <p className={styles.title}>Shipping and delivery</p>
                     <div className={styles.shippingdelivery}>
                         <div className={styles.itemWeight}>
                             <IconInput
+                                value={productDetails.productWeight}
+                                name={"productWeight"}
+                                onChange={(e) => handleInputSubmit(e)}
                                 label={"Plant weight"}
                                 placeholder={12.0}
                                 rightIcon={<p>k g</p>}
@@ -248,18 +366,27 @@ const NewProductPage = () => {
                         </div>
                         <div className={styles.plantSize}>
                             <IconInput
+                                value={productDetails.productHeight}
+                                name={"productHeight"}
+                                onChange={(e) => handleInputSubmit(e)}
                                 label={"Height"}
                                 placeholder={12}
                                 rightIcon={<p>ft</p>}
                                 rightIconCSS={{ paddingRight: "5px" }}
                             />
                             <IconInput
+                                value={productDetails.productSpread}
+                                name={"productSpread"}
+                                onChange={(e) => handleInputSubmit(e)}
                                 label={"Plant Spread"}
                                 placeholder={12}
                                 rightIcon={<p>cm</p>}
                                 rightIconCSS={{ paddingRight: "5px" }}
                             />
                             <IconInput
+                                value={productDetails.productMaxHeight}
+                                name={"productMaxHeight"}
+                                onChange={(e) => handleInputSubmit(e)}
                                 label={"Maximum Height"}
                                 placeholder={12}
                                 rightIcon={<p>ft</p>}
@@ -270,6 +397,9 @@ const NewProductPage = () => {
                     <p className={styles.title}>Pricing</p>
                     <div className={styles.pricing}>
                         <IconInput
+                            value={productDetails.salePrice}
+                            name={"salePrice"}
+                            onChange={(e) => handleInputSubmit(e)}
                             label={"Pricing"}
                             placeholder={345}
                             leftIcon={<p>₹</p>}
@@ -280,6 +410,9 @@ const NewProductPage = () => {
                             }}
                         />
                         <IconInput
+                            value={productDetails.originPrice}
+                            name={"originPrice"}
+                            onChange={(e) => handleInputSubmit(e)}
                             label={"Compare at price"}
                             placeholder={555}
                             leftIcon={<p>₹</p>}
@@ -302,8 +435,8 @@ const NewProductPage = () => {
                             bg="var(--primary)"
                             color={"var(--white)"}
                             padding={"10px"}
-                            width={"25%"}
-                            title="Add product"
+                            // width={"25%"}
+                            title={createBtnText}
                         />
                     </div>
                 </div>
@@ -342,3 +475,83 @@ export const getServerSideProps = async (ctx) => {
         };
     }
 };
+
+const validateAllInputs = (data) => {
+    console.log(data);
+    if (typeof data.productName !== "string" || data.productName.trim() === "") {
+        warningToast("Please provide a valid product name.");
+        return false;
+    }
+
+    if (typeof data.productDescription !== "string" || data.productDescription.trim() === "") {
+        warningToast("Please provide a valid product description.");
+        return false;
+    }
+
+    if (typeof data.categories !== "string" || data.categories.trim() === "") {
+        warningToast("Please select a valid category for the product.");
+        return false;
+    }
+
+    if (typeof data.productQuantity !== "number" || isNaN(data.productQuantity) || data.productQuantity <= 0) {
+        warningToast("Please enter a valid product quantity.");
+        return false;
+    }
+
+    if (typeof data.productSKU !== "string" || data.productSKU.trim() === "") {
+        warningToast("Please provide a valid product SKU.");
+        return false;
+    }
+
+    if (typeof data.productWeight !== "number" || isNaN(data.productWeight) || data.productWeight <= 0) {
+        warningToast("Please enter a valid product weight.");
+        return false;
+    }
+
+    if (typeof Number(data.productHeight) !== "number" || isNaN(Number(data.productHeight)) || Number(data.productHeight) <= 0) {
+        warningToast("Please enter a valid product height.");
+        return false;
+    }
+
+    if (typeof data.productSpread !== "number" || isNaN(data.productSpread) || data.productSpread <= 0) {
+        warningToast("Please enter a valid product spread.");
+        return false;
+    }
+
+    if (typeof data.productMaxHeight !== "number" || isNaN(data.productMaxHeight) || data.productMaxHeight <= 0) {
+        warningToast("Please enter a valid maximum product height.");
+        return false;
+    }
+
+    if (typeof data.salePrice !== "number" || isNaN(data.salePrice) || data.salePrice <= 0) {
+        warningToast("Please enter a valid sale price.");
+        return false;
+    }
+
+    if (typeof data.originPrice !== "number" || isNaN(data.originPrice) || data.originPrice <= 0) {
+        warningToast("Please enter a valid origin price.");
+        return false;
+    }
+
+    if (!data[1].img && !data[1].img && !data[1].img) {
+        warningToast("Please add product images.");
+        return false;
+    }
+};
+
+// const generateImages = async () => {
+//     setLoading((prev) => ({ ...prev, aiImages: true }));
+//     const data = await generateImageUsingAI(productname);
+//     const response = data.data;
+//     setLoading((prev) => ({ ...prev, aiImages: false }));
+//     setAiGeneratedImgs(response);
+// };
+
+// const generateDescription = async () => {
+//     setLoading((prev) => ({ ...prev, aiDescription: true }));
+//     const data = await generateProductDescriptionUsingAI(productname);
+//     console.log(data);
+//     // setDescription(data.response.choices[0].message.content);
+//     setLoading((prev) => ({ ...prev, aiDescription: false }));
+//     // console.log(data.response.choices[0].message.content);
+// };
