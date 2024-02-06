@@ -7,7 +7,6 @@
 @import url(https://fonts.googleapis.com/css2?family=Public+Sans:wght@100;200;300;400;500;600;800;900&display=swap);
 @import url(https://fonts.googleapis.com/css2?family=Ubuntu:wght@100;200;300;400;500;600;700&display=swap);
 
-
 /* @layer base {
   html {
     font-family: "Poppins", system-ui, sans-serif;
@@ -35,9 +34,11 @@
   --red: #ff0066;
   --lowLightRed: #ff006620;
   --toastify-color-success: #005fff !important;
+  --lowLightGrey: #f2f1f1;
 
   --font10: 10px;
   --font13: 13px;
+  --font14: 14px;
   --font16: 16px;
   --font18: 18px;
   --font20: 20px;
@@ -97,12 +98,11 @@ div {
   -webkit-user-select: none;
 }
 
-
 .react-loading-skeleton {
   height: 100%;
   width: 100%;
 }
 
-.chart{
+.chart {
   max-width: 100% !important;
 }

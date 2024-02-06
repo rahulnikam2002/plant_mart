@@ -66,14 +66,31 @@
 }
 
 .popUp {
-  /* box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; */
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   position: absolute;
   height: 100%;
   width: 100%;
-  background: gainsboro;
-  border: 1px solid var(--borderGrey);
-  padding: 5px;
+  border-radius: 10px;
+  background: var(--white);
+  border: 2px solid var(--borderGrey);
+  padding: 10px;
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+.popUp > p {
+  font-size: var(--font16);
+  cursor: pointer;
+  font-weight: var(--w500);
+  color: var(--primary);
+  width: fit-content;
+  height: fit-content;
+  padding: 1px 8px;
+  background: var(--lowLightGrey);
+  border-radius: var(--smallCurve);
+}
+
+.icon > i {
+  color: var(--black);
 }

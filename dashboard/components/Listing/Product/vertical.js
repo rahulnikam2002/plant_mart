@@ -51,11 +51,11 @@ const ProductVerticalListing = (props) => {
 
         {
           isPopupVisible == true && <div className={styles.popUp}>
-
-            <p>Edit</p>
             <p>Unpublished</p>
-            <p style={{ color: "var(--red)" }} >Delete</p>
-            <div onClick={handlePopUpClose} style={{ position: "absolute", top: "5px", right: "5px", cursor: "pointer" }}>
+            <p>Edit</p>
+            <p>Delete</p>
+
+            <div className={styles.icon} onClick={handlePopUpClose} style={{ position: "absolute", top: "8px", right: "5px", cursor: "pointer" }}>
               <i class="fi fi-rr-cross-small"></i>
             </div>
           </div>
@@ -63,7 +63,7 @@ const ProductVerticalListing = (props) => {
 
       </div>
 
-    </div>
+    </div >
   )
 }
 
