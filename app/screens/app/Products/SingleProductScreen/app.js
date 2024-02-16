@@ -1,6 +1,6 @@
-import { Animated, Dimensions } from "react-native";
-import { MediumText, SmallHeadingText, SmallText, SubHeadingText } from "../../../../Components/Text/Headings/Headings";
-import { useEffect, useRef, useState } from "react";
+import { Animated } from "react-native";
+import { MediumText, SmallText } from "../../../../Components/Text/Headings/Headings";
+import { useEffect, useState } from "react";
 import { View } from "react-native";
 import { StyleSheet } from "react-native";
 import { fonts } from "../../../../utils/constants/fonts/fonts";
@@ -8,19 +8,21 @@ import { ProductPageHeader } from "../../../../Components/Headers/PageHeader/Pro
 import { Colors } from "../../../../utils/constants/colors/colors";
 import LottieView from "lottie-react-native";
 import fastDeliveryLottieJSON from "../../../../Static/lottie/fastDelivery.json";
-import deliveryManLottieJSON from "../../../../Static/lottie/deliveryMan.json";
-import returnDeliveryLottieJSON from "../../../../Static/lottie/retrunDelivery.json";
 import { TouchableButton } from "../../../../Components/Button/Button";
 import { Icon } from "@rneui/base";
 import { ScrollView, TextInput } from "react-native-gesture-handler";
 import { TouchableOpacity } from "react-native";
 import { pinCodes } from "../../../../Static/data/pincodes/pincodes";
 import { infoToast, successToast } from "../../../../utils/toasts/toasts";
-import Markdown from "react-native-markdown-display";
+import { useRoute } from "@react-navigation/native";
 
 const IMGHEIGHT = 350;
 
-export const SingleProductScreen = ({ routes, navigation }) => {
+export const SingleProductScreen = ({ navigation }) => {
+    const { singleProductData } = useRoute().params;
+    const { productImg, productName, description, productSalePrice, productPrice } = singleProductData;
+    const [finalProductPrice, setFinalProductPrice] = useState(productSalePrice);
+
     return (
         <View style={{ height: "100%" }}>
             <ProductPageHeader
@@ -33,11 +35,23 @@ export const SingleProductScreen = ({ routes, navigation }) => {
             />
             <ScrollView keyboardShouldPersistTaps={"always"}>
                 {/* Product images */}
-                <ProductImages />
+                <ProductImages image={productImg} />
 
                 <View style={styles.mainInfoSection}>
                     {/* Product name price info */}
-                    <ProductInfo />
+                    <ProductInfo
+                        productName={productName}
+                        salePrice={productSalePrice}
+                        originalPrice={productPrice}
+                        description={description}
+                        productPrice={finalProductPrice}
+                    />
+
+                    {/* Delivery & services */}
+                    <QuantitySelection
+                        setFinalProductPrice={setFinalProductPrice}
+                        productSalePrice={productSalePrice}
+                    />
 
                     {/* Express delivery */}
                     <ExpressDeliveryContainer />
@@ -48,10 +62,7 @@ export const SingleProductScreen = ({ routes, navigation }) => {
                     {/* Delivery & services */}
                     <DeliveryAndServices />
 
-                    {/* Delivery & services */}
-                    <QuantitySelection />
-
-                    <ProductDescription />
+                    <ProductDescription description={description} />
                     {/* <View style={{ marginVertical: 40 }}></View> */}
                 </View>
             </ScrollView>
@@ -59,41 +70,50 @@ export const SingleProductScreen = ({ routes, navigation }) => {
     );
 };
 
-const ProductImages = () => {
-    const scrollRef = useRef(new Animated.Value(0)).current;
-
+const ProductImages = ({ image }) => {
     return (
         <View style={{ backgroundColor: Colors.white }}>
             <Animated.Image
-                style={styles.banner(scrollRef)}
+                style={styles.banner}
                 source={{
-                    uri: "https://i.etsystatic.com/20034067/r/il/c2c332/3613734930/il_fullxfull.3613734930_1r73.jpg"
+                    uri: image
                 }}
                 resizeMode={"cover"}></Animated.Image>
         </View>
     );
 };
 
-const ProductInfo = () => {
+const ProductInfo = ({ productName, salePrice, originalPrice, description, productPrice }) => {
     return (
         <View style={styles.productInfo}>
-            <MediumText sx={{ fontFamily: fonts.Montserrat[500], fontSize: 15, marginBottom: 5 }}>
-                Bring Home the Finest Mango Plants for a Bounty of Juicy Delights.
-            </MediumText>
+            <MediumText sx={{ fontFamily: fonts.Montserrat[500], fontSize: 15, marginBottom: 5 }}>{productName}</MediumText>
             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
                 <MediumText
                     color={Colors.lightBlack[1]}
                     sx={{ fontSize: 12 }}>
-                    MRP <MediumText sx={{ textDecorationLine: "line-through", fontSize: 12 }}>₹1256</MediumText>
+                    MRP <MediumText sx={{ textDecorationLine: "line-through", fontSize: 12 }}>₹{originalPrice}</MediumText>
                 </MediumText>
                 <MediumText>
                     <MediumText
                         color={Colors.black[10]}
                         sx={{ fontFamily: fonts.Montserrat[500], fontSize: 20 }}>
-                        ₹599
+                        ₹{salePrice}
                     </MediumText>
                 </MediumText>
             </View>
+            <View style={styles.shortDescription}>
+                <SmallText
+                    color={Colors.black[9]}
+                    sx={{ marginVertical: 5, fontFamily: fonts.Montserrat[500] }}>
+                    {description?.substring(0, 200)}...
+                </SmallText>
+            </View>
+            <TouchableButton
+                hidden={false}
+                title={`Get now for ${productPrice}`}
+                txtWidth={"100%"}
+                btnWidth={"100%"}
+            />
         </View>
     );
 };
@@ -177,8 +197,8 @@ const DeliveryAndServices = () => {
     );
 };
 
-const QuantitySelection = () => {
-    const [productQuantity, setProductQuantity] = useState(1);
+const QuantitySelection = ({ setFinalProductPrice, productSalePrice }) => {
+    const [updateQuantity, setProductQuantity] = useState(1);
 
     const incrementCount = () => {
         setProductQuantity((prevCount) => prevCount + 1);
@@ -187,6 +207,11 @@ const QuantitySelection = () => {
     const decrementCount = () => {
         setProductQuantity((prevCount) => (prevCount > 1 ? prevCount - 1 : 1));
     };
+
+    useEffect(() => {
+        setFinalProductPrice(Number(productSalePrice) * updateQuantity);
+    }, [updateQuantity]);
+
     return (
         <View style={styles.QuantitySelectionSection}>
             <View style={styles.sectionHeader}>
@@ -201,7 +226,7 @@ const QuantitySelection = () => {
             </View>
             <View></View>
             <View style={styles.QuantitySelectionOptions}>
-                <MediumText sx={{ fontSize: 20, fontFamily: fonts.Montserrat[500] }}>{productQuantity}</MediumText>
+                <MediumText sx={{ fontSize: 20, fontFamily: fonts.Montserrat[500] }}>{updateQuantity}</MediumText>
                 <View style={styles.increAndDec}>
                     <TouchableOpacity
                         style={styles.QuantityBtns}
@@ -299,9 +324,7 @@ const CheckDelivery = ({ scrollViewRef }) => {
     );
 };
 
-const ProductDescription = () => {
-    const description = `This is product information`;
-
+const ProductDescription = ({ description }) => {
     return (
         <View style={styles.productInfo}>
             <View style={styles.sectionHeader}>
@@ -313,18 +336,21 @@ const ProductDescription = () => {
             </View>
 
             <View>
-                <SmallText mergeStyle={true}>{description}</SmallText>
+                <SmallText
+                    color={Colors.black[9]}
+                    sx={{ fontSize: 12 }}
+                    mergeStyle={true}>
+                    {description}
+                </SmallText>
             </View>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    banner: (scrollRef) => ({
-        height: IMGHEIGHT,
-        borderBottomLeftRadius: 15,
-        borderBottomRightRadius: 15
-    }),
+    banner: {
+        height: IMGHEIGHT
+    },
     productInfo: {
         backgroundColor: Colors.white,
         paddingHorizontal: 15,
@@ -430,5 +456,12 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         borderRadius: 5
+    },
+    shortDescription: {
+        backgroundColor: Colors.bgGrey,
+        borderRadius: 5,
+        paddingVertical: 5,
+        paddingHorizontal: 10,
+        marginVertical: 10
     }
 });

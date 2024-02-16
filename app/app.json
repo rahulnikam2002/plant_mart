@@ -1,18 +1,16 @@
 {
-  "expo": {
-    "name": "app",
-    "slug": "app",
-    "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "android": {
-      "package": "com.plantmart.app"
-    },
-    "extra": {
-      "eas": {
-        "projectId": "ef15f3b8-088d-4192-a230-df7997939116"
-      }
+    "expo": {
+        "name": "app",
+        "slug": "plant-mart",
+        "version": "1.0.0",
+        "assetBundlePatterns": ["**/*"],
+        "android": {
+            "package": "com.plantmart.app"
+        },
+        "extra": {
+            "eas": {
+                "projectId": "a2c962e3-fd58-4730-85dd-319cdaa0edad"
+            }
+        }
     }
-  }
 }

@@ -63,6 +63,8 @@ const NewProductPage = () => {
         originPrice: null
     });
 
+    console.log(productDetails);
+
     const handleAddProduct = async () => {
         try {
             // const validateData = validateAllInputs({ ...productDetails, ...productImgs });
@@ -71,11 +73,17 @@ const NewProductPage = () => {
                 const allSecureLinks = await uploadAllImages();
                 setCreateBtnText("Creating new product...");
 
+                /**
+                 **  Creating cat. array from string
+                 *  */
                 productDetails.categories =
                     typeof productDetails.categories === "object"
                         ? productDetails.categories.join(",").replace(/\s/g, "").split(",")
                         : productDetails.categories.replace(/\s/g, "").split(",");
 
+                /**
+                 ** Adding all images to array
+                 */
                 productDetails.featuredImages = allSecureLinks;
 
                 const createNewProduct = await axios.post("http://localhost:3000/api/products/new", productDetails);

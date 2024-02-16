@@ -9,79 +9,92 @@ import { HorizontalBannerArea } from "../../../Components/Advertisement/BannerAr
 import { multipleBaneerAds } from "../../../Static/data/Ads/Ads";
 import { ProductGridLayout } from "../../../Components/Products/Layouts/Grid/Grid";
 import { hugeProducts, products } from "../../../Static/data/products/data";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { networkIP } from "../../../utils/constants/ip";
+import { errorToast } from "../../../utils/toasts/toasts";
+import { TextInput } from "react-native";
 
 export const ProductsScreen = ({ route }) => {
-  const [allProducts, setAllProducts] = useState();
-  const [loading, setLoading] = useState(true);
-  const title = route.params?.title;
+    const [allProducts, setAllProducts] = useState();
+    const [loading, setLoading] = useState(true);
+    const [refresPage, setRefreshPage] = useState(false);
+    const title = route.params?.title;
 
-  const fetchAllProducts = async () => {
-    const getAllProducts = await axios.get(`${networkIP}/api/products/search`);
-    const products = getAllProducts.data;
-    setAllProducts(hugeProducts)
-    setLoading(false)
-  }
+    const fetchAllProducts = useCallback(async () => {
+        try {
+            console.log("inside");
+            const getAllProducts = await axios.get(`${networkIP}/api/products/search`);
+            const products = getAllProducts.data;
+            setAllProducts(products);
+            setLoading(false);
+        } catch (error) {
+            console.error("Error fetching products:", error);
+            setLoading(false);
+            errorToast("Something went wrong", "Please try again");
+        }
+    }, [setAllProducts]);
 
-  useEffect(() => {
-    fetchAllProducts()
-  }, []);
+    useEffect(() => {
+        fetchAllProducts();
+    }, [fetchAllProducts]);
 
-  return (
-    <View style={{ height: "100%" }}>
-      {loading && (
-        <View style={styles.pageLoader}>
-          <ActivityIndicator
-            color={Colors.bgBlack}
-            size={30}
-          />
+    return (
+        <View style={{ height: "100%" }}>
+            {loading && (
+                <View style={styles.pageLoader}>
+                    <ActivityIndicator
+                        color={Colors.bgBlack}
+                        size={30}
+                    />
+                </View>
+            )}
+            <View style={styles.header}>
+                <ProductPageHeader
+                    title={title ? title : "Products"}
+                    subTitle={"35622 Items"}
+                />
+            </View>
+            <View style={styles.categoryFilter}>
+                <RoundedCarousel data={cahceSearch} />
+            </View>
+            {!loading && allProducts && (
+                <View style={styles.productsArea}>
+                    <ProductGridLayout
+                        refreshControl={fetchAllProducts}
+                        products={allProducts}
+                    />
+                </View>
+            )}
         </View>
-      )}
-      <View style={styles.header}>
-        <ProductPageHeader
-          title={title ? title : "Products"}
-          subTitle={"35622 Items"}
-        />
-      </View>
-      <View style={styles.categoryFilter}>
-        <RoundedCarousel data={cahceSearch} />
-      </View>
-      {!loading && allProducts && (
-        <View style={styles.productsArea}>
-          <ProductGridLayout products={allProducts} />
-        </View>
-      )}
-    </View>
-  );
+    );
 };
 
 const styles = StyleSheet.create({
-  header: {
-    backgroundColor: Colors.white
-  },
-  categoryFilter: {
-    backgroundColor: Colors.white,
-    paddingHorizontal: 15,
-    paddingVertical: 15,
-    marginTop: 2
-  },
-  productsArea: {
-    backgroundColor: Colors.white,
-    paddingHorizontal: 2,
-    // paddingVertical: 15,
-    marginTop: 1,
-    marginBottom: "30%"
-  },
-  pageLoader: {
-    height: "100%",
-    // backgroundColor: "#00000040",
-    position: "absolute",
-    top: 0,
-    width: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-    zIndex: 500
-  }
+    header: {
+        backgroundColor: Colors.white
+    },
+    categoryFilter: {
+        backgroundColor: Colors.white,
+        paddingHorizontal: 15,
+        paddingVertical: 15,
+        marginTop: 2
+    },
+    productsArea: {
+        backgroundColor: Colors.white,
+        paddingHorizontal: 2,
+        // paddingVertical: 15,
+        marginTop: 1,
+        marginBottom: "30%"
+    },
+    pageLoader: {
+        height: "100%",
+        // backgroundColor: "#00000040",
+        position: "absolute",
+        top: 0,
+        width: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+        zIndex: 500
+    }
 });
