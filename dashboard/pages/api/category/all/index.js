@@ -18,8 +18,17 @@ export default async function handler(req, res) {
     try {
         console.log("first");
         const allCategories = await productModel.find({}).select("categories");
+        const uniqueCategories = new Set();
 
-        return res.send(allCategories);
+        allCategories.forEach((item) => {
+            item.categories.forEach((category) => {
+                uniqueCategories.add(category);
+            });
+        });
+
+        const uniqueCategoriesArray = [...uniqueCategories];
+
+        return res.send(uniqueCategoriesArray);
     } catch (error) {
         // Handle errors and send appropriate status code and error message
         const status = error.status || 500;
