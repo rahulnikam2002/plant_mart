@@ -5,50 +5,53 @@ import { Colors } from "../../utils/constants/colors/colors";
 import React, { useState } from "react";
 import { View } from "react-native";
 
-export const Input = ({ placeholder, onChange, sx, onSubmit }) => {
-  const { fontsLoaded, fontError } = useGoogleFonts();
-  if (!fontsLoaded && !fontError) {
-    return null;
-  }
+export const Input = ({ placeholder, onChange, sx, onSubmit, value, keyboardType = "default", editable = true }) => {
+    const { fontsLoaded, fontError } = useGoogleFonts();
+    if (!fontsLoaded && !fontError) {
+        return null;
+    }
 
-  return (
-    <TextInput
-      selectionColor={Colors.lightBlack[1]}
-      style={[styles.input, sx]}
-      placeholder={placeholder}
-      onChangeText={(text) => onChange(text)}
-      onSubmitEditing={() => onSubmit()}
-    />
-  );
+    return (
+        <TextInput
+            selectionColor={Colors.lightBlack[1]}
+            style={[styles.input, sx]}
+            placeholder={placeholder}
+            onChangeText={(text) => onChange(text)}
+            onSubmitEditing={() => onSubmit()}
+            keyboardType={keyboardType}
+            value={value}
+            editable={editable}
+        />
+    );
 };
 
 export const PasswordInput = ({ placeholder, onChange, sx }) => {
-  const { fontsLoaded, fontError } = useGoogleFonts();
-  if (!fontsLoaded && !fontError) {
-    return null;
-  }
+    const { fontsLoaded, fontError } = useGoogleFonts();
+    if (!fontsLoaded && !fontError) {
+        return null;
+    }
 
-  return (
-    <TextInput
-      secureTextEntry={true}
-      selectionColor={Colors.lightBlack[1]}
-      style={[styles.input, sx]}
-      placeholder={placeholder}
-      onChangeText={(password) => onChange(password)}
-    />
-  );
+    return (
+        <TextInput
+            secureTextEntry={true}
+            selectionColor={Colors.lightBlack[1]}
+            style={[styles.input, sx]}
+            placeholder={placeholder}
+            onChangeText={(password) => onChange(password)}
+        />
+    );
 };
 
 const styles = StyleSheet.create({
-  input: {
-    width: "100%",
-    fontFamily: "Montserrat_400Regular",
-    borderWidth: 2,
-    borderColor: Colors.bgGrey,
-    marginTop: 10,
-    fontSize: 16,
-    fontWeight: "500",
-    paddingHorizontal: 10,
-    paddingVertical: 15
-  },
+    input: {
+        width: "100%",
+        fontFamily: "Montserrat_400Regular",
+        borderWidth: 2,
+        borderColor: Colors.bgGrey,
+        marginTop: 10,
+        fontSize: 16,
+        fontWeight: "500",
+        paddingHorizontal: 10,
+        paddingVertical: 15
+    }
 });

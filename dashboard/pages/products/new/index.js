@@ -60,7 +60,7 @@ const NewProductPage = () => {
         productSpread: null,
         productMaxHeight: null,
         salePrice: null,
-        originPrice: null
+        originalPrice: null
     });
 
     console.log(productDetails);
@@ -93,6 +93,7 @@ const NewProductPage = () => {
             }
         } catch (error) {
             console.log({ error });
+            setCreateBtnText("Add Product");
             errorToast("Product not added, try again");
         }
     };
@@ -418,8 +419,8 @@ const NewProductPage = () => {
                             }}
                         />
                         <IconInput
-                            value={productDetails.originPrice}
-                            name={"originPrice"}
+                            value={productDetails.originalPrice}
+                            name={"originalPrice"}
                             onChange={(e) => handleInputSubmit(e)}
                             label={"Compare at price"}
                             placeholder={555}
@@ -536,7 +537,7 @@ const validateAllInputs = (data) => {
         return false;
     }
 
-    if (typeof data.originPrice !== "number" || isNaN(data.originPrice) || data.originPrice <= 0) {
+    if (typeof data.originalPrice !== "number" || isNaN(data.originalPrice) || data.originalPrice <= 0) {
         warningToast("Please enter a valid origin price.");
         return false;
     }

@@ -18,7 +18,7 @@ export const Sidebar = () => {
 
     const searchForMenuItem = (menu, searchTerm) => {
         return menu.reduce((matches, menu) => {
-            const isMatching = menu.menu.toLowerCase().includes(searchTerm.toLowerCase());
+            const isMatching = menu.menu.toLowerCase().includes(searchTerm?.toLowerCase());
             if (menu.subMenu && menu.subMenu.length > 0) {
                 const isSubMenuMatching = searchForMenuItem(menu.subMenu, searchTerm);
                 return isMatching || isSubMenuMatching.length > 0 ? [...matches, menu] : matches;
@@ -30,6 +30,7 @@ export const Sidebar = () => {
     console.log("useState before activeTab", activeTab);
 
     const handleSearchMenu = (e) => {
+        console.log(e);
         const matchingItems = searchForMenuItem(dashboardMenu, e);
         setMenuData(matchingItems);
     };
@@ -119,12 +120,12 @@ const dashboardMenu = [
         rightIcon: <i className="fi fi-rr-angle-small-right"></i>,
         leftIcon: <i className="fi fi-rr-house-chimney"></i>
     },
-    {
-        menu: "Sales",
-        link: "/sales",
-        rightIcon: <i className="fi fi-rr-angle-small-right"></i>,
-        leftIcon: <i className="fi fi-br-basket-shopping-simple"></i>
-    },
+    // {
+    //     menu: "Sales",
+    //     link: "/sales",
+    //     rightIcon: <i className="fi fi-rr-angle-small-right"></i>,
+    //     leftIcon: <i className="fi fi-br-basket-shopping-simple"></i>
+    // },
     {
         menu: "Products",
         link: "#",
@@ -153,22 +154,22 @@ const dashboardMenu = [
                 menu: "All orders",
                 link: "/orders",
                 rightIcon: <i className="fi fi-sr-arrow-circle-right"></i>
-            },
-            {
-                menu: "Manage orders",
-                link: "/orders/manage",
-                rightIcon: <i className="fi fi-sr-arrow-circle-right"></i>
-            },
-            {
-                menu: "Add new orders",
-                link: "/orders/new",
-                rightIcon: <i className="fi fi-sr-arrow-circle-right"></i>
-            },
-            {
-                menu: "Orders reports",
-                link: "/orders/reports",
-                rightIcon: <i className="fi fi-sr-arrow-circle-right"></i>
             }
+            // {
+            //     menu: "Manage orders",
+            //     link: "/orders/manage",
+            //     rightIcon: <i className="fi fi-sr-arrow-circle-right"></i>
+            // },
+            // {
+            //     menu: "Add new orders",
+            //     link: "/orders/new",
+            //     rightIcon: <i className="fi fi-sr-arrow-circle-right"></i>
+            // },
+            // {
+            //     menu: "Orders reports",
+            //     link: "/orders/reports",
+            //     rightIcon: <i className="fi fi-sr-arrow-circle-right"></i>
+            // }
         ]
     },
     {

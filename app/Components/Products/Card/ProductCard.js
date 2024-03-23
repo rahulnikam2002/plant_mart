@@ -22,26 +22,13 @@ export const ProductCard = ({
     imageGallery,
     description
 }) => {
-    const singleProductData = {
-        productName,
-        productImg,
-        productPrice,
-        productSalePrice,
-        stars,
-        ratings,
-        categories,
-        offer,
-        id,
-        imageGallery,
-        description
-    };
-    console.log({ singleProductData });
     const navigation = useNavigation();
     const mergeCat = categories[0] + ", " + categories[1];
     const newCategory = mergeCat.length > 27 ? mergeCat.substring(0, 27) + "..." : mergeCat;
+    const productDiscount = ((productPrice - productSalePrice) / productPrice) * 100;
     return (
         <TouchableOpacity
-            onPress={() => navigation.navigate("singleProductsScreen", { singleProductData })}
+            onPress={() => navigation.navigate("singleProductsScreen", { productId: id })}
             activeOpacity={0.8}
             style={[styles.singleProductCard, { ...sx }]}>
             <View style={styles.imgContainer}>
@@ -79,10 +66,10 @@ export const ProductCard = ({
                         <SmallText
                             sx={{ textDecorationLine: "line-through" }}
                             color={Colors.lightBlack[3]}>
-                            ₹{productSalePrice}
+                            ₹{productPrice}
                         </SmallText>
                     )}
-                    {productPrice && <SmallText sx={{ fontFamily: fonts.Montserrat[500] }}>₹{productPrice}</SmallText>}
+                    {productPrice && <SmallText sx={{ fontFamily: fonts.Montserrat[500] }}>₹{productSalePrice}</SmallText>}
                     {productSalePrice && (
                         <LinearGradient
                             style={{ borderRadius: 50 }}
@@ -93,7 +80,7 @@ export const ProductCard = ({
                             <SmallText
                                 color={"white"}
                                 sx={{ paddingHorizontal: 5, fontSize: 10 }}>
-                                80% off
+                                {productDiscount.toFixed()}% off
                             </SmallText>
                         </LinearGradient>
                     )}

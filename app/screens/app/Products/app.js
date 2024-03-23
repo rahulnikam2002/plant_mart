@@ -52,7 +52,7 @@ export const ProductsScreen = ({ route }) => {
             <View style={styles.header}>
                 <ProductPageHeader
                     title={title ? title : "Products"}
-                    subTitle={"35622 Items"}
+                    subTitle={`${allProducts && allProducts.length}  Items`}
                 />
             </View>
             <View style={styles.categoryFilter}>

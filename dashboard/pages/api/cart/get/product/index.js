@@ -9,32 +9,16 @@ export default async function handler(req, res) {
     const { method } = req;
 
     // Check if the HTTP method is not POST, return an error response
-    if (method !== "POST") {
+    if (method !== "GET") {
         return res.status(401).send({
             message: "Method invalid"
         });
     }
 
     // Extract productIds and authToken from request body and headers respectively
-    const { productId, quantity } = req.body;
     const authToken = req.headers["user-auth-token"];
 
-    console.log({ productId, quantity, authToken });
-
     try {
-        // Check if the productIds array is empty, throw an error if so
-        if (productId.length === 0)
-            throw {
-                status: 404,
-                msg: "Empty products cannot be added to cart"
-            };
-
-        if (quantity === 0 || quantity <= 0)
-            throw {
-                status: 404,
-                msg: "Quantity should be at least 1 and non negative number"
-            };
-
         // Validate the provided authToken
         const checkAuthToken = validateAuthToken(authToken);
         console.log("checkAuthToken: ", checkAuthToken);
@@ -49,21 +33,13 @@ export default async function handler(req, res) {
         // Extract userId from the validated authToken
         const userId = checkAuthToken.id;
 
-        const checkProductAlreadyExists = await cartModel.findOne({ userId, productId });
-        let createNewProductInCart;
-
-        if (!checkProductAlreadyExists) {
-            createNewProductInCart = await cartModel.create({ userId, productId, quantity });
-        } else {
-            const { _id } = checkProductAlreadyExists._doc;
-            let updateQuantity = await cartModel.updateOne({ _id }, { $set: { quantity } });
-            createNewProductInCart = updateQuantity;
-        }
+        const fetchProductsFromCart = await cartModel.find({ userId }).populate("productId").populate("userId");
 
         // Send a success response with the added products to cart
-        return res.send({ userId, productId, quantity, checkProductAlreadyExists, createNewProductInCart });
+        return res.send(fetchProductsFromCart);
     } catch (error) {
         // Handle errors and send appropriate status code and error message
+        console.log(error);
         const status = error.status || 500;
         return res.status(status).send({
             msg: error.msg

@@ -13,6 +13,8 @@ import { IconButton } from "../../Components/Icons/Icon";
 import { MediumText } from "../../Components/Text/Headings/Headings";
 import { fonts } from "../../utils/constants/fonts/fonts";
 import { SingleProductScreen } from "../../screens/app/Products/SingleProductScreen/app";
+import { ProfileScreen } from "../../screens/app/profile/Profile";
+import { NewAddress } from "../../screens/app/profile/Address/NewAddress.Screen";
 
 const Stack = createStackNavigator();
 
@@ -52,6 +54,15 @@ export const App = () => {
                 component={ProductsScreen}
             />
             <Stack.Screen
+                options={{
+                    headerShown: true,
+                    title: "Profile",
+                    headerTitleAlign: "center"
+                }}
+                name="ProfileScreen"
+                component={ProfileScreen}
+            />
+            <Stack.Screen
                 name="singleProductsScreen"
                 options={({ navigation }) => ({
                     // gestureDirection: "vertical",
@@ -81,6 +92,20 @@ export const App = () => {
                     ),
                     headerTitleAlign: "center",
                     title: "Order overview",
+                    headerTitleStyle: { fontFamily: fonts.Montserrat[600], fontSize: 16 }
+                })}
+            />
+            <Stack.Screen
+                name="NewAddressScreen"
+                component={NewAddress}
+                options={({ navigation }) => ({
+                    // gestureDirection: "vertical",
+                    // gestureResponseDistance: 250,
+                    gestureEnabled: false,
+                    cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
+                    headerShown: true,
+                    headerTitleAlign: "center",
+                    title: "New Address",
                     headerTitleStyle: { fontFamily: fonts.Montserrat[600], fontSize: 16 }
                 })}
             />

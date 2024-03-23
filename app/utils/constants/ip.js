@@ -1,1 +1,1 @@
-export const networkIP = "http://192.168.110.96:3000";
+export const networkIP = "http://192.168.90.96:3000";

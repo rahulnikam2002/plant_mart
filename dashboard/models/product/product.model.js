@@ -33,7 +33,7 @@ const productSchema = new mongoose.Schema(
         salePrice: {
             type: String
         },
-        originPrice: {
+        originalPrice: {
             type: String,
             required: true
         }

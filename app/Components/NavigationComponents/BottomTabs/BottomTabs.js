@@ -10,81 +10,81 @@ import { View } from "react-native";
 import { StyleSheet } from "react-native";
 
 export const BottomTabs = ({ navigation }) => {
-  return (
-    <View style={styles.bottomTabs}>
-      <View>
-        <IconButton
-          name="home-outline"
-          size={25}
-          color={color}
-          type="ionicon"
-          onPress={() => navigation.navigate("homeScreen")}
-        />
-        {/* <SmallText sx={{ textAlign: "center" }}>Home</SmallText> */}
-      </View>
-      <View>
-        <IconButton
-          name="search-outline"
-          size={25}
-          color={color}
-          type="ionicon"
-          onPress={() => navigation.navigate("searchScreen")}
-        />
-        {/* <SmallText sx={{ textAlign: "center" }}>Search</SmallText> */}
-      </View>
-      <View>
-        <IconButton
-          name="leaf-outline"
-          size={25}
-          color={color}
-          type="ionicon"
-          onPress={() => navigation.navigate("productsScreen")}
-        />
-        {/* <SmallText sx={{ textAlign: "center" }}>Products</SmallText> */}
-      </View>
-      <View>
-        <IconButton
-          name="cart-outline"
-          size={25}
-          color={color}
-          type="ionicon"
-          onPress={() => navigation.navigate("cartScreen")}
-        />
-        {/* <SmallText sx={{ textAlign: "center" }}>Cart</SmallText> */}
-      </View>
-      <View>
-        <IconButton
-          name="person-outline"
-          size={25}
-          color={color}
-          type="ionicon"
-          onPress={() => navigation.navigate("searchScreen")}
-        />
-        {/* <SmallText sx={{ textAlign: "center" }}>Profile</SmallText> */}
-      </View>
-    </View>
-  );
+    return (
+        <View style={styles.bottomTabs}>
+            <View>
+                <IconButton
+                    name="home-outline"
+                    size={25}
+                    color={color}
+                    type="ionicon"
+                    onPress={() => navigation.navigate("homeScreen")}
+                />
+                {/* <SmallText sx={{ textAlign: "center" }}>Home</SmallText> */}
+            </View>
+            <View>
+                <IconButton
+                    name="search-outline"
+                    size={25}
+                    color={color}
+                    type="ionicon"
+                    onPress={() => navigation.navigate("searchScreen")}
+                />
+                {/* <SmallText sx={{ textAlign: "center" }}>Search</SmallText> */}
+            </View>
+            <View>
+                <IconButton
+                    name="leaf-outline"
+                    size={25}
+                    color={color}
+                    type="ionicon"
+                    onPress={() => navigation.navigate("productsScreen")}
+                />
+                {/* <SmallText sx={{ textAlign: "center" }}>Products</SmallText> */}
+            </View>
+            <View>
+                <IconButton
+                    name="cart-outline"
+                    size={25}
+                    color={color}
+                    type="ionicon"
+                    onPress={() => navigation.navigate("cartScreen")}
+                />
+                {/* <SmallText sx={{ textAlign: "center" }}>Cart</SmallText> */}
+            </View>
+            <View>
+                <IconButton
+                    name="person-outline"
+                    size={25}
+                    color={color}
+                    type="ionicon"
+                    onPress={() => navigation.navigate("ProfileScreen")}
+                />
+                {/* <SmallText sx={{ textAlign: "center" }}>Profile</SmallText> */}
+            </View>
+        </View>
+    );
 };
 
 const styles = StyleSheet.create({
-  bottomTabs: {
-    flexDirection: "row",
-    width: "100%",
-    justifyContent: "space-between",
-    paddingHorizontal: 20,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 9
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 12.35,
-    backgroundColor: "white"
-  }
+    bottomTabs: {
+        flexDirection: "row",
+        width: "100%",
+        justifyContent: "space-between",
+        paddingHorizontal: 20,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 9
+        },
+        shadowOpacity: 0.5,
+        shadowRadius: 12.35,
+        backgroundColor: "white"
+    }
 });
 
 {
-  /* <Tab.Navigator
+    /* <Tab.Navigator
 screenOptions={{
   tabBarShowLabel: false,
   headerShown: false,

@@ -18,16 +18,13 @@ const userSchema = new mongoose.Schema({
             street: {
                 type: String
             },
-            city: {
-                type: String
-            },
-            state: {
+            area: {
                 type: String
             },
             postalCode: {
                 type: String
             },
-            country: {
+            landMark: {
                 type: String
             }
         }
@@ -63,19 +60,6 @@ const userSchema = new mongoose.Schema({
                     ref: "Product"
                 }
             ]
-        }
-    ],
-    referralCode: {
-        type: String
-    },
-    referredBy: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
-    },
-    referredUsers: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
         }
     ]
 });

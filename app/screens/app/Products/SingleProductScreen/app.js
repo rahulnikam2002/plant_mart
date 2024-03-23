@@ -1,6 +1,6 @@
-import { Animated } from "react-native";
+import { ActivityIndicator, Animated } from "react-native";
 import { MediumText, SmallText } from "../../../../Components/Text/Headings/Headings";
-import { useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { View } from "react-native";
 import { StyleSheet } from "react-native";
 import { fonts } from "../../../../utils/constants/fonts/fonts";
@@ -13,21 +13,66 @@ import { Icon } from "@rneui/base";
 import { ScrollView, TextInput } from "react-native-gesture-handler";
 import { TouchableOpacity } from "react-native";
 import { pinCodes } from "../../../../Static/data/pincodes/pincodes";
-import { infoToast, successToast } from "../../../../utils/toasts/toasts";
+import { errorToast, infoToast, successToast } from "../../../../utils/toasts/toasts";
 import { useRoute } from "@react-navigation/native";
+import axios from "axios";
+import { networkIP } from "../../../../utils/constants/ip";
+import { AuthContext } from "../../../../context/auth/auth.context";
 
 const IMGHEIGHT = 350;
 
 export const SingleProductScreen = ({ navigation }) => {
-    const { singleProductData } = useRoute().params;
-    const { productImg, productName, description, productSalePrice, productPrice } = singleProductData;
-    const [finalProductPrice, setFinalProductPrice] = useState(productSalePrice);
+    const { getUserAuthToken } = useContext(AuthContext);
+    const { singleProductData, productId } = useRoute().params;
+    // const { productImg, productName, description, productSalePrice, productPrice } = singleProductData;
+    const [productDetails, setProductDetails] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [finalProductPrice, setFinalProductPrice] = useState();
 
-    return (
+    // Cart related
+    const [updateQuantity, setProductQuantity] = useState(1);
+
+    const getProductDetails = useCallback(async () => {
+        try {
+            setLoading(true);
+            const productData = await axios.get(`${networkIP}/api/products/search/id/${productId}`);
+            const response = productData.data;
+            setProductDetails(response);
+            setFinalProductPrice(response.salePrice);
+            setLoading(false);
+        } catch (error) {
+            errorToast("Server issue", "unable to load data, try again");
+        }
+    }, [productId]);
+
+    const addProductToCart = async () => {
+        try {
+            const userAuthToken = await getUserAuthToken();
+            const addToCart = await axios.post(
+                `${networkIP}/api/cart/add/product`,
+                { productId, quantity: updateQuantity },
+                {
+                    headers: {
+                        "user-auth-token": userAuthToken
+                    }
+                }
+            );
+
+            console.log(addToCart.data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    useEffect(() => {
+        getProductDetails();
+    }, [productId]);
+
+    return !loading && productDetails ? (
         <View style={{ height: "100%" }}>
             <ProductPageHeader
                 title={"Product"}
-                subTitle={"Bring home the finest mango..."}
+                subTitle={productDetails?.productName?.substring(0, 30) + "..."}
                 showSubTitle={true}
                 showLogo={false}
                 showCart={true}
@@ -35,37 +80,49 @@ export const SingleProductScreen = ({ navigation }) => {
             />
             <ScrollView keyboardShouldPersistTaps={"always"}>
                 {/* Product images */}
-                <ProductImages image={productImg} />
+                <ProductImages
+                    image={productDetails.featuredImages && productDetails.featuredImages.length >= 2 ? productDetails.featuredImages[0] : null}
+                />
 
                 <View style={styles.mainInfoSection}>
                     {/* Product name price info */}
                     <ProductInfo
-                        productName={productName}
-                        salePrice={productSalePrice}
-                        originalPrice={productPrice}
-                        description={description}
+                        productName={productDetails.productName}
+                        salePrice={productDetails.salePrice}
+                        originalPrice={productDetails.originalPrice}
+                        description={productDetails.productDescription}
                         productPrice={finalProductPrice}
+                        addProductToCart={addProductToCart}
                     />
 
                     {/* Delivery & services */}
                     <QuantitySelection
                         setFinalProductPrice={setFinalProductPrice}
-                        productSalePrice={productSalePrice}
+                        productSalePrice={productDetails.salePrice}
+                        setProductQuantity={setProductQuantity}
+                        updateQuantity={updateQuantity}
                     />
 
                     {/* Express delivery */}
                     <ExpressDeliveryContainer />
 
                     {/* Check devlivery option */}
-                    <CheckDelivery />
+                    <CheckDelivery addProductToCart={addProductToCart} />
 
                     {/* Delivery & services */}
                     <DeliveryAndServices />
 
-                    <ProductDescription description={description} />
+                    <ProductDescription description={productDetails.productDescription} />
                     {/* <View style={{ marginVertical: 40 }}></View> */}
                 </View>
             </ScrollView>
+        </View>
+    ) : (
+        <View style={{ height: "100%", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+            <ActivityIndicator
+                size={30}
+                color={Colors.bgBlack}
+            />
         </View>
     );
 };
@@ -83,7 +140,7 @@ const ProductImages = ({ image }) => {
     );
 };
 
-const ProductInfo = ({ productName, salePrice, originalPrice, description, productPrice }) => {
+const ProductInfo = ({ productName, salePrice, originalPrice, description, productPrice, addProductToCart }) => {
     return (
         <View style={styles.productInfo}>
             <MediumText sx={{ fontFamily: fonts.Montserrat[500], fontSize: 15, marginBottom: 5 }}>{productName}</MediumText>
@@ -110,6 +167,7 @@ const ProductInfo = ({ productName, salePrice, originalPrice, description, produ
             </View>
             <TouchableButton
                 hidden={false}
+                onPress={addProductToCart}
                 title={`Get now for ${productPrice}`}
                 txtWidth={"100%"}
                 btnWidth={"100%"}
@@ -169,7 +227,7 @@ const DeliveryAndServices = () => {
                         />
                     </View> */}
                     <View>
-                        <MediumText sx={{ fontFamily: fonts.Montserrat[500], fontSize: 13 }}>Get it by, Mon, 1 Feb</MediumText>
+                        <MediumText sx={{ fontFamily: fonts.Montserrat[500], fontSize: 13 }}>Get it by, Sat, 17 Feb</MediumText>
                         <SmallText color={Colors.lightBlack[1]}>We have same day delivery option for our customers</SmallText>
                     </View>
                 </View>
@@ -197,9 +255,7 @@ const DeliveryAndServices = () => {
     );
 };
 
-const QuantitySelection = ({ setFinalProductPrice, productSalePrice }) => {
-    const [updateQuantity, setProductQuantity] = useState(1);
-
+const QuantitySelection = ({ setFinalProductPrice, productSalePrice, updateQuantity, setProductQuantity }) => {
     const incrementCount = () => {
         setProductQuantity((prevCount) => prevCount + 1);
     };
@@ -244,7 +300,7 @@ const QuantitySelection = ({ setFinalProductPrice, productSalePrice }) => {
     );
 };
 
-const CheckDelivery = ({ scrollViewRef }) => {
+const CheckDelivery = ({ scrollViewRef, addProductToCart }) => {
     const [pinCode, setPinCode] = useState();
     const [showMsg, setShowMsg] = useState("");
 
@@ -316,7 +372,7 @@ const CheckDelivery = ({ scrollViewRef }) => {
                         btnWidth={"100%"}
                         loading={false}
                         hidden={false}
-                        onPress={() => console.log("Adding to cart...")}
+                        onPress={addProductToCart}
                     />
                 </View>
             </View>

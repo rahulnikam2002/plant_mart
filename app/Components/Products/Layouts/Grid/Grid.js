@@ -37,7 +37,7 @@ export const ProductGridLayout = ({ products, maxCount = "unlimited", refreshCon
                         categories={item.categories}
                         id={item._id}
                         productImg={featuredImage}
-                        productPrice={item.originPrice}
+                        productPrice={item.originalPrice}
                         productSalePrice={item.salePrice}
                         ratings={item.ratings}
                         stars={item.stars}
