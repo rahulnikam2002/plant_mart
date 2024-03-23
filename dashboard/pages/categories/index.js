@@ -8,19 +8,6 @@ import { useEffect } from "react";
 const CategoryListingPage = () => {
     const router = useRouter();
 
-    const getCategories = async () => {
-        try {
-            const res = await axios.get("http://localhost:3000/api/category/all");
-            console.log(res);
-        } catch (error) {
-            console.log(error.response);
-        }
-    };
-
-    useEffect(() => {
-        getCategories();
-    }, []);
-
     return (
         <div className={styles.main}>
             <div className={styles.catCta}>
