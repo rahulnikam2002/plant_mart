@@ -168,7 +168,7 @@ const ProductInfo = ({ productName, salePrice, originalPrice, description, produ
             <TouchableButton
                 hidden={false}
                 onPress={addProductToCart}
-                title={`Get now for ${productPrice}`}
+                title={`Add to cart | ${productPrice}`}
                 txtWidth={"100%"}
                 btnWidth={"100%"}
             />

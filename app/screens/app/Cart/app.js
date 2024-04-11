@@ -58,72 +58,80 @@ export const CartPage = ({ navigation }) => {
     // Screen loading related only
     const [loading, setLoading] = useState(false);
 
+    // User address only
+    const [userDetails, setUserDetails] = useState(null);
+    const [userAddress, setUserAddress] = useState(null);
+    const [addressPopupOpen, setAddressPopupOpen] = useState(false);
+
+    // Order btn loading
+    const [orderBtnLoading, setOrderBtnLoading] = useState(false);
+
     // * Invkoking razorpay skd
-    const handleUserCheckout = async () => {
-        // * Showing button loading
-        setCheckoutLoading(true);
-        try {
-            // * Generating order id before proceeding to checkout screen
-            const generateOrderId = await axios.post(`${networkIP}/api/payments/order`, { amount: totalCartAmount });
+    // const handleUserCheckout = async () => {
+    //     // * Showing button loading
+    //     setCheckoutLoading(true);
+    //     try {
+    //         // * Generating order id before proceeding to checkout screen
+    //         const generateOrderId = await axios.post(`${networkIP}/api/payments/order`, { amount: totalCartAmount });
 
-            const orderIdObject = generateOrderId.data;
-            // * Stop button laoding. Ref line no: 33
-            setCheckoutLoading(false);
+    //         const orderIdObject = generateOrderId.data;
+    //         // * Stop button laoding. Ref line no: 33
+    //         setCheckoutLoading(false);
 
-            // * Checking if order id doesn't exist
-            if (!orderIdObject.id) {
-                errorToast("Checkout failed", "Please try again to checkout!");
-                return;
-            }
+    //         // * Checking if order id doesn't exist
+    //         if (!orderIdObject.id) {
+    //             errorToast("Checkout failed", "Please try again to checkout!");
+    //             return;
+    //         }
 
-            // * If order id exist, We need to create a payment option object whhere we will store all payment information!
-            const options = {
-                description: "Plant Mart order summary",
-                image: "https://res.cloudinary.com/dhelycucn/image/upload/v1699949404/global/Logo/ic_launcher_qotxxt.png",
-                currency: "INR",
-                key: "rzp_test_WEdUuBSsAktdDV",
-                amount: orderIdObject.amount,
-                name: "Rahul Rajesh Nikam",
-                order_id: orderIdObject.id,
-                theme: { color: Colors.bgBlack },
-                method: "netbanking",
-                bank: "HDFC"
-            };
+    //         // * If order id exist, We need to create a payment option object whhere we will store all payment information!
+    //         const options = {
+    //             description: "Plant Mart order summary",
+    //             image: "https://res.cloudinary.com/dhelycucn/image/upload/v1699949404/global/Logo/ic_launcher_qotxxt.png",
+    //             currency: "INR",
+    //             key: "rzp_test_WEdUuBSsAktdDV",
+    //             amount: orderIdObject.amount,
+    //             name: "Rahul Rajesh Nikam",
+    //             order_id: orderIdObject.id,
+    //             theme: { color: Colors.bgBlack },
+    //             method: "netbanking",
+    //             bank: "HDFC"
+    //         };
 
-            // * If razorpay sdk fails
-            if (!RazorpayCheckout) {
-                errorToast("Payment Initialization Error", "Failed to initialize Payment. Please try again.");
-                return;
-            }
+    //         // * If razorpay sdk fails
+    //         if (!RazorpayCheckout) {
+    //             errorToast("Payment Initialization Error", "Failed to initialize Payment. Please try again.");
+    //             return;
+    //         }
 
-            // * Authorizing payment and transferring user to payment screen
-            const authorizePayment = await RazorpayCheckout.open(options);
+    //         // * Authorizing payment and transferring user to payment screen
+    //         const authorizePayment = await RazorpayCheckout.open(options);
 
-            // * Once user did payment we start screen loading, so and will check for payment status (Completed || on Hold || failed)
-            setFullScreenLoader(true);
+    //         // * Once user did payment we start screen loading, so and will check for payment status (Completed || on Hold || failed)
+    //         setFullScreenLoader(true);
 
-            /*
-             * @Callback: Verifying the success callback. If successful, the response will include:
-             *   - Order ID
-             *   - Payment ID
-             *   - Razorpay signature (HMAC SHA256)
-             */
+    //         /*
+    //          * @Callback: Verifying the success callback. If successful, the response will include:
+    //          *   - Order ID
+    //          *   - Payment ID
+    //          *   - Razorpay signature (HMAC SHA256)
+    //          */
 
-            if (authorizePayment.razorpay_signature && authorizePayment.razorpay_payment_id && authorizePayment.razorpay_order_id) {
-                // * Verifying signature
-                verifyPaymentSignature(authorizePayment);
-            } else {
-                // * If succes callback fails, we stop showing loading screen and in this case payment is failed!
-                setFullScreenLoader(false);
-                errorToast("Payment failed or on hold", "Let us check the status and will update it in you orders");
-            }
-        } catch (checkoutError) {
-            //* Catching all possible exception
-            console.log(checkoutError);
-            setFullScreenLoader(false);
-            errorToast("Checkout failed", "Our bad! kindly try again ❤️");
-        }
-    };
+    //         if (authorizePayment.razorpay_signature && authorizePayment.razorpay_payment_id && authorizePayment.razorpay_order_id) {
+    //             // * Verifying signature
+    //             verifyPaymentSignature(authorizePayment);
+    //         } else {
+    //             // * If succes callback fails, we stop showing loading screen and in this case payment is failed!
+    //             setFullScreenLoader(false);
+    //             errorToast("Payment failed or on hold", "Let us check the status and will update it in you orders");
+    //         }
+    //     } catch (checkoutError) {
+    //         //* Catching all possible exception
+    //         console.log(checkoutError);
+    //         setFullScreenLoader(false);
+    //         errorToast("Checkout failed", "Our bad! kindly try again ❤️");
+    //     }
+    // };
 
     /*
      * @Note: This step is essential to authenticate the details returned to the checkout screen
@@ -169,22 +177,81 @@ export const CartPage = ({ navigation }) => {
         }
     };
 
-    useEffect(() => {
-        const backAction = () => {
-            navigation.navigate("homeScreen");
-            return true;
-        };
+    const handleUserCheckout = useCallback(async () => {
+        try {
+            setOrderBtnLoading(true);
+            let productsStructure = [];
+            let totalAmount = 0;
+            if (products.length > 1) {
+                for (product in products) {
+                    const quantity = Number(products[product].quantity);
+                    const productPrice = Number(products[product].productId.salePrice);
+                    totalAmount += quantity * productPrice;
+                    productsStructure.push({ product: products[product].productId._id, quantity, price: quantity * productPrice });
+                }
+            } else {
+                const quantity = Number(products[0].quantity);
+                const productPrice = Number(products[0].productId.salePrice);
+                totalAmount = quantity * productPrice;
+                productsStructure.push({ product: products[0].productId._id, quantity, price: quantity * productPrice });
+            }
 
-        const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
-        fetchProductsFromCart();
+            if (!authToken) {
+                const userAuthToken = await getUserAuthToken();
+                setAuthToken(userAuthToken);
+            }
 
-        return () => backHandler.remove();
-    }, []);
+            const { _id, ...restAddress } = userAddress;
+            const makeNewOrder = await axios.post(
+                `${networkIP}/api/orders/new`,
+                {
+                    products: productsStructure,
+                    deliveryStatus: "Processing",
+                    totalAmount,
+                    totalProducts: productsStructure.length,
+                    deliveryAddress: restAddress
+                },
+                {
+                    headers: {
+                        "user-auth-token": authToken
+                    }
+                }
+            );
+            const newOrder = makeNewOrder.data;
+            setOrderBtnLoading(false);
+
+            const today = new Date();
+            const tomorrow = new Date(today);
+            tomorrow.setDate(today.getDate() + 1); // Add a day to today's date
+
+            const formattedDate = formatDate(tomorrow);
+
+            if (newOrder.orderStatus) {
+                navigation.navigate("orderConfirmScreen", {
+                    data: {
+                        orderId: newOrder.createNewOrderToDatabase._id,
+                        totalAmount: newOrder.createNewOrderToDatabase.totalAmount,
+                        totalProducts: newOrder.createNewOrderToDatabase.totalProducts,
+                        estimateDelivery: formattedDate,
+                        userAddress: newOrder.createNewOrderToDatabase.deliveryAddress,
+                        userName: userDetails.name
+                    }
+                });
+                return;
+            }
+            return errorToast("Something went wrong", "Please try ordering again from cart");
+        } catch (error) {
+            setOrderBtnLoading(false);
+            errorToast("Something went wrong", "Please try ordering again from cart");
+            console.log(error.response);
+        }
+    }, [products, userAddress]);
 
     const fetchProductsFromCart = useCallback(async () => {
         try {
             setLoading(true);
             const userAuthToken = await getUserAuthToken();
+            console.log({ userAuthToken });
             setAuthToken(userAuthToken);
             const products = await axios.get(`${networkIP}/api/cart/get/product`, {
                 headers: {
@@ -193,7 +260,8 @@ export const CartPage = ({ navigation }) => {
             });
 
             setProducts(products.data);
-            console.log(products.data[0]?.userId.address);
+            setUserDetails(products.data[0]?.userId);
+            setUserAddress(products.data[0]?.userId.address[0]);
 
             let sum = 0;
             for (let i = 0; i < products.data.length; i++) {
@@ -211,10 +279,24 @@ export const CartPage = ({ navigation }) => {
         }
     }, [products]);
 
+    useEffect(() => {
+        const backAction = () => {
+            navigation.navigate("homeScreen");
+            return true;
+        };
+
+        const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
+        fetchProductsFromCart();
+
+        return () => backHandler.remove();
+    }, []);
+
     return (
         // Div => View
         <View>
-            <ScrollView style={styles.parent}>
+            <ScrollView
+                style={styles.parent}
+                stickyHeaderIndices={[0]}>
                 <View style={styles.header}>
                     <ProductPageHeader
                         title={"Shopping cart"}
@@ -225,31 +307,44 @@ export const CartPage = ({ navigation }) => {
                 </View>
 
                 <View style={{ marginTop: 5 }}>
-                    <InfoBox
-                        boxTitle={() => (
-                            <MediumText sx={{ fontFamily: fonts.Montserrat[500] }}>
-                                Expected delivery in <MediumText sx={{ fontFamily: fonts.Montserrat[600] }}>2 Days</MediumText>
-                            </MediumText>
-                        )}
-                        leftIcon={{
-                            iconName: "time-outline",
-                            iconType: "ionicon",
-                            iconColor: Colors.green.bsae,
-                            iconSize: 20
-                        }}>
-                        <View style={styles.userInfo}>
-                            <View style={styles.userAddress}>
-                                <View style={styles.userAddressSectionLeft}>
-                                    <MediumText>
-                                        Deliver to: <MediumText sx={{ fontFamily: fonts.Montserrat[600] }}>Rahul Rajesh Nikam, 415709</MediumText>
-                                    </MediumText>
-                                    <SmallText color={Colors.lightBlack[2]}>
-                                        House No - 5, Nikam House, Samarth Nagar, Murde, Khed, Ratnagiri, 415709, <SmallText>+918767213959</SmallText>
-                                    </SmallText>
+                    {products.length > 0 && (
+                        <InfoBox
+                            boxTitle={() => (
+                                <MediumText sx={{ fontFamily: fonts.Montserrat[500] }}>
+                                    Expected delivery in <MediumText sx={{ fontFamily: fonts.Montserrat[600] }}>1 Days</MediumText>
+                                </MediumText>
+                            )}
+                            leftIcon={{
+                                iconName: "time-outline",
+                                iconType: "ionicon",
+                                iconColor: Colors.green.bsae,
+                                iconSize: 20
+                            }}
+                            onRightIconPress={() => setAddressPopupOpen(true)}>
+                            <View style={styles.userInfo}>
+                                <View style={styles.userAddress}>
+                                    {userDetails && userAddress ? (
+                                        <View style={styles.userAddressSectionLeft}>
+                                            <MediumText>
+                                                Deliver to:{" "}
+                                                <MediumText sx={{ fontFamily: fonts.Montserrat[600] }}>
+                                                    {userDetails.name}, {userAddress.postalCode}
+                                                </MediumText>
+                                            </MediumText>
+                                            <SmallText color={Colors.lightBlack[2]}>
+                                                {`${userAddress.street}, ${userAddress.area}, ${userAddress.landMark}, Pune, Maharashtra, ${userAddress.postalCode}`}
+                                                {/* <SmallText>+918767213959</SmallText> */}
+                                            </SmallText>
+                                        </View>
+                                    ) : (
+                                        <View>
+                                            <MediumText>Loading...</MediumText>
+                                        </View>
+                                    )}
                                 </View>
                             </View>
-                        </View>
-                    </InfoBox>
+                        </InfoBox>
+                    )}
                 </View>
 
                 <View style={{ marginTop: 5 }}>
@@ -262,30 +357,36 @@ export const CartPage = ({ navigation }) => {
                         }}
                         boxTitle={() => <MediumText sx={{ fontFamily: fonts.Montserrat[500] }}>Product List</MediumText>}
                         showRightIcon={false}>
-                        <View style={styles.productsListContainer}>
-                            <AnimatePresence>
-                                {products &&
-                                    products.map((item, index) => (
-                                        <MotiView
-                                            key={item.productId._id}
-                                            from={{ opacity: 0, translateY: -100 }}
-                                            animate={{ opacity: 1, translateY: 0 }}
-                                            exit={{ opacity: 0, translateX: -300 }}
-                                            transition={{ duration: 500 }}>
-                                            <SingleProductDisplay
-                                                productName={item.productId.productName}
-                                                productImg={item.productId?.featuredImages[0]}
-                                                productPrice={item.productId.salePrice}
-                                                quantity={item.quantity}
-                                                productId={item.productId._id}
-                                                authToken={authToken}
-                                                fetchProductsFromCart={fetchProductsFromCart}
-                                                setLoading={setLoading}
-                                            />
-                                        </MotiView>
-                                    ))}
-                            </AnimatePresence>
-                        </View>
+                        {!loading && products.length > 0 ? (
+                            <View style={styles.productsListContainer}>
+                                <AnimatePresence>
+                                    {products &&
+                                        products.map((item, index) => (
+                                            <MotiView
+                                                key={item.productId._id}
+                                                from={{ opacity: 0, translateY: -100 }}
+                                                animate={{ opacity: 1, translateY: 0 }}
+                                                exit={{ opacity: 0, translateX: -300 }}
+                                                transition={{ duration: 500 }}>
+                                                <SingleProductDisplay
+                                                    productName={item.productId.productName}
+                                                    productImg={item.productId?.featuredImages[0]}
+                                                    productPrice={item.productId.salePrice}
+                                                    quantity={item.quantity}
+                                                    productId={item.productId._id}
+                                                    authToken={authToken}
+                                                    fetchProductsFromCart={fetchProductsFromCart}
+                                                    setLoading={setLoading}
+                                                />
+                                            </MotiView>
+                                        ))}
+                                </AnimatePresence>
+                            </View>
+                        ) : (
+                            <View style={{ paddingVertical: 10 }}>
+                                <MediumText>No Products in Cart</MediumText>
+                            </View>
+                        )}
                     </InfoBox>
                 </View>
 
@@ -297,18 +398,30 @@ export const CartPage = ({ navigation }) => {
                             iconSize: 20,
                             iconColor: Colors.green.bsae
                         }}
-                        boxTitle={() => <MediumText sx={{ fontFamily: fonts.Montserrat[500] }}>Best Coupons for you</MediumText>}
+                        boxTitle={() => <MediumText sx={{ fontFamily: fonts.Montserrat[500] }}>Delivery & Payment Mode</MediumText>}
                         showRightIcon={false}
                         showRightText={true}
-                        rightText={() => (
-                            <TouchableOpacity style={styles}>
-                                <SmallText
+                        // rightText={() => (
+                        //     <TouchableOpacity style={styles}>
+                        //         <SmallText
+                        //             sx={{ fontFamily: fonts.Montserrat[500] }}
+                        //             color={Colors.red.base}>
+                        //             All Coupons
+                        //         </SmallText>
+                        //     </TouchableOpacity>
+                        // )}
+                    >
+                        <View style={{ paddingVertical: 10 }}>
+                            <MediumText>
+                                We currently support only{" "}
+                                <MediumText
                                     sx={{ fontFamily: fonts.Montserrat[500] }}
-                                    color={Colors.red.base}>
-                                    All Coupons
-                                </SmallText>
-                            </TouchableOpacity>
-                        )}></InfoBox>
+                                    color={Colors.black[10]}>
+                                    Cash on Delivery
+                                </MediumText>
+                            </MediumText>
+                        </View>
+                    </InfoBox>
                 </View>
 
                 <View style={{ marginTop: 5, marginBottom: 100 }}>
@@ -380,8 +493,8 @@ export const CartPage = ({ navigation }) => {
                     // onPress={() => navigation.navigate("orderConfirmScreen")}
                     txtWidth={"100%"}
                     btnWidth={"100%"}
-                    hidden={false}
-                    loading={checkoutLoading}
+                    hidden={!products.length > 0}
+                    loading={orderBtnLoading}
                 />
             </View>
 
@@ -393,6 +506,73 @@ export const CartPage = ({ navigation }) => {
                     />
                 </View>
             )}
+
+            <AnimatePresence>
+                {addressPopupOpen && (
+                    <MotiView
+                        onTouchStart={() => setAddressPopupOpen(false)}
+                        from={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        style={styles.addressPopup}>
+                        <MotiView
+                            onTouchStart={(e) => e.stopPropagation()}
+                            from={{ height: "0%" }}
+                            animate={{ height: "50%" }}
+                            exit={{ height: "0%" }}
+                            transition={{ type: "timing" }}
+                            style={styles.innerAddressTab}>
+                            <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
+                                <MediumText sx={{ fontFamily: fonts.Montserrat[500] }}>Select Address</MediumText>
+                                <TouchableOpacity onPress={() => setAddressPopupOpen(false)}>
+                                    <Icon
+                                        name="close"
+                                        type="ionicon"
+                                    />
+                                </TouchableOpacity>
+                            </View>
+
+                            <View>
+                                <ScrollView style={{ height: "80%", paddingBottom: 40 }}>
+                                    {userDetails &&
+                                        userAddress &&
+                                        userDetails.address.map((item, index) => (
+                                            <TouchableOpacity
+                                                onPress={() => {
+                                                    setUserAddress(userDetails.address[index]);
+                                                    setAddressPopupOpen(false);
+                                                }}
+                                                key={index}
+                                                style={styles.singleAddress_popup}>
+                                                <View style={styles.userAddressSectionLeft}>
+                                                    <MediumText>
+                                                        Deliver to:{" "}
+                                                        <MediumText sx={{ fontFamily: fonts.Montserrat[600] }}>
+                                                            {userDetails.name}, {item.postalCode}
+                                                        </MediumText>
+                                                    </MediumText>
+                                                    <SmallText color={Colors.lightBlack[2]}>
+                                                        {`${item.street}, ${item.area}, ${item.landMark}, Pune, Maharashtra, ${item.postalCode}`}
+                                                        {/* <SmallText>+918767213959</SmallText> */}
+                                                    </SmallText>
+                                                </View>
+                                            </TouchableOpacity>
+                                        ))}
+                                </ScrollView>
+                                <View style={{ marginTop: 10 }}>
+                                    <TouchableButton
+                                        onPress={() => navigation.navigate("NewAddressScreen")}
+                                        btnWidth={"100%"}
+                                        txtWidth={"100%"}
+                                        hidden={false}
+                                        title="Create New Address"
+                                    />
+                                </View>
+                            </View>
+                        </MotiView>
+                    </MotiView>
+                )}
+            </AnimatePresence>
         </View>
     );
 };
@@ -413,12 +593,10 @@ const SingleProductDisplay = ({ productName, quantity, productImg, productPrice,
                 }
             );
 
-            console.log(deleteProduct.data);
             await fetchProductsFromCart();
             setLoading(false);
         } catch (error) {
             setLoading(false);
-            console.log(error);
         }
     };
 
@@ -436,7 +614,6 @@ const SingleProductDisplay = ({ productName, quantity, productImg, productPrice,
                 }
             );
 
-            console.log(incrementQuantity.data);
             await fetchProductsFromCart();
 
             setLoading(false);
@@ -459,7 +636,6 @@ const SingleProductDisplay = ({ productName, quantity, productImg, productPrice,
                 }
             );
 
-            console.log(incrementQuantity.data);
             await fetchProductsFromCart();
 
             setLoading(false);
@@ -554,7 +730,8 @@ const styles = StyleSheet.create({
         height: "100%"
     },
     header: {
-        backgroundColor: Colors.white
+        backgroundColor: Colors.white,
+        marginBottom: 2
     },
     addreddSecHeaderLeft: {
         gap: 10,
@@ -679,6 +856,28 @@ const styles = StyleSheet.create({
     },
     deleteProduct: {
         // backgroundColor: Colors.red.base
+    },
+    addressPopup: {
+        position: "absolute",
+        top: 0,
+        height: "100%",
+        width: "100%",
+        backgroundColor: "#00000060"
+    },
+    innerAddressTab: {
+        backgroundColor: Colors.white,
+        position: "absolute",
+        bottom: 0,
+        width: "100%",
+        padding: 15,
+        borderTopLeftRadius: 15,
+        borderTopRightRadius: 15
+    },
+    singleAddress_popup: {
+        backgroundColor: Colors.backgroundWhite,
+        padding: 10,
+        borderRadius: 5,
+        marginVertical: 5
     }
 });
 
@@ -710,3 +909,16 @@ const styles = StyleSheet.create({
  * Handle unsuccess payments
  * Build single product screen
  */
+
+function formatDate(date) {
+    const day = date.getDate();
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const monthIndex = date.getMonth();
+    const year = date.getFullYear();
+
+    // Add the ordinal suffix for the day
+    const suffixes = ["st", "nd", "rd"];
+    const suffix = day < 4 ? suffixes[day - 1] : "th";
+
+    return `${day}${suffix} ${monthNames[monthIndex]} ${year}`;
+}
