@@ -6,11 +6,8 @@
         "assetBundlePatterns": ["**/*"],
         "android": {
             "package": "com.plantmart.app"
-        },
-        "extra": {
-            "eas": {
-                "projectId": "a2c962e3-fd58-4730-85dd-319cdaa0edad"
-            }
         }
     }
 }
+
+
