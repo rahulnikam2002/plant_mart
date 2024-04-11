@@ -9,7 +9,7 @@ const CategoryVerticalListing = (props) => {
             </div>
             <div className={styles.prodCat}>
                 <p>
-                    <span>{props.product}</span> products
+                    <span>{props.product}</span> product
                 </p>
             </div>
             <div className={styles.catStatus}>

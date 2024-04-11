@@ -54,11 +54,11 @@ export const App = () => {
                 component={ProductsScreen}
             />
             <Stack.Screen
-                options={{
-                    headerShown: true,
+                options={({ navigation }) => ({
+                    headerShown: false,
                     title: "Profile",
-                    headerTitleAlign: "center"
-                }}
+                    headerTitleStyle: { fontFamily: fonts.Montserrat[600], fontSize: 16 }
+                })}
                 name="ProfileScreen"
                 component={ProfileScreen}
             />

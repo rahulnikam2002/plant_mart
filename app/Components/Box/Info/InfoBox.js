@@ -5,6 +5,7 @@ import { Colors } from "../../../utils/constants/colors/colors";
 import { fonts } from "../../../utils/constants/fonts/fonts";
 import { MediumText, SmallText } from "../../Text/Headings/Headings";
 import { StyleSheet } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 export const InfoBox = ({
     leftIcon = {
@@ -20,7 +21,8 @@ export const InfoBox = ({
     rightTextColor = Colors.red.base,
     rightText,
     headerStyles,
-    bodyStyles
+    bodyStyles,
+    onRightIconPress
 }) => {
     return (
         <View>
@@ -40,12 +42,13 @@ export const InfoBox = ({
                 {/* Right */}
                 <View style={styles.headerRight}>
                     {showRightIcon && !showRightText && (
-                        <View style={styles.rightIconStyle}>
+                        <TouchableOpacity style={styles.rightIconStyle}>
                             <IconButton
+                                onPress={onRightIconPress ? onRightIconPress : () => {}}
                                 type="ionicon"
                                 name="chevron-forward-outline"
                             />
-                        </View>
+                        </TouchableOpacity>
                     )}
 
                     {!showRightIcon && showRightText && (

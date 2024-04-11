@@ -1,12 +1,30 @@
 import CategoryVerticalListing from "@/components/Listing/Product/Category/vertical";
 import { IconButton } from "@/components/buttons/buttons";
 import styles from "@/styles/allCategories.module.css";
+import { errorToast } from "@/utils/helper/toasts/toasts.messages";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
+import Image from "next/image";
 
 const CategoryListingPage = () => {
+    const [categories, setCategories] = useState([]);
     const router = useRouter();
+
+    const fetchCategories = useCallback(async () => {
+        try {
+            const allCategories = await axios.get("/api/category/all");
+            const response = allCategories.data;
+            setCategories(response);
+        } catch (error) {
+            console.log("Error at categories page:16");
+            errorToast("Server Issue, try to refresh");
+        }
+    }, []);
+
+    useEffect(() => {
+        fetchCategories();
+    }, []);
 
     return (
         <div className={styles.main}>
@@ -32,18 +50,13 @@ const CategoryListingPage = () => {
             </div>
             <div className={styles.catHeader}>
                 <p>Category</p>
-                <p>Products</p>
+                <p>Type</p>
             </div>
             <div className={styles.allCategoryList}>
-                {dummyCategories.map((value) => {
-                    return (
-                        <CategoryVerticalListing
-                            categoryName={value.name}
-                            product={value.product}
-                            status={value.status}
-                        />
-                    );
-                })}
+                {categories &&
+                    categories.map((value) => {
+                        return <CategoryVerticalListing categoryName={value} />;
+                    })}
             </div>
         </div>
     );

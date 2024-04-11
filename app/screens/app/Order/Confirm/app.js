@@ -12,8 +12,66 @@ import { InfoBox } from "../../../../Components/Box/Info/InfoBox";
 import { Icon } from "@rneui/base";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 
-export const OrderConfirmScreen = () => {
+export const OrderConfirmScreen = ({ route, navigation }) => {
     const lottieAnimationRef = useRef();
+
+    const { estimateDelivery, orderId, totalAmount, totalProducts, userName, userAddress } = route.params.data;
+
+    const orderDetailsObject = [
+        {
+            title: "Order ID",
+            icon: "pricetag-outline",
+            iconType: "ionicon",
+            value: orderId.substring(0, 15) + "...",
+            showCTA: false
+        },
+        {
+            title: "Total Amount",
+            icon: "currency-rupee",
+            iconType: "material-community",
+            value: `₹${totalAmount}`,
+            showCTA: false
+        },
+        {
+            title: "Total Items",
+            icon: "leaf-outline",
+            iconType: "ionicon",
+            value: totalProducts,
+            showCTA: false
+        },
+        {
+            title: "Estimate Delivery",
+            icon: "car-outline",
+            iconType: "ionicon",
+            value: estimateDelivery,
+            showCTA: true,
+            screenName: ""
+        },
+        {
+            title: "Order Status",
+            icon: "cube-outline",
+            iconType: "ionicon",
+            value: "Processing",
+            showCTA: true,
+            screenName: ""
+        },
+        {
+            title: "Delivery Type",
+            icon: "speedometer-outline",
+            iconType: "ionicon",
+            value: "Superfast", //* Standard or super fast
+            showCTA: true,
+            screenName: ""
+        },
+        {
+            title: "Contact us",
+            icon: "call-outline",
+            iconType: "ionicon",
+            value: "+918767213959", //* Standard or super fast
+            showCTA: true,
+            screenName: ""
+        }
+    ];
 
     useEffect(() => {
         lottieAnimationRef.current?.play(0, 50);
@@ -178,7 +236,7 @@ export const OrderConfirmScreen = () => {
                                                 <SmallText color={Colors.lightBlack[2]}>{item.title}</SmallText>
                                                 <SmallText sx={{ fontFamily: fonts.Montserrat[600] }}>{item.value}</SmallText>
                                             </View>
-                                            {item.showCTA && (
+                                            {/* {item.showCTA && (
                                                 <TouchableOpacity style={{ position: "relative", top: -5 }}>
                                                     <Icon
                                                         type="ionicon"
@@ -186,7 +244,7 @@ export const OrderConfirmScreen = () => {
                                                         color={Colors.lightBlack[1]}
                                                     />
                                                 </TouchableOpacity>
-                                            )}
+                                            )} */}
                                         </View>
                                     </View>
                                 ))}
@@ -206,10 +264,14 @@ export const OrderConfirmScreen = () => {
                             }}>
                             <View style={{ paddingVertical: 10 }}>
                                 <MediumText>
-                                    Deliver to: <MediumText sx={{ fontFamily: fonts.Montserrat[600] }}>Rahul Rajesh Nikam, 415709</MediumText>
+                                    Deliver to:{" "}
+                                    <MediumText sx={{ fontFamily: fonts.Montserrat[600] }}>
+                                        {userName}, {userAddress.postalCode}
+                                    </MediumText>
                                 </MediumText>
                                 <SmallText color={Colors.lightBlack[2]}>
-                                    House No - 5, Nikam House, Samarth Nagar, Murde, Khed, Ratnagiri, 415709, <SmallText>+918767213959</SmallText>
+                                    {`${userAddress.street}, ${userAddress.area}, ${userAddress.landMark}, Pune, Maharashtra, ${userAddress.postalCode}`}
+                                    <SmallText>+918767213959</SmallText>
                                 </SmallText>
                             </View>
                         </InfoBox>
@@ -318,59 +380,3 @@ const styles = StyleSheet.create({
         justifyContent: "space-between"
     }
 });
-
-const orderDetailsObject = [
-    {
-        title: "Order ID",
-        icon: "pricetag-outline",
-        iconType: "ionicon",
-        value: "#1A2BCFI59",
-        showCTA: false
-    },
-    {
-        title: "Total Amount",
-        icon: "currency-rupee",
-        iconType: "material-community",
-        value: "₹1446",
-        showCTA: false
-    },
-    {
-        title: "Total Items",
-        icon: "leaf-outline",
-        iconType: "ionicon",
-        value: 2,
-        showCTA: false
-    },
-    {
-        title: "Estimate Delivery",
-        icon: "car-outline",
-        iconType: "ionicon",
-        value: "16th Nov 2023",
-        showCTA: true,
-        screenName: ""
-    },
-    {
-        title: "Order Status",
-        icon: "cube-outline",
-        iconType: "ionicon",
-        value: "Processing",
-        showCTA: true,
-        screenName: ""
-    },
-    {
-        title: "Delivery Type",
-        icon: "speedometer-outline",
-        iconType: "ionicon",
-        value: "Superfast", //* Standard or super fast
-        showCTA: true,
-        screenName: ""
-    },
-    {
-        title: "Contact us",
-        icon: "call-outline",
-        iconType: "ionicon",
-        value: "+918767213959", //* Standard or super fast
-        showCTA: true,
-        screenName: ""
-    }
-];
