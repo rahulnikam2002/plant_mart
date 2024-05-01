@@ -50,6 +50,7 @@ const NewProductPage = () => {
 
     const [productDetails, setProductDetails] = useState({
         productName: null,
+        scientificName: null,
         productDescription: null,
         featuredImages: [],
         categories: null,
@@ -185,6 +186,15 @@ const NewProductPage = () => {
                                     label={"Product name"}
                                     placeholder={"Product name"}
                                     value={productDetails.productName}
+                                />
+                            </div>
+                            <div className={styles.innerProdNameInput}>
+                                <TextInput
+                                    name="scientificName"
+                                    setText={(e) => handleInputSubmit(e)}
+                                    label={"Scientific name"}
+                                    placeholder={"Scientific name"}
+                                    value={productDetails.scientificName}
                                 />
                             </div>
                             <div

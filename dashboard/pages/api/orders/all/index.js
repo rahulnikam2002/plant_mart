@@ -1,7 +1,9 @@
 // Import necessary modules and dependencies
-import ordersModels from "@/models/orders/orders.models";
+
+import { Orders } from "@/models/orders/orders.models";
 import { verifyJWT } from "@/utils/jwt/verifyJWT"; // Import JWT verification utility
 import axios from "axios"; // Import Axios for HTTP requests
+import mongoose from "mongoose";
 
 // Define the default asynchronous handler function
 export default async function handler(req, res) {
@@ -18,6 +20,8 @@ export default async function handler(req, res) {
     // Extract productIds and authToken from request body and headers respectively
     const authToken = req.cookies.token;
 
+    console.log({ authToken });
+
     try {
         if (!authToken) {
             throw {
@@ -25,11 +29,15 @@ export default async function handler(req, res) {
                 msg: "Admin Auth token is missing"
             };
         }
-        const getAllOrdersFromDB = await ordersModels.find({}).populate("userId").populate("products.product");
+        const getAllOrdersFromDB = await Orders.find({})
+            .populate("userId")
+            .populate("products.product")
+            .catch((err) => console.log({ err: err }));
 
         return res.status(201).send(getAllOrdersFromDB);
     } catch (error) {
         // Handle errors and send appropriate status code and error message
+        console.log({ error });
         const status = error.status || 500;
         return res.status(status).send({
             msg: error.msg

@@ -1,0 +1,89 @@
+{
+    "config": {
+        "adapter": ["xhr", "http"],
+        "data": "{\"products\":[{\"product\":\"65dcb02ca4a5565a05f6b09a\",\"quantity\":2,\"price\":1000},{\"product\":\"65f6d4697348239f669d50d6\",\"quantity\":2,\"price\":700},{\"product\":\"660a488f3a5b5c9f58612484\",\"quantity\":1,\"price\":100}],\"deliveryStatus\":\"Processing\",\"totalAmount\":1800,\"totalProducts\":3,\"deliveryAddress\":{\"street\":\"Gnvfcbfb\",\"area\":\"Magarpatta\",\"postalCode\":\"411028\",\"landMark\":\"Vbb\"}}",
+        "env": { "Blob": "[Function Blob]", "FormData": "[Function FormData]" },
+        "headers": "",
+        "maxBodyLength": -1,
+        "maxContentLength": -1,
+        "method": "post",
+        "timeout": 0,
+        "transformRequest": "[[Function transformRequest]]",
+        "transformResponse": "[[Function transformResponse]]",
+        "transitional": { "clarifyTimeoutError": false, "forcedJSONParsing": true, "silentJSONParsing": true },
+        "url": "http://192.168.251.96:3000/api/orders/new",
+        "validateStatus": "Function validateStatus]",
+        "xsrfCookieName": "XSRF-TOKEN",
+        "xsrfHeaderName": "X-XSRF-TOKEN"
+    },
+    "data": {},
+    "headers": {
+        "connection": "keep-alive",
+        "content-length": "2",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Fri, 12 Apr 2024 15:18:44 GMT",
+        "etag": "\"bwc9mymkdm2\"",
+        "keep-alive": "timeout=5",
+        "vary": "Accept-Encoding"
+    },
+    "request": {
+        "DONE": 4,
+        "HEADERS_RECEIVED": 2,
+        "LOADING": 3,
+        "OPENED": 1,
+        "UNSENT": 0,
+        "_aborted": false,
+        "_cachedResponse": "undefined",
+        "_hasError": false,
+        "_headers": {
+            "accept": "application/json, text/plain, */*",
+            "content-type": "application/json",
+            "user-auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MDA0Yzk3MTZjNzY4ZDY5YWQ5ZDI4ZiIsImVtYWlsIjoic2lkZGhpbWFoYWRpazI1N0BnbWFpbC5jb20iLCJpYXQiOjE3MTI5MzUwNzksImV4cCI6MTcxMzc5OTA3OX0.dg_3-cS8E28ulKilsAFMTHe6PamGb33TBTfXF_yw_Zo"
+        },
+        "_incrementalEvents": false,
+        "_lowerCaseResponseHeaders": {
+            "connection": "keep-alive",
+            "content-length": "2",
+            "content-type": "application/json; charset=utf-8",
+            "date": "Fri, 12 Apr 2024 15:18:44 GMT",
+            "etag": "\"bwc9mymkdm2\"",
+            "keep-alive": "timeout=5",
+            "vary": "Accept-Encoding"
+        },
+        "_method": "POST",
+        "_perfKey": "network_XMLHttpRequest_http://192.168.251.96:3000/api/orders/new",
+        "_performanceLogger": {
+            "_closed": false,
+            "_extras": "",
+            "_isLoggingForWebPerformance": false,
+            "_pointExtras": "",
+            "_points": "",
+            "_timespans": ""
+        },
+        "_requestId": null,
+        "_response": "{}",
+        "_responseType": "",
+        "_sent": true,
+        "_subscriptions": [],
+        "_timedOut": false,
+        "_trackingName": "unknown",
+        "_url": "http://192.168.251.96:3000/api/orders/new",
+        "readyState": 4,
+        "responseHeaders": {
+            "Connection": "keep-alive",
+            "Keep-Alive": "timeout=5",
+            "Vary": "Accept-Encoding",
+            "content-length": "2",
+            "content-type": "application/json; charset=utf-8",
+            "date": "Fri, 12 Apr 2024 15:18:44 GMT",
+            "etag": "\"bwc9mymkdm2\""
+        },
+        "responseURL": "http://192.168.251.96:3000/api/orders/new",
+        "status": 500,
+        "timeout": 0,
+        "upload": {},
+        "withCredentials": true
+    },
+    "status": 500,
+    "statusText": ""
+}

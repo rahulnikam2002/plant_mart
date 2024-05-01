@@ -15,6 +15,17 @@ import { fonts } from "../../utils/constants/fonts/fonts";
 import { SingleProductScreen } from "../../screens/app/Products/SingleProductScreen/app";
 import { ProfileScreen } from "../../screens/app/profile/Profile";
 import { NewAddress } from "../../screens/app/profile/Address/NewAddress.Screen";
+import { UserOrdersScreen } from "../../screens/app/UserOrders/userOrders.screen";
+import { Icon } from "@rneui/base";
+import { SingleOrderDetails } from "../../screens/app/UserOrders/SingleOrderDetails.Screens";
+import { PlantMartPlus } from "../../screens/app/pages/plantMartPlus";
+import { AffiliateProgram } from "../../screens/app/pages/affiliateProgram";
+import { ReferralProgram } from "../../screens/app/pages/referralProgram";
+import { TermsConditions } from "../../screens/app/pages/termsConditions";
+import { PrivacyPolicies } from "../../screens/app/pages/privacyPolicies";
+import { Feedback } from "../../screens/app/pages/feedback";
+import { GetSupport } from "../../screens/app/pages/getSupport";
+import { EditProfileScreen } from "../../screens/app/profile/EditProfile/EditProfile.Screen";
 
 const Stack = createStackNavigator();
 
@@ -106,6 +117,138 @@ export const App = () => {
                     headerShown: true,
                     headerTitleAlign: "center",
                     title: "New Address",
+                    headerTitleStyle: { fontFamily: fonts.Montserrat[600], fontSize: 16 }
+                })}
+            />
+            <Stack.Screen
+                name="UserOrdersScreen"
+                component={UserOrdersScreen}
+                options={({ navigation }) => ({
+                    // gestureDirection: "vertical",
+                    // gestureResponseDistance: 250,
+                    gestureEnabled: false,
+                    // cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
+                    headerShown: true,
+                    headerTitleAlign: "left",
+                    title: "My Orders",
+                    headerTitleStyle: { fontFamily: fonts.Montserrat[600], fontSize: 16 }
+                })}
+            />
+            <Stack.Screen
+                name="SingleOrderDetails"
+                component={SingleOrderDetails}
+                options={({ navigation }) => ({
+                    gestureDirection: "vertical",
+                    gestureResponseDistance: 500,
+                    gestureEnabled: true,
+                    cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
+                    headerShown: true,
+                    headerTitleAlign: "left",
+                    title: "Order Details",
+                    headerTitleStyle: { fontFamily: fonts.Montserrat[600], fontSize: 16 }
+                })}
+            />
+            <Stack.Screen
+                name="PlantMartPlus"
+                component={PlantMartPlus}
+                options={({ navigation }) => ({
+                    gestureDirection: "horizontal",
+                    gestureResponseDistance: 500,
+                    gestureEnabled: true,
+                    headerShown: true,
+                    headerTitleAlign: "left",
+                    title: "Plant Mart Plus",
+                    headerTitleStyle: { fontFamily: fonts.Montserrat[600], fontSize: 16 }
+                })}
+            />
+            <Stack.Screen
+                name="AffiliateProgram"
+                component={AffiliateProgram}
+                options={({ navigation }) => ({
+                    gestureDirection: "horizontal",
+                    gestureResponseDistance: 500,
+                    gestureEnabled: true,
+                    headerShown: true,
+                    headerTitleAlign: "left",
+                    title: "Our Affiliate Program",
+                    headerTitleStyle: { fontFamily: fonts.Montserrat[600], fontSize: 16 }
+                })}
+            />
+            <Stack.Screen
+                name="ReferralProgram"
+                component={ReferralProgram}
+                options={({ navigation }) => ({
+                    gestureDirection: "horizontal",
+                    gestureResponseDistance: 500,
+                    gestureEnabled: true,
+                    headerShown: true,
+                    headerTitleAlign: "left",
+                    title: "Our Referral Program",
+                    headerTitleStyle: { fontFamily: fonts.Montserrat[600], fontSize: 16 }
+                })}
+            />
+            <Stack.Screen
+                name="TermsConditions"
+                component={TermsConditions}
+                options={({ navigation }) => ({
+                    gestureDirection: "horizontal",
+                    gestureResponseDistance: 500,
+                    gestureEnabled: true,
+                    headerShown: true,
+                    headerTitleAlign: "left",
+                    title: "Terms & Conditions",
+                    headerTitleStyle: { fontFamily: fonts.Montserrat[600], fontSize: 16 }
+                })}
+            />
+            <Stack.Screen
+                name="PrivacyPolicies"
+                component={PrivacyPolicies}
+                options={({ navigation }) => ({
+                    gestureDirection: "horizontal",
+                    gestureResponseDistance: 500,
+                    gestureEnabled: true,
+                    headerShown: true,
+                    headerTitleAlign: "left",
+                    title: "Privacy Policies",
+                    headerTitleStyle: { fontFamily: fonts.Montserrat[600], fontSize: 16 }
+                })}
+            />
+            <Stack.Screen
+                name="Feedback"
+                component={Feedback}
+                options={({ navigation }) => ({
+                    gestureDirection: "horizontal",
+                    gestureResponseDistance: 500,
+                    gestureEnabled: true,
+                    headerShown: true,
+                    headerTitleAlign: "left",
+                    title: "Feedback",
+                    headerTitleStyle: { fontFamily: fonts.Montserrat[600], fontSize: 16 }
+                })}
+            />
+            <Stack.Screen
+                name="GetSupport"
+                component={GetSupport}
+                options={({ navigation }) => ({
+                    gestureDirection: "horizontal",
+                    gestureResponseDistance: 500,
+                    gestureEnabled: true,
+                    headerShown: true,
+                    headerTitleAlign: "left",
+                    title: "Get Support",
+                    headerTitleStyle: { fontFamily: fonts.Montserrat[600], fontSize: 16 }
+                })}
+            />
+            <Stack.Screen
+                name="EditProfileScreen"
+                component={EditProfileScreen}
+                options={({ navigation }) => ({
+                    gestureDirection: "horizontal",
+                    gestureResponseDistance: 500,
+                    gestureEnabled: true,
+                    headerShown: true,
+                    headerTitleAlign: "left",
+                    title: "Edit Profile",
                     headerTitleStyle: { fontFamily: fonts.Montserrat[600], fontSize: 16 }
                 })}
             />

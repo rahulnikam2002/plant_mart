@@ -23,7 +23,7 @@ import { useCallback } from "react";
 import { ProductGridLayout } from "../../../Components/Products/Layouts/Grid/Grid";
 import { products } from "../../../Static/data/products/data";
 import { errorToast } from "../../../utils/toasts/toasts";
-import axios from "axios";
+import axios, { all } from "axios";
 import { networkIP } from "../../../utils/constants/ip";
 
 export const HomeScreen = ({ navigation }) => {
@@ -96,7 +96,7 @@ export const HomeScreen = ({ navigation }) => {
                     <HorizontalBannerArea data={multipleBaneerAds} />
                 </View>
 
-                <View>
+                {/* <View>
                     <SeactionHeader
                         title={"Categories"}
                         onPress={() => console.log(true)}
@@ -106,7 +106,7 @@ export const HomeScreen = ({ navigation }) => {
                         maxItems={10}
                         scrollable
                     />
-                </View>
+                </View> */}
 
                 <View style={{ marginTop: 5 }}>
                     <SeactionHeader
@@ -114,7 +114,10 @@ export const HomeScreen = ({ navigation }) => {
                         onPress={() => navigation.navigate("productsScreen")}
                     />
                     {!loading ? (
-                        <ProductGridLayout products={allProducts?.splice(0, 6)} />
+                        <ProductGridLayout
+                            showRefreshControl={false}
+                            products={allProducts?.splice(0, 6)}
+                        />
                     ) : (
                         <ActivityIndicator
                             color={Colors.bgBlack}
@@ -123,16 +126,16 @@ export const HomeScreen = ({ navigation }) => {
                     )}
                 </View>
 
-                <View style={[styles.bannerArea]}>
+                <View style={[styles.bannerArea, { marginBottom: 80 }]}>
                     <HorizontalBannerArea data={SingleBannerAds} />
                 </View>
 
-                <View style={[{ marginTop: 0 }, styles.lastSection]}>
+                {/* <View style={[{ marginTop: 0 }, styles.lastSection]}>
                     <SeactionHeader
                         title={"Max Selling"}
                         onPress={() => console.log(true)}
                     />
-                    {!loading ? (
+                    {!loading && allProducts ? (
                         <ProductGridLayout products={allProducts?.splice(0, 6)} />
                     ) : (
                         <ActivityIndicator
@@ -140,7 +143,7 @@ export const HomeScreen = ({ navigation }) => {
                             size={30}
                         />
                     )}
-                </View>
+                </View> */}
             </ScrollView>
 
             <View style={styles.bottomTabs}>

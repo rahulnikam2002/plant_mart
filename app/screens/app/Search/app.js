@@ -128,7 +128,7 @@ export const SearchScreen = () => {
             </View>
             {!showSearchResult && (
                 <View>
-                    <View style={styles.recentSearches}>
+                    {/* <View style={styles.recentSearches}>
                         <MediumText sx={{ fontFamily: fonts.Montserrat[500], marginBottom: 10 }}>Recent Searches</MediumText>
                         <View style={styles.recentSearchesInnerContainer}>
                             {cahceSearch &&
@@ -144,7 +144,7 @@ export const SearchScreen = () => {
                                     </TouchableOpacity>
                                 ))}
                         </View>
-                    </View>
+                    </View> */}
 
                     <View style={styles.bannerArea}>
                         <HorizontalBannerArea data={multipleBaneerAds} />

@@ -20,6 +20,10 @@ const OrdersSchema = new mongoose.Schema(
                     type: Number,
                     required: true,
                     default: 1
+                },
+                deliveryStatus: {
+                    type: String,
+                    default: "Processing"
                 }
             }
         ],
@@ -37,10 +41,6 @@ const OrdersSchema = new mongoose.Schema(
                 type: String
             }
         },
-        deliveryStatus: {
-            type: String,
-            default: "Processing"
-        },
         totalAmount: {
             type: Number,
             required: true,
@@ -55,4 +55,4 @@ const OrdersSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
-export default mongoose.models.Orders || mongoose.model("Orders", OrdersSchema);
+export const Orders = mongoose.models.Orders || mongoose.model("Orders", OrdersSchema);

@@ -8,7 +8,7 @@ import { useCallback, useRef, useState } from "react";
 import { Dimensions } from "react-native";
 import { RefreshControl } from "react-native-gesture-handler";
 
-export const ProductGridLayout = ({ products, maxCount = "unlimited", refreshControl }) => {
+export const ProductGridLayout = ({ showRefreshControl = true, products, maxCount = "unlimited", refreshControl }) => {
     const [refreshing, setRefreshing] = useState(false);
 
     const onRefresh = useCallback(() => {
@@ -18,11 +18,13 @@ export const ProductGridLayout = ({ products, maxCount = "unlimited", refreshCon
     return (
         <FlatList
             refreshControl={
-                <RefreshControl
-                    colors={[Colors.bgBlack, "red", "green"]}
-                    refreshing={refreshing}
-                    onRefresh={onRefresh}
-                />
+                showRefreshControl && (
+                    <RefreshControl
+                        colors={[Colors.bgBlack, "red", "green"]}
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />
+                )
             }
             style={{ width: "100%", backgroundColor: Colors.backgroundWhite }}
             numColumns={2}

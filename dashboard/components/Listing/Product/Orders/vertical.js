@@ -2,9 +2,14 @@ import style from "@/styles/verticalOrdersListing.module.css";
 import { useState } from "react";
 import VerticalOrderProduct from "./verticalOrderProduct";
 import { Button, IconButton, LinkButton } from "@/components/buttons/buttons";
+import axios from "axios";
+import { motion } from "framer-motion";
 
-const OrderVerticalListing = ({ orderId, totalAmount, userId, deliveryStatus, orderedProducts }) => {
+const OrderVerticalListing = ({ orderId, totalAmount, address, userId, deliveryStatus, orderedProducts, orders, orderedOn }) => {
     const [isChecked, setChecked] = useState(false);
+    const [viewDetails, setViewDeatils] = useState(false);
+
+    console.log({ orders });
 
     const handleCheckboxChange = (e) => {
         setChecked(!isChecked);
@@ -65,21 +70,8 @@ const OrderVerticalListing = ({ orderId, totalAmount, userId, deliveryStatus, or
                 </p>
             </div>
             <div className={style.orderUpdateDetails}>
-                <div className={style.dropDown}>
-                    <select className={style.options}>
-                        <option
-                            value=""
-                            disabled
-                            selected
-                            hidden>
-                            Update status
-                        </option>
-                        <option value="Delivered">Delivered</option>
-                        <option value="Undelivered">Undelivered</option>
-                    </select>
-                </div>
                 <IconButton
-                    onClick={() => alert(true)}
+                    onClick={() => setViewDeatils(!viewDetails)}
                     width={"fit-content"}
                     rightIcon={
                         <i
@@ -90,6 +82,54 @@ const OrderVerticalListing = ({ orderId, totalAmount, userId, deliveryStatus, or
                     bgColor={"#f5f7f9"}
                     title={"View Details"}
                 />
+
+                {viewDetails && (
+                    <div className={style.mainDropDown}>
+                        <div className={style.innerdiv}>
+                            <div className={style.innerBoxBorder}>
+                                <p>
+                                    <span>Customer name: </span> {userId.name}
+                                </p>
+                            </div>
+                            <div className={style.innerBoxBorder}>
+                                <p>
+                                    <span>User Id: </span> {userId._id.substring(userId._id.length - 10)}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className={style.innerdiv}>
+                            <div className={style.innerBoxBorder}>
+                                <p>
+                                    <span>Payment Method: </span> Cash On Delivery
+                                </p>
+                            </div>
+                            <div className={style.innerBoxBorder}>
+                                <p>
+                                    <span>Total Amount: </span>₹ {totalAmount}
+                                </p>
+                            </div>
+                        </div>
+                        <div className={style.innerdiv}>
+                            <div className={style.innerBoxBorder}>
+                                <p>
+                                    <span>Total Proucts Ordered: </span> {orderedProducts.length}
+                                </p>
+                            </div>
+                            <div className={style.innerBoxBorder}>
+                                <p>
+                                    <span>Ordered On: </span> {formatDate(orderedOn && orderedOn)}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className={style.innerBoxBorder}>
+                            <p>
+                                <span>Address: </span> {`${address.street}, ${address.area}, ${address.landMark} Pune, Maharashtra`}
+                            </p>
+                        </div>
+                    </div>
+                )}
             </div>
             <div className={style.orderProductInfo}>
                 {orderedProducts &&
@@ -100,6 +140,9 @@ const OrderVerticalListing = ({ orderId, totalAmount, userId, deliveryStatus, or
                             quantity={item.quantity}
                             sku={item.product.productSKU}
                             productName={item.product.productName}
+                            orderId={orderId}
+                            productId={item._id}
+                            orderStatus={item.deliveryStatus}
                         />
                     ))}
             </div>
@@ -108,3 +151,11 @@ const OrderVerticalListing = ({ orderId, totalAmount, userId, deliveryStatus, or
 };
 
 export default OrderVerticalListing;
+
+const formatDate = (dateObj) => {
+    const timestamp = dateObj;
+    const date = new Date(timestamp);
+
+    const options = { year: "numeric", month: "short", day: "2-digit" };
+    return date.toLocaleDateString("en-GB", options);
+};

@@ -43,7 +43,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { AnimatePresence, MotiView } from "moti";
 
 export const CartPage = ({ navigation }) => {
-    const { getUserAuthToken } = useContext(AuthContext);
+    const { getUserAuthToken, logoutUser } = useContext(AuthContext);
 
     // * Initializing required useStates
     const [totalCartAmount, setTotalCartAmount] = useState(144699);
@@ -243,7 +243,7 @@ export const CartPage = ({ navigation }) => {
         } catch (error) {
             setOrderBtnLoading(false);
             errorToast("Something went wrong", "Please try ordering again from cart");
-            console.log(error.response);
+            console.log(error);
         }
     }, [products, userAddress]);
 
@@ -273,7 +273,12 @@ export const CartPage = ({ navigation }) => {
             setTotalPrice(sum);
             setLoading(false);
         } catch (error) {
-            console.log(error);
+            const { tokenExired } = error.response.data;
+
+            if (tokenExired) {
+                logoutUser();
+            }
+
             setLoading(false);
             errorToast("Something went wrong!", "Please try again to fetch all products");
         }
@@ -294,9 +299,7 @@ export const CartPage = ({ navigation }) => {
     return (
         // Div => View
         <View>
-            <ScrollView
-                style={styles.parent}
-                stickyHeaderIndices={[0]}>
+            <ScrollView style={styles.parent}>
                 <View style={styles.header}>
                     <ProductPageHeader
                         title={"Shopping cart"}

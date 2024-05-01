@@ -4,6 +4,7 @@ import productModel from "@/models/product/product.model";
 
 const productDataSchema = Joi.object({
     productName: Joi.string().required(),
+    scientificName: Joi.string(),
     productDescription: Joi.string().required(),
     featuredImages: Joi.array().items(Joi.string()).min(3).max(3).required(),
     categories: Joi.array().items(Joi.string()).required(),

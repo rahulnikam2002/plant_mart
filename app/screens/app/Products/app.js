@@ -55,9 +55,7 @@ export const ProductsScreen = ({ route }) => {
                     subTitle={`${allProducts && allProducts.length}  Items`}
                 />
             </View>
-            <View style={styles.categoryFilter}>
-                <RoundedCarousel data={cahceSearch} />
-            </View>
+            <View style={styles.categoryFilter}>{/* <RoundedCarousel data={cahceSearch} /> */}</View>
             {!loading && allProducts && (
                 <View style={styles.productsArea}>
                     <ProductGridLayout
@@ -77,15 +75,13 @@ const styles = StyleSheet.create({
     categoryFilter: {
         backgroundColor: Colors.white,
         paddingHorizontal: 15,
-        paddingVertical: 15,
         marginTop: 2
     },
     productsArea: {
         backgroundColor: Colors.white,
         paddingHorizontal: 2,
         // paddingVertical: 15,
-        marginTop: 1,
-        marginBottom: "30%"
+        marginTop: 1
     },
     pageLoader: {
         height: "100%",

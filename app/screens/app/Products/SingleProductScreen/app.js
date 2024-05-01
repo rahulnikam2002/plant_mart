@@ -38,6 +38,7 @@ export const SingleProductScreen = ({ navigation }) => {
             const productData = await axios.get(`${networkIP}/api/products/search/id/${productId}`);
             const response = productData.data;
             setProductDetails(response);
+            console.log({ response });
             setFinalProductPrice(response.salePrice);
             setLoading(false);
         } catch (error) {
@@ -62,6 +63,11 @@ export const SingleProductScreen = ({ navigation }) => {
         } catch (error) {
             console.error(error);
         }
+    };
+
+    const directPurchase = async () => {
+        await addProductToCart();
+        navigation.navigate("cartScreen");
     };
 
     useEffect(() => {
@@ -93,6 +99,8 @@ export const SingleProductScreen = ({ navigation }) => {
                         description={productDetails.productDescription}
                         productPrice={finalProductPrice}
                         addProductToCart={addProductToCart}
+                        directPurchase={directPurchase}
+                        sciName={productDetails.scientificName}
                     />
 
                     {/* Delivery & services */}
@@ -140,10 +148,12 @@ const ProductImages = ({ image }) => {
     );
 };
 
-const ProductInfo = ({ productName, salePrice, originalPrice, description, productPrice, addProductToCart }) => {
+const ProductInfo = ({ productName, salePrice, originalPrice, description, productPrice, addProductToCart, sciName, directPurchase }) => {
     return (
         <View style={styles.productInfo}>
-            <MediumText sx={{ fontFamily: fonts.Montserrat[500], fontSize: 15, marginBottom: 5 }}>{productName}</MediumText>
+            <MediumText sx={{ fontFamily: fonts.Montserrat[500], fontSize: 15, marginBottom: 5 }}>
+                {productName} | {sciName}
+            </MediumText>
             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
                 <MediumText
                     color={Colors.lightBlack[1]}
@@ -167,8 +177,8 @@ const ProductInfo = ({ productName, salePrice, originalPrice, description, produ
             </View>
             <TouchableButton
                 hidden={false}
-                onPress={addProductToCart}
-                title={`Add to cart | ${productPrice}`}
+                onPress={directPurchase}
+                title={`Buy now | ${productPrice}`}
                 txtWidth={"100%"}
                 btnWidth={"100%"}
             />
@@ -202,6 +212,23 @@ const ExpressDeliveryContainer = () => {
 };
 
 const DeliveryAndServices = () => {
+    const getTomDate = () => {
+        let today = new Date();
+
+        // Array of month names
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+        // Get the day, month, and year
+        let day = today.getDate();
+        let monthIndex = today.getMonth();
+        let year = today.getFullYear();
+
+        // Format the date
+        let formattedDate = day + " " + monthNames[monthIndex] + " " + year;
+
+        console.log(formattedDate);
+        return formattedDate;
+    };
     return (
         <View style={styles.DeliveryAndServices}>
             <View style={styles.sectionHeader}>
@@ -227,7 +254,7 @@ const DeliveryAndServices = () => {
                         />
                     </View> */}
                     <View>
-                        <MediumText sx={{ fontFamily: fonts.Montserrat[500], fontSize: 13 }}>Get it by, Sat, 17 Feb</MediumText>
+                        <MediumText sx={{ fontFamily: fonts.Montserrat[500], fontSize: 13 }}>Get it by, {getTomDate()}</MediumText>
                         <SmallText color={Colors.lightBlack[1]}>We have same day delivery option for our customers</SmallText>
                     </View>
                 </View>

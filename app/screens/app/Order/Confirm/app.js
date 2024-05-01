@@ -53,7 +53,7 @@ export const OrderConfirmScreen = ({ route, navigation }) => {
             iconType: "ionicon",
             value: "Processing",
             showCTA: true,
-            screenName: ""
+            screenName: "UserOrdersScreen"
         },
         {
             title: "Delivery Type",
@@ -217,7 +217,8 @@ export const OrderConfirmScreen = ({ route, navigation }) => {
                         leftIcon={{
                             iconName: "gift-outline",
                             iconType: "ionicon"
-                        }}>
+                        }}
+                        onRightIconPress={() => navigation.navigate("UserOrdersScreen")}>
                         <View style={styles.orderDetailsBody}>
                             {orderDetailsObject &&
                                 orderDetailsObject.map((item, index) => (

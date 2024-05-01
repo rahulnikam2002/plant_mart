@@ -1,7 +1,11 @@
 import { verify } from "jsonwebtoken";
 
 export const verifyJWT = (token, secret) => {
-    const verifyToken = verify(token, secret);
-    if (!verifyToken) return false;
-    return verifyToken;
+    try {
+        const verifyToken = verify(token, secret);
+        return verifyToken;
+    } catch (error) {
+        console.error("Error verifying JWT:", error);
+        return false;
+    }
 };

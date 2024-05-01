@@ -18,7 +18,7 @@ export const DrawerContents = ({ navigation }) => {
                 // justifyContent: "space-between",
                 paddingHorizontal: 20
             }}>
-            <View>
+            {/* <View>
                 <Avatar
                     size={64}
                     rounded
@@ -28,7 +28,7 @@ export const DrawerContents = ({ navigation }) => {
                 />
                 <MediumText sx={{ fontFamily: fonts.Montserrat[600], marginTop: 5 }}>Rahul Rajesh Nikam</MediumText>
                 <SmallText sx={{ fontFamily: fonts.Montserrat[400] }}>codewithrahulnikam@gmail.com</SmallText>
-            </View>
+            </View> */}
 
             <View>
                 {MenuItems.map((item, index) => (
@@ -86,25 +86,19 @@ const MenuItems = [
         icon: "grass",
         toScreen: "productsScreen"
     },
-
     {
-        name: "Wishlist",
-        icon: "favorite",
-        toScreen: "homeScreen"
+        name: "Cart",
+        icon: "fence",
+        toScreen: "cartScreen"
     },
     {
-        name: "Check diseases",
-        icon: "bug-report",
-        toScreen: "homeScreen"
+        name: "Search",
+        icon: "search",
+        toScreen: "cartScreen"
     },
     {
         name: "My account",
         icon: "account-circle",
         toScreen: "ProfileScreen"
-    },
-    {
-        name: "Settings",
-        icon: "settings",
-        toScreen: "homeScreen"
     }
 ];

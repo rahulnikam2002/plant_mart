@@ -23,6 +23,7 @@ export const Colors = {
         9: "#4caf5a29"
     },
     red: {
-        base: "#ff406c40"
+        base: "#ff406c40",
+        9: "#ff406c"
     }
 };

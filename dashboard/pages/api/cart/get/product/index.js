@@ -21,8 +21,9 @@ export default async function handler(req, res) {
     try {
         // Validate the provided authToken
         const checkAuthToken = validateAuthToken(authToken);
-        console.log("checkAuthToken: ", checkAuthToken);
-        if (!checkAuthToken) throw { status: 400, msg: "Invalid user" };
+        console.log({ checkAuthToken });
+
+        if (!checkAuthToken) throw { status: 400, msg: "Invalid user", tokenExired: true };
 
         // Verify if the user associated with the token is registered
         const checkIsUservalid = await axios.post("http://localhost:3000/api/user/authentication/check/email", { email: checkAuthToken.email });
@@ -40,15 +41,18 @@ export default async function handler(req, res) {
     } catch (error) {
         // Handle errors and send appropriate status code and error message
         console.log(error);
+        console.log("This is the error");
         const status = error.status || 500;
         return res.status(status).send({
-            msg: error.msg
+            msg: error.msg,
+            tokenExired: error.tokenExired
         });
     }
 }
 
 // Utility function to validate the JWT token
 const validateAuthToken = (token) => {
+    console.log({ token });
     const tokenVerify = verifyJWT(token, process.env.NEXT_PUBLIC_USER_JWT_SECRET_KEY);
     console.log("token::", tokenVerify);
     return tokenVerify;

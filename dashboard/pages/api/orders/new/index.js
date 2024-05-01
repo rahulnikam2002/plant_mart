@@ -1,6 +1,6 @@
 // Import necessary modules and dependencies
 import cartModel from "@/models/cart/cart.model"; // Import cart model
-import ordersModels from "@/models/orders/orders.models";
+import { Orders } from "@/models/orders/orders.models";
 import { verifyJWT } from "@/utils/jwt/verifyJWT"; // Import JWT verification utility
 import axios from "axios"; // Import Axios for HTTP requests
 
@@ -52,7 +52,7 @@ export default async function handler(req, res) {
         // Extract userId from the validated authToken
         const userId = checkAuthToken.id;
 
-        const createNewOrderToDatabase = await ordersModels.create({
+        const createNewOrderToDatabase = await Orders.create({
             userId: userId,
             products: products,
             deliveryAddress,
@@ -73,6 +73,7 @@ export default async function handler(req, res) {
     } catch (error) {
         // Handle errors and send appropriate status code and error message
         const status = error.status || 500;
+        console.log({ error });
         return res.status(status).send({
             msg: error.msg
         });

@@ -23,7 +23,7 @@ export default async function handler(req, res) {
         const regex = new RegExp(searchTerms.join("|"), "i");
 
         const searchResult = await productModel.find({
-            productName: { $regex: regex }
+            $or: [{ productName: { $regex: regex } }, { productDescription: { $regex: regex } }, { scientificName: { $regex: regex } }]
         });
 
         res.send(searchResult);
