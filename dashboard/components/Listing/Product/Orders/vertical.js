@@ -136,13 +136,13 @@ const OrderVerticalListing = ({ orderId, totalAmount, address, userId, deliveryS
                     orderedProducts.map((item) => (
                         <VerticalOrderProduct
                             key={item._id}
-                            image={item.product.featuredImages[0]}
+                            image={item.product?.featuredImages[0]}
                             quantity={item.quantity}
-                            sku={item.product.productSKU}
-                            productName={item.product.productName}
+                            sku={item.product?.productSKU}
+                            productName={item.product?.productName}
                             orderId={orderId}
                             productId={item._id}
-                            orderStatus={item.deliveryStatus}
+                            orderStatus={item?.deliveryStatus}
                         />
                     ))}
             </div>

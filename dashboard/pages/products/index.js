@@ -114,6 +114,7 @@ const ProductsPage = ({ data }) => {
                 {products.map((value) => {
                     return (
                         <ProductVerticalListing
+                            productId={value._id}
                             productName={value.productName}
                             price={value.salePrice}
                             weight={value.productWeight}
@@ -122,6 +123,8 @@ const ProductsPage = ({ data }) => {
                             status={"Published"}
                             sku={value.productSKU}
                             date={value.createdAt.split("T")[0]}
+                            allProducts={products}
+                            setProducts={setProducts}
                         />
                     );
                 })}
